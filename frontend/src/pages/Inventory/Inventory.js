@@ -27,7 +27,7 @@ const Inventory = () => {
       {loading ? (
         <Loader />
       ) : (
-        <Page title="Dashboard: Inventory | Stokify">
+        <Page title="Dashboard: Inventoryys | Stokify">
           <Container>
             <Stack
               direction="row"
