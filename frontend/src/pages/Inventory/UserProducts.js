@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import Label from "src/components/Label";
-import { Typography } from "@mui/material";
+import { Typography, Border } from "@mui/material";
 import "./UserProducts.css";
 const UserProduct = ({ product }) => {
   return (

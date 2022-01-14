@@ -14,13 +14,21 @@ import { getProduct } from "../../actions/productAction";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "src/components/Loader/Loader";
 
+import { useAlert } from "react-alert";
+
 const Inventory = () => {
+  const alert = useAlert();
   const dispatch = useDispatch();
-  const { loading, products } = useSelector((state) => state.products);
+  const { loading, products, error, productsCount } = useSelector(
+    (state) => state.products
+  );
 
   useEffect(() => {
+    if (error) {
+      return alert.error(error);
+    }
     dispatch(getProduct());
-  }, [dispatch]);
+  }, [dispatch, error]);
 
   return (
     <Fragment>

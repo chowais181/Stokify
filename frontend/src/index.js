@@ -10,16 +10,24 @@ import { Provider } from "react-redux";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import reportWebVitals from "./reportWebVitals";
-
+import { positions, transitions, Provider as AlertProvider } from "react-alert";
+import AlertTemplate from "react-alert-template-basic";
 // ----------------------------------------------------------------------
+const options = {
+  timeout: 4000,
+  position: positions.MIDDLE,
+  transition: transitions.SCALE,
+};
 
 ReactDOM.render(
   <Provider store={store}>
-    <HelmetProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </HelmetProvider>
+    <AlertProvider template={AlertTemplate} {...options}>
+      <HelmetProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </HelmetProvider>
+    </AlertProvider>
   </Provider>,
   document.getElementById("root")
 );
