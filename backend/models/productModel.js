@@ -36,6 +36,7 @@ const productSchema = new mongoose.Schema({
     required: [true, "Please Enter product department"],
     enum: ["grocery", "IT", "furniture", "societies", "sports"],
     default: "IT",
+    trim: true,
   },
   status: {
     type: String,

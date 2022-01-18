@@ -5,6 +5,7 @@ import searchFill from "@iconify/icons-eva/search-fill";
 import { styled, alpha } from "@mui/material/styles";
 import {
   Box,
+  Stack,
   Input,
   Slide,
   Button,
@@ -14,6 +15,8 @@ import {
 } from "@mui/material";
 
 // ----------------------------------------------------------------------
+//navigate to search something
+import { useNavigate } from "react-router-dom";
 
 const APPBAR_MOBILE = 64;
 const APPBAR_DESKTOP = 92;
@@ -40,7 +43,8 @@ const SearchbarStyle = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function Searchbar() {
+const Searchbar = () => {
+  const navigate = useNavigate();
   const [isOpen, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -49,6 +53,17 @@ export default function Searchbar() {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const [keyword, setKeyword] = useState("");
+
+  const searchSubmitHandler = (e) => {
+    e.preventDefault();
+    if (keyword.trim()) {
+      navigate(`/dashboard/inventoryitems/${keyword}`);
+    } else {
+      navigate("/dashboard/inventoryitems");
+    }
   };
 
   return (
@@ -62,28 +77,41 @@ export default function Searchbar() {
 
         <Slide direction="down" in={isOpen} mountOnEnter unmountOnExit>
           <SearchbarStyle>
-            <Input
-              autoFocus
-              fullWidth
-              disableUnderline
-              placeholder="Search…"
-              startAdornment={
-                <InputAdornment position="start">
-                  <Box
-                    component={Icon}
-                    icon={searchFill}
-                    sx={{ color: "text.disabled", width: 20, height: 20 }}
-                  />
-                </InputAdornment>
-              }
-              sx={{ mr: 1, fontWeight: "fontWeightBold" }}
-            />
-            <Button variant="contained" onClick={handleClose}>
-              Search
-            </Button>
+            <form className="searchBox" onSubmit={searchSubmitHandler}>
+              <Stack
+                direction="row"
+                alignItems="center"
+                spacing={{ xs: 0.5, sm: 1.5 }}
+              >
+                <Input
+                  type="text"
+                  autoFocus
+                  fullWidth
+                  disableUnderline
+                  placeholder="Search…"
+                  startAdornment={
+                    <InputAdornment position="start">
+                      <Box
+                        component={Icon}
+                        icon={searchFill}
+                        sx={{ color: "text.disabled", width: 20, height: 20 }}
+                      />
+                    </InputAdornment>
+                  }
+                  sx={{ mr: 1, fontWeight: "fontWeightBold" }}
+                  onChange={(e) => setKeyword(e.target.value)}
+                />
+
+                {/* <Input type="submit" value="Search"/> */}
+                <Button variant="contained" type="submit" onClick={handleClose}>
+                  Search
+                </Button>
+              </Stack>
+            </form>
           </SearchbarStyle>
         </Slide>
       </div>
     </ClickAwayListener>
   );
-}
+};
+export default Searchbar;

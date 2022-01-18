@@ -23,7 +23,7 @@ const sidebarConfig = [
   },
   {
     title: "inventory",
-    path: "/dashboard/inventory",
+    path: "/dashboard/requestinventory",
     icon: getIcon("vaadin:stock"),
   },
   {

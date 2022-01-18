@@ -4,11 +4,27 @@ class ApiFeatures {
     this.queryStr = queryStr;
   }
 
-  //searching feature of the products
-  search() {
+  //searching feature of the products by name
+  // search() {
+  //   const keyword = this.queryStr.keyword
+  //     ? {
+  //         name: {
+  //           //search keyword for filters
+  //           $regex: this.queryStr.keyword,
+  //           $options: "i", //mean case insensitive
+  //         },
+  //       }
+  //     : {};
+
+  //   this.query = this.query.find({ ...keyword });
+  //   return this;
+  // }
+
+  //searching feature of the products by department
+  searchbyDept() {
     const keyword = this.queryStr.keyword
       ? {
-          name: {
+          department: {
             //search keyword for filters
             $regex: this.queryStr.keyword,
             $options: "i", //mean case insensitive

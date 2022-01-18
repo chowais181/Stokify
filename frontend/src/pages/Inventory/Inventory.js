@@ -4,7 +4,8 @@ import plusFill from "@iconify/icons-eva/plus-fill";
 import { Link as RouterLink } from "react-router-dom";
 import "./Inventory.css";
 // material
-import { Button, Container, Stack, Typography, Card } from "@mui/material";
+
+import { Button, Container, Stack, Typography, Card} from "@mui/material";
 // components
 import Page from "../../components/Page";
 import UserProduct from "./UserProducts";
@@ -13,22 +14,31 @@ import { getProduct } from "../../actions/productAction";
 
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "src/components/Loader/Loader";
+import SearchNotFound from "../../components/SearchNotFound";
 
 import { useAlert } from "react-alert";
-
+import { useParams } from "react-router-dom";
 const Inventory = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
-  const { loading, products, error, productsCount } = useSelector(
-    (state) => state.products
-  );
+  const { loading, products, error } = useSelector((state) => state.products);
 
+   
+const isProductNotFound = products.length === 0;
+//getting the keyword wich we are using in search 
+// the useParam fetch the name from the url
+  const { keyword } = useParams();
+  // console.log(keyword);
   useEffect(() => {
     if (error) {
       return alert.error(error);
     }
-    dispatch(getProduct());
-  }, [dispatch, error]);
+    dispatch(getProduct(keyword));
+  }, [dispatch, error, alert,keyword]);
+if (products.length === 0) {
+  <Loader/>
+}
+
 
   return (
     <Fragment>
@@ -49,13 +59,15 @@ const Inventory = () => {
               <Button
                 variant="contained"
                 component={RouterLink}
-                to="#"
+                to="/dashboard/requestinventory"
                 startIcon={<Icon icon={plusFill} />}
               >
                 New Order
               </Button>
             </Stack>
+
             <Card>
+              {isProductNotFound && <SearchNotFound searchQuery={keyword} />}
               <div className="container" id="container">
                 {products &&
                   products.map((product) => <UserProduct product={product} />)}

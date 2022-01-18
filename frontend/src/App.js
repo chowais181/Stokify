@@ -1,5 +1,6 @@
 // routes
 import Router from "./routes";
+import "./App.css";
 // theme
 import ThemeConfig from "./theme";
 import GlobalStyles from "./theme/globalStyles";
