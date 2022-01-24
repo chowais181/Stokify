@@ -187,7 +187,6 @@ export default function Pro() {
           </Typography>
           <Button
             variant="contained"
-            
             component={RouterLink}
             to="/dashboard/newproduct"
             startIcon={<Icon icon={plusFill} />}

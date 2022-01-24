@@ -4,7 +4,7 @@ import DashboardLayout from "./layouts/dashboard";
 import LogoOnlyLayout from "./layouts/LogoOnlyLayout";
 //
 import Login from "./pages/Login";
-import Register from "./pages/Register";
+// import Register from "./pages/Register";
 import DashboardApp from "./pages/DashboardApp";
 import Products from "./pages/Products";
 import ProductDetails from "./pages/Inventory/ProductDetails";
@@ -16,7 +16,9 @@ import Purchases from "./pages/Purchases";
 import NewUser from "./pages/newUser/addUser";
 import NewProduct from "./pages/newProduct/newItem";
 import Order from "./pages/Orders";
+// import { Route, Redirect } from "react-router";
 import RequestInventory from "./pages/RequestInventory";
+import Profile from "./components/user/Profile";
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -34,11 +36,14 @@ export default function Router() {
         { path: "products", element: <Products /> },
         { path: "newproduct", element: <NewProduct /> },
 
-        { path: "requestinventory", element: < RequestInventory/> },
-       
+        { path: "profile", element: <Profile /> },
+
+        { path: "requestinventory", element: <RequestInventory /> },
+
         { path: "inventoryitems", element: <Inventory /> },
-        { path: "inventoryitem/:id", element: <ProductDetails /> },
-        { path: "inventoryitems/:keyword", element: <Inventory /> },
+        { path: "inventoryitem/:department/:id", element: <ProductDetails /> },
+        { path: "inventoryitems/:department", element: <Inventory /> },
+        { path: "inventoryitems/:department/:name", element: <Inventory /> },
       ],
     },
     {
@@ -46,7 +51,7 @@ export default function Router() {
       element: <LogoOnlyLayout />,
       children: [
         { path: "login", element: <Login /> },
-        { path: "register", element: <Register /> },
+        // { path: ":register", element: <Register /> },
         { path: "404", element: <NotFound /> },
         { path: "/", element: <Navigate to="/dashboard/app" /> },
         { path: "*", element: <Navigate to="/404" /> },

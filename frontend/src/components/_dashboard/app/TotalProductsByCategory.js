@@ -7,7 +7,12 @@ import { Card, CardHeader } from "@mui/material";
 import { fNumber } from "../../../utils/formatNumber";
 //
 import { BaseOptionChart } from "../../charts";
-
+//
+import { getProduct } from "../../../actions/productAction";
+import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useAlert } from "react-alert";
+//
 // ----------------------------------------------------------------------
 
 const CHART_HEIGHT = 372;
@@ -31,9 +36,21 @@ const ChartWrapperStyle = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-const CHART_DATA = [4344, 5435, 1443, 4443];
+const CHART_DATA = [4344, 5435, 1443, 4443, 1223];
+const Categories = ["grocery", "IT", "furniture", "societies", "sports"];
+// let count = 0;
+export default function TotalProductsByCategory() {
+  const alert = useAlert();
+  const dispatch = useDispatch();
+  const { error } = useSelector((state) => state.products);
 
-export default function AppCurrentVisits() {
+  useEffect(() => {
+    if (error) {
+      return alert.error(error);
+    }
+    dispatch(getProduct(Categories[0]));
+  }, [dispatch, error, alert]);
+
   const theme = useTheme();
 
   const chartOptions = merge(BaseOptionChart(), {
@@ -43,7 +60,7 @@ export default function AppCurrentVisits() {
       theme.palette.warning.main,
       theme.palette.error.main,
     ],
-    labels: ["Grocery", "IT", "Furniture", "Socities"],
+    labels: ["Grocery", "IT", "Furniture", "Socities", "Sports"],
     stroke: { colors: [theme.palette.background.paper] },
     legend: { floating: true, horizontalAlign: "center" },
     dataLabels: { enabled: true, dropShadow: { enabled: false } },

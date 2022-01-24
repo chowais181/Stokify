@@ -1,24 +1,38 @@
 import { Icon } from "@iconify/react";
 
-import { Link as RouterLink } from "react-router-dom";
 import Select from "react-select";
-
+//navigate to search something
+import { useNavigate } from "react-router-dom";
 // material
 import { Button, Container, Stack, Typography } from "@mui/material";
 // components
 import Page from "../components/Page";
+import { useState } from "react";
+import { ProductCartWidget } from "src/components/_dashboard/products";
+const optionsDept = [
+  { value: "IT", label: "IT" },
+  { value: "furniture", label: "Furniture" },
+  { value: "grocery", label: "Grocery" },
+  { value: "societies", label: "Societies" },
+  { value: "sports", label: "Sports" },
+];
 
-export default function Purchases() {
-     const optionsDept = [
-       { value: "IT", label: "IT" },
-       { value: "furniture", label: "Furniture" },
-       { value: "grocery", label: "Grocery" },
-       { value: "societies", label: "Societies" },
-       { value: "sports", label: "Sports" },
-     ];
-  
+export default function RequestInventory() {
+  const navigate = useNavigate();
+  const [option, setOption] = useState(optionsDept[0]);
+
+  const Proceed = () => {
+    if (option.label != null) {
+      // navigate to selected dept
+      if (option.label.trim()) {
+        navigate(`/dashboard/inventoryitems/${option.value}`);
+      }
+    }
+  };
+
   return (
     <Page title="Dashboard: Purchases | Stokify">
+      <ProductCartWidget />
       <Container>
         <Stack
           direction="row"
@@ -30,7 +44,6 @@ export default function Purchases() {
             Request Inventory
           </Typography>
         </Stack>
-
         <Stack
           mb={5}
           direction="row"
@@ -39,16 +52,15 @@ export default function Purchases() {
         >
           <Typography variant="h7" gutterBottom>
             Select the Concerned Department :
-            <Select defaultValue={optionsDept[0]} options={optionsDept} />
+            <Select
+              defaultValue={optionsDept[0]}
+              options={optionsDept}
+              onChange={setOption}
+            />
           </Typography>
         </Stack>
 
-        <Button
-          variant="contained"
-          component={RouterLink}
-          to="/dashboard/inventoryitems"
-          color="warning"
-        >
+        <Button variant="contained" onClick={Proceed} color="warning">
           <Icon icon="ic:outline-inventory" width="30" />
           Proceed
         </Button>
@@ -56,4 +68,3 @@ export default function Purchases() {
     </Page>
   );
 }
-

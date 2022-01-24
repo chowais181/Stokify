@@ -1,7 +1,5 @@
 import { Icon } from "@iconify/react";
 import pieChart2Fill from "@iconify/icons-eva/pie-chart-2-fill";
-import lockFill from "@iconify/icons-eva/lock-fill";
-import personAddFill from "@iconify/icons-eva/person-add-fill";
 import alertTriangleFill from "@iconify/icons-eva/alert-triangle-fill";
 import PurchasesPopover from "./PurchasesPopover";
 
@@ -41,17 +39,6 @@ const sidebarConfig = [
     path: "#",
     icon: getIcon("icons8:buy"),
   },
-  {
-    title: "login",
-    path: "/login",
-    icon: getIcon(lockFill),
-  },
-  {
-    title: "register",
-    path: "/register",
-    icon: getIcon(personAddFill),
-  },
-
   {
     title: "Not found",
     path: "/404",

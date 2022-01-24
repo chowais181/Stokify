@@ -8,8 +8,8 @@ const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, "Please Enter Your Name"],
-    maxLength: [30, "Name cannot exceed 30 characters"],
-    minLength: [4, "Name should have more than 4 characters"],
+    maxLength: [30, "cannot exceed 30 characters"],
+    minLength: [4, " should have more than 4 characters"],
   },
   email: {
     type: String,
@@ -21,34 +21,44 @@ const userSchema = new mongoose.Schema({
   phoneNumber: {
     type: String,
     trim: true,
-    maxLength: [11, "Phone number cannot exceed more than 11 digits"],
+    required: [true, "Please Enter Your Phone Number"],
+    maxLength: [11, " cannot exceed more than 11 digits"],
     validate: {
       validator: function (v) {
         return /^[0-9]{11}/.test(v);
       },
-      message: "{VALUE} is not a valid 10 digit number!",
+      message: "{VALUE} is not a valid 11 digit number!",
     },
   },
   password: {
     type: String,
     required: [true, "Please Enter Your Password"],
-    minLength: [8, "Password should be greater than 8 characters"],
+    minLength: [8, " should be greater than 8 characters"],
     select: false,
   },
   avatar: {
     public_id: {
       type: String,
-      required: true,
+      // required: true,
     },
     url: {
       type: String,
-      required: true,
+      // required: true,
     },
   },
 
   role: {
     type: String,
-    default: "user",
+    enum: [
+      "Staff",
+      "Student",
+      "Faculty",
+      "Stock Manager",
+      "Coordinator",
+      "Vendor",
+      "Admin",
+    ],
+    default: "Staff",
   },
   createdAt: {
     type: Date,
@@ -75,7 +85,6 @@ userSchema.methods.getJWTToken = function () {
 };
 
 // Compare Password
-
 userSchema.methods.comparePassword = async function (password) {
   return await bcrypt.compare(password, this.password);
 };

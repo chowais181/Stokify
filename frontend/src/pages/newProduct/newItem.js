@@ -1,52 +1,59 @@
 import { Container, Typography } from "@mui/material";
 import * as Yup from "yup";
-
 import { useFormik, Form, FormikProvider } from "formik";
-
-import { useNavigate } from "react-router-dom";
 // material
 import { Stack, TextField } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import Select from "react-select";
 
 // ----------------------------------------------------------------------
-
+import { useState, useRef, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { clearErrors, createProduct } from "src/actions/productAction";
+import { useAlert } from "react-alert";
+import { NEW_PRODUCT_RESET } from "../../constants/productConstants";
+//-------------------------------------------
+const optionsUnit = [
+  { value: "piece", label: "Piece" },
+  { value: "kg", label: "KG" },
+  { value: "box", label: "Box" },
+  { value: "meter", label: "Meter" },
+  { value: "litre", label: "Litre" },
+];
+const optionsDept = [
+  { value: "IT", label: "IT" },
+  { value: "furniture", label: "Furniture" },
+  { value: "grocery", label: "Grocery" },
+  { value: "societies", label: "Societies" },
+  { value: "sports", label: "Sports" },
+];
 export default function ProductForm() {
-  const navigate = useNavigate();
-
+  const dispatch = useDispatch();
+  const alert = useAlert();
+  const nameRef = useRef("");
+  const priceRef = useRef("");
+  const stockRef = useRef("");
+  const descriptionRef = useRef("");
+  const [uom, setUOM] = useState(optionsUnit[0]);
+  const [cat, setCAT] = useState(optionsDept[0]);
+  console.log(cat.value);
   const AddProductSchema = Yup.object().shape({
     name: Yup.string()
-      .min(30, "Too Short!")
-      .max(4, "Too Long!")
+      .min(4, "Too Short!")
+      .max(30, "Too Long!")
       .required("Name is required"),
     price: Yup.string()
-      .min(0, "Too Short!")
+      .min(1, "Too Short!")
       .max(8, "Too Long!")
       .required("Price is required"),
-    category: Yup.string()
-      .min(30, "Too Short!")
-      .max(4, "Too Long!")
-      .required("Category is required"),
     stock: Yup.string()
-      .min(0, "Too Short!")
+      .min(1, "Too Short!")
       .max(8, "Too Long!")
       .required("Stock is required"),
+    description: Yup.string().max(50, "Too Long!"),
   });
+  const { loading, error, success } = useSelector((state) => state.newProduct);
 
-  const optionsUnit = [
-    { value: "piece", label: "Piece" },
-    { value: "kg", label: "KG" },
-    { value: "box", label: "Box" },
-    { value: "meter", label: "Meter" },
-    { value: "litre", label: "Litre" },
-  ];
-  const optionsDept = [
-    { value: "IT", label: "IT" },
-    { value: "furniture", label: "Furniture" },
-    { value: "grocery", label: "Grocery" },
-    { value: "societies", label: "Societies" },
-    { value: "sports", label: "Sports" },
-  ];
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -56,11 +63,34 @@ export default function ProductForm() {
     },
     validationSchema: AddProductSchema,
     onSubmit: () => {
-      navigate("/dashboard/app", { replace: true });
+      dispatch(
+        createProduct(
+          nameRef.current.value,
+          stockRef.current.value,
+          descriptionRef.current.value,
+          priceRef.current.value,
+          uom.value,
+          cat.value
+        )
+      );
     },
   });
 
-  const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
+  // ----------------------------------------------------------------------
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+    if (success) {
+      alert.show(
+        <div style={{ color: "green" }}>Product added successfully!</div>
+      );
+      dispatch({ type: NEW_PRODUCT_RESET });
+    }
+  }, [dispatch, error, alert, success]);
+
+  const { errors, touched, handleSubmit, getFieldProps } = formik;
 
   return (
     <Container maxWidth="xs">
@@ -76,6 +106,7 @@ export default function ProductForm() {
         <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
           <Stack spacing={1}>
             <TextField
+              inputRef={nameRef}
               fullWidth
               label="Name"
               {...getFieldProps("name")}
@@ -83,6 +114,7 @@ export default function ProductForm() {
               helperText={touched.name && errors.name}
             />
             <TextField
+              inputRef={descriptionRef}
               fullWidth
               label="Description"
               // {...getFieldProps("name")}
@@ -90,33 +122,45 @@ export default function ProductForm() {
               // helperText={touched.name && errors.name}
             />
             <TextField
+              inputRef={priceRef}
               fullWidth
               label="Price"
+              type="number"
               {...getFieldProps("price")}
               error={Boolean(touched.price && errors.price)}
               helperText={touched.price && errors.price}
             />
             <TextField
+              inputRef={stockRef}
               fullWidth
               label="Stock"
+              type="number"
               {...getFieldProps("stock")}
               error={Boolean(touched.stock && errors.stock)}
               helperText={touched.stock && errors.stock}
             />
             <Typography variant="h7" gutterBottom>
               Select Units of Measure :
-              <Select defaultValue={optionsUnit[0]} options={optionsUnit} />
+              <Select
+                defaultValue={optionsUnit[0]}
+                options={optionsUnit}
+                onChange={setUOM}
+              />
             </Typography>
             <Typography variant="h7" gutterBottom>
-              Select Product Department :
-              <Select defaultValue={optionsDept[0]} options={optionsDept} />
+              Select Product Category :
+              <Select
+                defaultValue={optionsDept[0]}
+                options={optionsDept}
+                onChange={setCAT}
+              />
             </Typography>
             <LoadingButton
               fullWidth
               size="large"
               type="submit"
               variant="contained"
-              loading={isSubmitting}
+              loading={loading}
             >
               Add Product
             </LoadingButton>

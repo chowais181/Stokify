@@ -5,7 +5,10 @@ import { alpha, styled } from "@mui/material/styles";
 import { Card, Typography } from "@mui/material";
 // utils
 import { fShortenNumber } from "../../../utils/formatNumber";
-
+import { getProduct } from "../../../actions/productAction";
+import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useAlert } from "react-alert";
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Card)(({ theme }) => ({
@@ -34,9 +37,18 @@ const IconWrapperStyle = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-const TOTAL = 1000;
+const StockInHand = () => {
+  const alert = useAlert();
+  const dispatch = useDispatch();
+  const { productsCount, error } = useSelector((state) => state.products);
 
-export default function stockInHand() {
+  useEffect(() => {
+    if (error) {
+      return alert.error(error);
+    }
+    dispatch(getProduct());
+  }, [dispatch, error, alert]);
+  const TOTAL = productsCount;
   return (
     <RootStyle>
       <IconWrapperStyle>
@@ -48,4 +60,5 @@ export default function stockInHand() {
       </Typography>
     </RootStyle>
   );
-}
+};
+export default StockInHand;

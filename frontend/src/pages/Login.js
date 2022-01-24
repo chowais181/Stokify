@@ -1,4 +1,4 @@
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 // material
 import { styled } from "@mui/material/styles";
 import { Card, Stack, Link, Container, Typography } from "@mui/material";
@@ -10,7 +10,8 @@ import { MHidden } from "../components/@material-extend";
 import { LoginForm } from "../components/authentication/login";
 
 // ----------------------------------------------------------------------
-
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 const RootStyle = styled(Page)(({ theme }) => ({
   [theme.breakpoints.up("md")]: {
     display: "flex",
@@ -39,10 +40,26 @@ const ContentStyle = styled("div")(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function Login() {
+  const { isAuthenticated } = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const isAuthentic = localStorage.getItem("userInfo");
+  useEffect(() => {
+    if (isAuthentic) {
+      navigate("/dashboard/app", { replace: true });
+    }
+  }, [isAuthentic, navigate]);
+  // ----------------------------------------------------------------------
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard/app", { replace: true });
+    }
+  }, [dispatch, isAuthenticated, navigate]);
+
   return (
     <RootStyle title="Login | Stokify">
       <AuthLayout>
-        Don’t have an account? &nbsp;
+        {/* Don’t have an account? &nbsp;
         <Link
           underline="none"
           variant="subtitle2"
@@ -50,7 +67,7 @@ export default function Login() {
           to="/register"
         >
           Get started
-        </Link>
+        </Link> */}
       </AuthLayout>
 
       <MHidden width="mdDown">

@@ -1,29 +1,77 @@
 import * as Yup from "yup";
-import { useState } from "react";
+import React from "react";
 import { Icon } from "@iconify/react";
 import { useFormik, Form, FormikProvider } from "formik";
 import eyeFill from "@iconify/icons-eva/eye-fill";
 import eyeOffFill from "@iconify/icons-eva/eye-off-fill";
-import { useNavigate } from "react-router-dom";
+
+import Select from "react-select";
 // material
-import { Stack, TextField, IconButton, InputAdornment } from "@mui/material";
+import {
+  Stack,
+  TextField,
+  IconButton,
+  Typography,
+  InputAdornment,
+} from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import React from "react";
 
+import { useAlert } from "react-alert";
 // ----------------------------------------------------------------------
-
+//--------------------------------------------------
+import { useState, useRef, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { clearErrors, register } from "src/actions/userAction";
+// ----------------------------------------------------------------------
+const optionsRole = [
+  { value: "Staff", label: "Staff" },
+  { value: "Faculty", label: "Faculty" },
+  { value: "Student", label: "Student" },
+  { value: "Stock Manager", label: "Stock Manager" },
+  { value: "Vendor", label: "Vendor" },
+  { value: "Coordinator", label: "Coordinator" },
+  { value: "Admin", label: "Admin" },
+];
 export default function RegisterForm() {
-  const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
+  const alert = useAlert();
+  const { loading, error, success } = useSelector((state) => state.user);
+  const [role, setOption] = useState(optionsRole[0]);
+  //getting the value from the textfield
+  //creating a refernce for TextField Component
+  const EmailRef = useRef("");
+  const NameRef = useRef("");
+  const PasswordRef = useRef("");
+  const ConfirmPasswordRef = useRef("");
+  const PhoneNoRef = useRef("");
+  //setting the image  avaatar///
 
+  // const [avatar, setAvatar] = useState("/Profile.png");
+  // const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
+  // const registerDataChange = (e) => {
+  //   if (e.target.name === "avatar") {
+  //     const reader = new FileReader();
+  //     reader.onload = () => {
+  //       if (reader.readyState === 2) {
+  //         setAvatarPreview(reader.result);
+  //         setAvatar(reader.result);
+  //       }
+  //     };
+  //     reader.readAsDataURL(e.target.files[0]);
+  //   }
+  // };
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const RegisterSchema = Yup.object().shape({
+    //thats why length is 10 bcz it does not consider 0
     name: Yup.string()
-      .min(30, "Too Short!")
-      .max(4, "Too Long!")
+      .min(4, "Too Short!")
+      .max(30, "Too Long!")
       .required("Name is required"),
     phoneNumber: Yup.string()
-      .min(11, "Phone Number must be of 11 digits!")
-      .max(11, "Phone Number must be of 11 digits!")
+      .min(10, "Phone Number must be of 11 digits!")
+      .max(10, "Phone Number must be of 11 digits!")
       .required("Phone Number is Required"),
     email: Yup.string()
       .email("Email must be a valid email address")
@@ -33,7 +81,7 @@ export default function RegisterForm() {
       .min(8, "Password is  too Short!"),
     confirmPassword: Yup.string().required("Confirm Password is required"),
   });
-
+  // console.log(PasswordRef.current.value);
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -42,19 +90,49 @@ export default function RegisterForm() {
       confirmPassword: "",
       phoneNumber: "",
     },
+
     validationSchema: RegisterSchema,
     onSubmit: () => {
-      navigate("/dashboard/app", { replace: true });
+      // navigate("/dashboard/app", { replace: true });
+      if (PasswordRef.current.value !== ConfirmPasswordRef.current.value) {
+        alert.error("Password is not match with confirm password!!");
+      } else {
+        dispatch(
+          register(
+            NameRef.current.value,
+            EmailRef.current.value,
+            PhoneNoRef.current.value,
+            PasswordRef.current.value,
+            // avatar,
+            role.value
+          )
+        );
+      }
     },
   });
 
-  const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
+  // ----------------------------------------------------------------------
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+    if (success === true) {
+      alert.show(
+        <div style={{ color: "green" }}>User added successfully!</div>
+      );
+    }
+  }, [dispatch, error, alert, success]);
+  // ----------------------------------------------------------------------
+
+  const { errors, touched, handleSubmit, getFieldProps } = formik;
 
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={1}>
           <TextField
+            inputRef={NameRef}
             fullWidth
             label="Name"
             {...getFieldProps("name")}
@@ -63,6 +141,7 @@ export default function RegisterForm() {
           />
 
           <TextField
+            inputRef={EmailRef}
             fullWidth
             autoComplete="username"
             type="email"
@@ -72,6 +151,8 @@ export default function RegisterForm() {
             helperText={touched.email && errors.email}
           />
           <TextField
+            inputRef={PhoneNoRef}
+            placeholder="03012345678"
             fullWidth
             autoComplete="phoneNumber"
             type="number"
@@ -81,6 +162,7 @@ export default function RegisterForm() {
             helperText={touched.phoneNumber && errors.phoneNumber}
           />
           <TextField
+            inputRef={PasswordRef}
             fullWidth
             autoComplete="current-password"
             type={showPassword ? "text" : "password"}
@@ -102,9 +184,10 @@ export default function RegisterForm() {
             helperText={touched.password && errors.password}
           />
           <TextField
+            inputRef={ConfirmPasswordRef}
             fullWidth
             autoComplete="current-password"
-            type={showPassword ? "text" : "confirmPassword"}
+            type={showConfirmPassword ? "text" : "password"}
             label="Confirm Password"
             {...getFieldProps("confirmPassword")}
             InputProps={{
@@ -112,9 +195,9 @@ export default function RegisterForm() {
                 <InputAdornment position="end">
                   <IconButton
                     edge="end"
-                    onClick={() => setShowPassword((prev) => !prev)}
+                    onClick={() => setShowConfirmPassword((prev) => !prev)}
                   >
-                    <Icon icon={showPassword ? eyeFill : eyeOffFill} />
+                    <Icon icon={showConfirmPassword ? eyeFill : eyeOffFill} />
                   </IconButton>
                 </InputAdornment>
               ),
@@ -122,20 +205,38 @@ export default function RegisterForm() {
             error={Boolean(touched.confirmPassword && errors.confirmPassword)}
             helperText={touched.confirmPassword && errors.confirmPassword}
           />
-          
-          <div className="mb-1">
-            Upload Image <span className="font-css top">*</span>
-            <div className="">
-              <input type="file" id="file-input" name="ImageStyle" />
+
+          <Typography variant="h7" gutterBottom>
+            Select User Role:
+            <Select
+              defaultValue={optionsRole[0]}
+              options={optionsRole}
+              onChange={setOption}
+            />
+          </Typography>
+          {/* <fieldset>
+            <div id="registerImage">
+              <img
+                src={avatarPreview}
+                alt="Avatar Preview"
+                height={50}
+                width={50}
+              />
+              <Input
+                type="file"
+                name="avatar"
+                accept="image/*"
+                onChange={registerDataChange}
+              />
             </div>
-          </div>
+          </fieldset> */}
 
           <LoadingButton
             fullWidth
             size="large"
             type="submit"
             variant="contained"
-            loading={isSubmitting}
+            loading={loading}
           >
             Register
           </LoadingButton>

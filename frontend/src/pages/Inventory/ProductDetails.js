@@ -1,6 +1,5 @@
 import { useAlert } from "react-alert";
 import { Icon } from "@iconify/react";
-import { Link as RouterLink } from "react-router-dom";
 import { Button } from "@mui/material";
 // import { addItemsToCart } from "../../actions/cartAction";
 import Loader from "src/components/Loader/Loader";
@@ -13,13 +12,19 @@ import { useSelector, useDispatch } from "react-redux";
 import { clearErrors, getProductDetails } from "../../actions/productAction";
 import { useParams } from "react-router-dom";
 import "./productDetails.css";
+import { useNavigate } from "react-router-dom";
 const ProductDetails = () => {
   //Use the useParams hook to access the id match param
   //getting theid wich we are selecting in inventory
   // the useParam fetch the id from the url
+  //we onnly get the paramater by( /:link ) if we set it by this
   const { id } = useParams();
-  console.log(id);
-
+  const navigate = useNavigate();
+  const MoveBack = () => {
+    //going to previous page by using navigate -1
+    //and we can go forward by using 1
+    navigate(-1);
+  };
   const dispatch = useDispatch();
   const alert = useAlert();
 
@@ -82,7 +87,7 @@ const ProductDetails = () => {
                 </div>
 
                 <div className="detailsBlock-3">
-                  <h1>{`₹${product.price}`}</h1>
+                  {/* <h1>{`₹Rs: {product.price}`}</h1> */}
 
                   <div className="detailsBlock-3-1">
                     <div className="detailsBlock-3-1-1">
@@ -100,8 +105,7 @@ const ProductDetails = () => {
                     disabled={product.Stock < 1 ? true : false}
                     onClick={addToCartHandler}
                   >
-                    <Icon icon="bx:bxs-cart-download" width="30" />{" "}
-                    Add to Cart
+                    <Icon icon="bx:bxs-cart-download" width="30" /> Add to Cart
                   </Button>
                   <p>
                     Status :
@@ -118,12 +122,7 @@ const ProductDetails = () => {
                 </div>
               </div>
               <br />
-              <Button
-                variant="contained"
-                component={RouterLink}
-                to="/dashboard/inventoryitems"
-                color="warning"
-              >
+              <Button variant="contained" onClick={MoveBack} color="warning">
                 <Icon icon="akar-icons:arrow-back" width="40" />
                 Back to list
               </Button>

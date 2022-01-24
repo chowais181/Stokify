@@ -14,20 +14,24 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   //   crop: "scale",
   // });
 
-  const { name, email, password, phoneNumber } = req.body;
+  const { name, email, password, phoneNumber, role } = req.body;
 
   const user = await User.create({
     name,
     email,
     password,
     phoneNumber,
-    avatar: {
-      public_id: "this is sample id",
-      url: "ddfdf",
-    },
-  });
+    role,
 
-  sendToken(user, 201, res);
+    // avatar: {
+    //   public_id: "this is sample id",
+    //   url: "ddfdf",
+    // },
+  });
+  res.status(200).json({
+    success: true,
+    message: "user added successfully",
+  });
 });
 
 // Login User

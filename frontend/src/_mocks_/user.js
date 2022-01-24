@@ -17,8 +17,6 @@ const users = [...Array(24)].map((_, index) => ({
     "Admin",
     "Stock Manager",
     "Coordinator",
-    "HOD",
-    "Director",
     "Vendor",
     "Staff",
     "Faculty",

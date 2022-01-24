@@ -1,5 +1,4 @@
 import * as Yup from "yup";
-import { useState } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useFormik, Form, FormikProvider } from "formik";
 import { Icon } from "@iconify/react";
@@ -16,20 +15,42 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
+import { useAlert } from "react-alert";
+//--------------------------------------------------
+import { useState, useRef, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { clearErrors, login } from "src/actions/userAction";
 
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
+  //getting the value from the textfield
+  //creating a refernce for TextField Component
+  const EmailRef = useRef("");
+  const PasswordRef = useRef("");
+  // console.log(EmailRef.current.value, PasswordRef.current.value);
+  const dispatch = useDispatch();
+  const alert = useAlert();
 
+  // ----------------------------------------------------------------------
+  const { loading, error } = useSelector((state) => state.user);
+  // ----------------------------------------------------------------------
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+  }, [dispatch, error, alert, navigate]);
+
+  // --------------------------validation---------------------------------------
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
       .email("Email must be a valid email address")
       .required("Email is required"),
     password: Yup.string().required("Password is required"),
   });
-
+  // ----------------------------------------------------------------------
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -38,22 +59,22 @@ export default function LoginForm() {
     },
     validationSchema: LoginSchema,
     onSubmit: () => {
-      navigate("/dashboard/app", { replace: true });
+      dispatch(login(EmailRef.current.value, PasswordRef.current.value));
     },
   });
-
-  const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } =
-    formik;
-
+  const { errors, touched, values, handleSubmit, getFieldProps } = formik;
+  const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = () => {
     setShowPassword((show) => !show);
   };
+  // ----------------------------------------------------------------------
 
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
           <TextField
+            inputRef={EmailRef} //connecting inputRef property of TextField to the valueRef
             fullWidth
             autoComplete="username"
             type="email"
@@ -64,6 +85,7 @@ export default function LoginForm() {
           />
 
           <TextField
+            inputRef={PasswordRef} //connecting inputRef property of TextField to the valueRef
             fullWidth
             autoComplete="current-password"
             type={showPassword ? "text" : "password"}
@@ -109,7 +131,7 @@ export default function LoginForm() {
           size="large"
           type="submit"
           variant="contained"
-          loading={isSubmitting}
+          loading={loading}
         >
           Login
         </LoadingButton>

@@ -3,12 +3,15 @@ import { Link } from "react-router-dom";
 import Label from "src/components/Label";
 import { Typography } from "@mui/material";
 import "./UserProducts.css";
+import { useParams } from "react-router-dom";
 const UserProduct = ({ product }) => {
+  const { department } = useParams();
+
   return (
     <Fragment>
       <Link
         className="productCard"
-        to={`/dashboard/inventoryitem/${product._id}`}
+        to={`/dashboard/inventoryitem/${department}/${product._id}`}
       >
         <h4>{product.name}</h4>
         <Typography>Description: {product.description}</Typography>

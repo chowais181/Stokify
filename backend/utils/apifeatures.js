@@ -5,26 +5,10 @@ class ApiFeatures {
   }
 
   //searching feature of the products by name
-  // search() {
-  //   const keyword = this.queryStr.keyword
-  //     ? {
-  //         name: {
-  //           //search keyword for filters
-  //           $regex: this.queryStr.keyword,
-  //           $options: "i", //mean case insensitive
-  //         },
-  //       }
-  //     : {};
-
-  //   this.query = this.query.find({ ...keyword });
-  //   return this;
-  // }
-
-  //searching feature of the products by department
-  searchbyDept() {
+  search() {
     const keyword = this.queryStr.keyword
       ? {
-          department: {
+          name: {
             //search keyword for filters
             $regex: this.queryStr.keyword,
             $options: "i", //mean case insensitive
@@ -35,6 +19,24 @@ class ApiFeatures {
     this.query = this.query.find({ ...keyword });
     return this;
   }
+
+  // // searching feature of the products by department
+  // searchbyDept() {
+
+  //   const keyword1 = this.queryStr.keyword1
+  //     ? {
+  //         department: {
+  //           //search keyword for filters
+  //           $regex: this.queryStr.keyword1,
+  //           $options: "i", //mean case insensitive
+  //         },
+  //       }
+  //     : {};
+
+  //   this.query = this.query.find({ ...keyword1 });
+  //   return this;
+  // }
+
   //basically we make the copy of this.queryStr bcz this is object and
   //we can't use it without so we get it with refernece
   //so we use spread syntax allows an iterable such as an array expression
@@ -60,6 +62,7 @@ class ApiFeatures {
 
     return this;
   }
+
   pagination(resultPerPage) {
     const currentPage = Number(this.queryStr.page) || 1;
 

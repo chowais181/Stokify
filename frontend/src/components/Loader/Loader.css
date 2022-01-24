@@ -8,13 +8,13 @@
 }
 
 .loading > div {
-  width: 5vmax;
-  height: 5vmax;
+  width: 10vmax;
+  height: 10vmax;
   border-bottom: 5px solid rgba(212, 95, 0, 0.979);
 
   border-radius: 50%;
 
-  animation: loadingRotate 800ms linear infinite;
+  animation: loadingRotate 8 00ms linear infinite;
 }
 
 @keyframes loadingRotate {
