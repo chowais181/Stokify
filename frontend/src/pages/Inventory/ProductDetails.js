@@ -13,6 +13,8 @@ import { clearErrors, getProductDetails } from "../../actions/productAction";
 import { useParams } from "react-router-dom";
 import "./productDetails.css";
 import { useNavigate } from "react-router-dom";
+import { addItemsToCart } from "../../actions/cartAction";
+
 const ProductDetails = () => {
   //Use the useParams hook to access the id match param
   //getting theid wich we are selecting in inventory
@@ -58,7 +60,7 @@ const ProductDetails = () => {
   };
 
   const addToCartHandler = () => {
-    // dispatch(addItemsToCart(match.params.id, quantity));
+    dispatch(addItemsToCart(id, quantity));
     alert.success("Item Added To Cart");
   };
 
@@ -69,6 +71,7 @@ const ProductDetails = () => {
       ) : (
         <Fragment>
           <Page title="Products: Product Detail | Stokify">
+           
             <Container>
               <Stack
                 direction="row"

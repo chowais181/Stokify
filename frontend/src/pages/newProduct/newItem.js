@@ -66,9 +66,9 @@ export default function ProductForm() {
       dispatch(
         createProduct(
           nameRef.current.value,
-          stockRef.current.value,
           descriptionRef.current.value,
           priceRef.current.value,
+          stockRef.current.value,
           uom.value,
           cat.value
         )

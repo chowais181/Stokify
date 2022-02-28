@@ -5,10 +5,10 @@ import Page from "../components/Page";
 import {
   AppNewUsers,
   AppItemOrders,
-  AppOrderTimeline,
+  // AppOrderTimeline,
   TotalProducts,
   TotalProductsByCategory,
-  AppWebsiteVisits,
+  // AppWebsiteVisits,
 } from "../components/_dashboard/app";
 
 // ----------------------------------------------------------------------

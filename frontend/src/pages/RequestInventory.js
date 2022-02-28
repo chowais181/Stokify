@@ -8,7 +8,7 @@ import { Button, Container, Stack, Typography } from "@mui/material";
 // components
 import Page from "../components/Page";
 import { useState } from "react";
-import { ProductCartWidget } from "src/components/_dashboard/products";
+
 const optionsDept = [
   { value: "IT", label: "IT" },
   { value: "furniture", label: "Furniture" },
@@ -32,7 +32,7 @@ export default function RequestInventory() {
 
   return (
     <Page title="Dashboard: Purchases | Stokify">
-      <ProductCartWidget />
+      
       <Container>
         <Stack
           direction="row"

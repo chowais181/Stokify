@@ -62,7 +62,7 @@ export const getProductDetails = (id) => async (dispatch) => {
 
 // Create Product admin
 export const createProduct =
-  (name, stock, desc, price, uom, cat) => async (dispatch) => {
+  (name, desc, price, Stock, uom, category) => async (dispatch) => {
     try {
       dispatch({ type: NEW_PRODUCT_REQUEST });
 
@@ -74,11 +74,11 @@ export const createProduct =
         `/api/v1/admin/product/new`,
         {
           name,
-          stock,
           desc,
           price,
+          Stock,
           uom,
-          cat,
+          category,
         },
         config
       );

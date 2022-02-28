@@ -3,8 +3,9 @@ import shoppingCartFill from "@iconify/icons-eva/shopping-cart-fill";
 // material
 import { styled } from "@mui/material/styles";
 import { Badge } from "@mui/material";
-
+import { Link as RouterLink } from "react-router-dom";
 // ----------------------------------------------------------------------
+import { useSelector } from "react-redux";
 
 const RootStyle = styled("div")(({ theme }) => ({
   zIndex: 999,
@@ -30,9 +31,18 @@ const RootStyle = styled("div")(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function CartWidget() {
+  const { cartItems } = useSelector((state) => state.cart);
+
   return (
     <RootStyle>
-      <Badge showZero badgeContent={0} color="error" max={99}>
+      <Badge
+        showZero
+        badgeContent={cartItems.length}
+        color="error"
+        max={99}
+        component={RouterLink}
+        to="/dashboard/inventoryitems/:department/cart"
+      >
         <Icon icon={shoppingCartFill} width={24} height={24} />
       </Badge>
     </RootStyle>

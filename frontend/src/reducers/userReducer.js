@@ -177,6 +177,7 @@ export const profileReducer = (state = {}, action) => {
   }
 };
 
+//////////////////forgot password //////////////////////
 export const forgotPasswordReducer = (state = {}, action) => {
   switch (action.type) {
     case FORGOT_PASSWORD_REQUEST:

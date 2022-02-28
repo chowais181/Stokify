@@ -1,7 +1,7 @@
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // material
 import { styled } from "@mui/material/styles";
-import { Card, Stack, Link, Container, Typography } from "@mui/material";
+import { Card, Stack, Container, Typography } from "@mui/material";
 // layouts
 import AuthLayout from "../layouts/AuthLayout";
 // components
@@ -58,17 +58,7 @@ export default function Login() {
 
   return (
     <RootStyle title="Login | Stokify">
-      <AuthLayout>
-        {/* Don’t have an account? &nbsp;
-        <Link
-          underline="none"
-          variant="subtitle2"
-          component={RouterLink}
-          to="/register"
-        >
-          Get started
-        </Link> */}
-      </AuthLayout>
+      <AuthLayout></AuthLayout>
 
       <MHidden width="mdDown">
         <SectionStyle>
@@ -91,15 +81,6 @@ export default function Login() {
           </Stack>
 
           <LoginForm />
-
-          <MHidden width="smUp">
-            <Typography variant="body2" align="center" sx={{ mt: 3 }}>
-              Don’t have an account?&nbsp;
-              <Link variant="subtitle2" component={RouterLink} to="register">
-                Get started
-              </Link>
-            </Typography>
-          </MHidden>
         </ContentStyle>
       </Container>
     </RootStyle>

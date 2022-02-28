@@ -1,7 +1,7 @@
-import React, { Fragment, useEffect } from "react";
+import React, { useEffect } from "react";
 import Loader from "../Loader/Loader";
 import { Link } from "react-router-dom";
-import { Button, Card, Container, Stack, Typography } from "@mui/material";
+import { Card, Container, Typography } from "@mui/material";
 import "./Profile.css";
 import Page from "../Page";
 const Profile = ({ history }) => {
@@ -24,7 +24,7 @@ const Profile = ({ history }) => {
             <div className="profileContainer">
               <div>
                 <img src={"../Profile.png"} alt={userInfo["name"]} />
-                <Link to="/me/update">Edit Profile</Link>
+                <Link to="/#">My Profile</Link>
               </div>
               <div>
                 <div>
@@ -47,7 +47,7 @@ const Profile = ({ history }) => {
 
                 <div>
                   <Link to="/orders">My Orders</Link>
-                  <Link to="/password/update">Change Password</Link>
+                  <Link to="/dashboard/password/update">Change Password</Link>
                 </div>
               </div>
             </div>

@@ -1,10 +1,9 @@
 import React, { useEffect, Fragment } from "react";
-import { Icon } from "@iconify/react";
-import plusFill from "@iconify/icons-eva/plus-fill";
-import { Link as RouterLink } from "react-router-dom";
+// import { Icon } from "@iconify/react";
+
 import "./Inventory.css";
 // material
-import { Button, Container, Stack, Typography, Card } from "@mui/material";
+import { Container, Stack, Typography, Card } from "@mui/material";
 // components
 import Page from "../../components/Page";
 import UserProduct from "./UserProducts";
@@ -15,6 +14,7 @@ import SearchNotFound from "../../components/SearchNotFound";
 import { useAlert } from "react-alert";
 import { useParams } from "react-router-dom";
 import SearchToolBar from "./SearchToolBar";
+import { ProductCartWidget } from "src/components/_dashboard/products";
 //
 const Inventory = () => {
   const alert = useAlert();
@@ -42,7 +42,7 @@ const Inventory = () => {
         <Loader />
       ) : (
         <Page title="Dashboard: Inventory | Stokify">
-        
+          <ProductCartWidget />
           <Container>
             <Stack
               direction="row"
@@ -53,14 +53,6 @@ const Inventory = () => {
               <Typography variant="h4" gutterBottom>
                 Available Inventory
               </Typography>
-              <Button
-                variant="contained"
-                component={RouterLink}
-                to="/dashboard/requestinventory"
-                startIcon={<Icon icon={plusFill} />}
-              >
-                New Order
-              </Button>
             </Stack>
 
             <Card>

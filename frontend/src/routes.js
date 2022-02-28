@@ -19,6 +19,10 @@ import Order from "./pages/Orders";
 // import { Route, Redirect } from "react-router";
 import RequestInventory from "./pages/RequestInventory";
 import Profile from "./components/user/Profile";
+import UpdatePassword from "./components/user/UpdatePassword";
+import ForgotPassword from "./components/user/ForgotPassword";
+import Cart from "./pages/Inventory/Cart/Cart";
+
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -37,6 +41,7 @@ export default function Router() {
         { path: "newproduct", element: <NewProduct /> },
 
         { path: "profile", element: <Profile /> },
+        { path: "password/update", element: <UpdatePassword /> },
 
         { path: "requestinventory", element: <RequestInventory /> },
 
@@ -44,6 +49,7 @@ export default function Router() {
         { path: "inventoryitem/:department/:id", element: <ProductDetails /> },
         { path: "inventoryitems/:department", element: <Inventory /> },
         { path: "inventoryitems/:department/:name", element: <Inventory /> },
+        { path: "inventoryitems/:department/cart", element: <Cart /> },
       ],
     },
     {
@@ -52,6 +58,7 @@ export default function Router() {
       children: [
         { path: "login", element: <Login /> },
         // { path: ":register", element: <Register /> },
+        { path: "password/forgot", element: <ForgotPassword /> },
         { path: "404", element: <NotFound /> },
         { path: "/", element: <Navigate to="/dashboard/app" /> },
         { path: "*", element: <Navigate to="/404" /> },
