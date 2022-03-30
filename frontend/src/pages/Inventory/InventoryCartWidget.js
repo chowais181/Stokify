@@ -6,7 +6,7 @@ import { Badge } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 // ----------------------------------------------------------------------
 import { useSelector } from "react-redux";
-
+import { useParams } from "react-router-dom";
 const RootStyle = styled("div")(({ theme }) => ({
   zIndex: 999,
   right: 0,
@@ -30,9 +30,9 @@ const RootStyle = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function CartWidget() {
+export default function InventoryCartWidget() {
   const { cartItems } = useSelector((state) => state.cart);
-
+  const { department } = useParams();
   return (
     <RootStyle>
       <Badge
@@ -41,7 +41,7 @@ export default function CartWidget() {
         color="error"
         max={99}
         component={RouterLink}
-        to="/dashboard/inventoryitems/:department/cart"
+        to={`/dashboard/requestinventory/inventoryitems/${department}/cart`}
       >
         <Icon icon={shoppingCartFill} width={24} height={24} />
       </Badge>

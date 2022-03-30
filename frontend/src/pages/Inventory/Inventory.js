@@ -20,8 +20,11 @@ const Inventory = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
   const { loading, products, error } = useSelector((state) => state.products);
+  let isProductNotFound = 0;
+  if (loading === false) {
+    isProductNotFound = products.length === 0;
+  }
 
-  const isProductNotFound = products.length === 0;
   //getting the keyword wich we are using in search
   // the useParam fetch the name from the url
 

@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+// import { useSelector } from "react-redux";
 import { Icon } from "@iconify/react";
 import menu2Fill from "@iconify/icons-eva/menu-2-fill";
 // material
@@ -11,7 +12,8 @@ import Searchbar from "./Searchbar";
 import AccountPopover from "./AccountPopover";
 import AddPopover from "./AddPopover";
 import NotificationsPopover from "./NotificationsPopover";
-
+import PurchasesPopover from "./PurchasesPopover";
+import InventoryCartPopover from "./InventoryCartPopover";
 // ----------------------------------------------------------------------
 
 const DRAWER_WIDTH = 280;
@@ -43,6 +45,8 @@ DashboardNavbar.propTypes = {
 };
 
 export default function DashboardNavbar({ onOpenSidebar }) {
+  // const { user, loading } = useSelector((state) => state.user);
+
   return (
     <RootStyle>
       <ToolbarStyle>
@@ -63,6 +67,10 @@ export default function DashboardNavbar({ onOpenSidebar }) {
           alignItems="center"
           spacing={{ xs: 0.5, sm: 1.5 }}
         >
+          {/* {loading === false && user.role === "Admin" && <AddPopover />}
+          {loading === false && user.role === "Staff" && <PurchasesPopover />} */}
+          <InventoryCartPopover />
+          <PurchasesPopover />
           <AddPopover />
           <NotificationsPopover />
           <AccountPopover />

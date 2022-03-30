@@ -10,11 +10,13 @@ import Scrollbar from "../../components/Scrollbar";
 import NavSection from "../../components/NavSection";
 import { MHidden } from "../../components/@material-extend";
 //
-import sidebarConfig from "./SidebarConfig";
+import React from "react";
 
 // ----------------------------------------------------------------------
 
 const DRAWER_WIDTH = 230;
+
+
 
 const RootStyle = styled("div")(({ theme }) => ({
   [theme.breakpoints.up("lg")]: {
@@ -37,6 +39,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
     if (isOpenSidebar) {
       onCloseSidebar();
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
@@ -56,8 +59,9 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
           <Logo />
         </Box>
       </Box>
+      
 
-      <NavSection navConfig={sidebarConfig} />
+      <NavSection />
 
       <Box sx={{ flexGrow: 1 }} />
     </Scrollbar>

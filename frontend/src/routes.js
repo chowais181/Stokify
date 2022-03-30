@@ -22,6 +22,9 @@ import Profile from "./components/user/Profile";
 import UpdatePassword from "./components/user/UpdatePassword";
 import ForgotPassword from "./components/user/ForgotPassword";
 import Cart from "./pages/Inventory/Cart/Cart";
+import Checkout from "./pages/Inventory/Cart/Vendor/CheckoutSteps";
+import Shipping from "./pages/Inventory/Cart/Vendor/Shipping";
+import ConfirmOrder from "./pages/Inventory/Cart/Vendor/ConfirmOrder";
 
 // ----------------------------------------------------------------------
 
@@ -45,11 +48,35 @@ export default function Router() {
 
         { path: "requestinventory", element: <RequestInventory /> },
 
-        { path: "inventoryitems", element: <Inventory /> },
-        { path: "inventoryitem/:department/:id", element: <ProductDetails /> },
-        { path: "inventoryitems/:department", element: <Inventory /> },
-        { path: "inventoryitems/:department/:name", element: <Inventory /> },
-        { path: "inventoryitems/:department/cart", element: <Cart /> },
+        { path: "requestinventory/inventoryitems", element: <Inventory /> },
+        {
+          path: "requestinventory/inventoryitem/:department/:id",
+          element: <ProductDetails />,
+        },
+        {
+          path: "requestinventory/inventoryitems/:department",
+          element: <Inventory />,
+        },
+        {
+          path: "requestinventory/inventoryitems/:department/:name",
+          element: <Inventory />,
+        },
+        {
+          path: "requestinventory/inventoryitems/:department/cart",
+          element: <Cart />,
+        },
+        {
+          path: "requestinventory/inventoryitems/checkout",
+          element: <Checkout />,
+        },
+        {
+          path: "shipping",
+          element: <Shipping />,
+        },
+        {
+          path: "order/confirm",
+          element: <ConfirmOrder />,
+        },
       ],
     },
     {

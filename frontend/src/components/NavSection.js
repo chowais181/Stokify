@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState} from "react";
 import PropTypes from "prop-types";
-import { Icon } from "@iconify/react";
+
 import {
   NavLink as RouterLink,
   matchPath,
@@ -18,16 +18,18 @@ import {
   ListItemIcon,
   ListItemButton,
 } from "@mui/material";
+import { useSelector } from "react-redux";
+// -------------------------icon -----------------------------------------
+
+import { Icon } from "@iconify/react";
+import pieChart2Fill from "@iconify/icons-eva/pie-chart-2-fill";
+import alertTriangleFill from "@iconify/icons-eva/alert-triangle-fill";
 
 // ----------------------------------------------------------------------
 
-// const sidebarConfig = [
-//   {
-//     title: "dashboard",
-//     path: "/dashboard/app",
-//     icon: getIcon(pieChart2Fill),
-//   }
-// ];
+const getIcon = (name) => <Icon icon={name} width={22} height={22} />;
+
+//
 
 //sidebar menu color when not active
 const ListItemStyle = styled((props) => (
@@ -177,7 +179,76 @@ NavSection.propTypes = {
   navConfig: PropTypes.array,
 };
 
+const sidebarConfig0 = [
+  {
+    title: "loading",
+    path: "/dashboard/app",
+    icon: getIcon(pieChart2Fill),
+  },
+];
+
+const sidebarConfigManager = [
+  {
+    title: "Manager",
+    path: "/dashboard/app",
+    icon: getIcon(pieChart2Fill),
+  },
+];
+
+const sidebarConfigAdmin = [
+  {
+    title: "dashboard",
+    path: "/dashboard/app",
+    icon: getIcon(pieChart2Fill),
+  },
+
+  {
+    title: "products",
+    path: "/dashboard/products",
+    icon: getIcon("ic:baseline-production-quantity-limits"),
+  },
+  {
+    title: "inventory",
+    path: "/dashboard/requestinventory",
+    icon: getIcon("vaadin:stock"),
+  },
+  {
+    title: "orders",
+    path: "/dashboard/orders",
+    icon: getIcon("carbon:order-details"),
+  },
+  {
+    title: "users",
+    path: "/dashboard/user",
+    icon: getIcon("fe:users"),
+  },
+  {
+    title: "shipping",
+    path: "/dashboard/shipping",
+    icon: getIcon("fa-solid:shipping-fast"),
+  },
+  {
+    title: "Not found",
+    path: "/404",
+    icon: getIcon(alertTriangleFill),
+  },
+];
+
 export default function NavSection({ navConfig, ...other }) {
+  const { user } = useSelector((state) => state.user);
+
+  let side = sidebarConfig0;
+
+  if (user) {
+    
+    if (user.role === "Admin") {
+      side = sidebarConfigAdmin;
+    }
+    if (user.role === "Staff") {
+      side = sidebarConfigManager;
+    }
+  }
+
   const { pathname } = useLocation();
   const match = (path) =>
     path ? !!matchPath({ path, end: false }, pathname) : false;
@@ -185,7 +256,7 @@ export default function NavSection({ navConfig, ...other }) {
   return (
     <Box {...other}>
       <List disablePadding>
-        {navConfig.map((item) => (
+        {side.map((item) => (
           <NavItem key={item.title} item={item} active={match} />
         ))}
       </List>

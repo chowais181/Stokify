@@ -36,7 +36,7 @@ export default function ProductForm() {
   const descriptionRef = useRef("");
   const [uom, setUOM] = useState(optionsUnit[0]);
   const [cat, setCAT] = useState(optionsDept[0]);
-  console.log(cat.value);
+
   const AddProductSchema = Yup.object().shape({
     name: Yup.string()
       .min(4, "Too Short!")
@@ -57,12 +57,11 @@ export default function ProductForm() {
   const formik = useFormik({
     initialValues: {
       name: "",
-      description: "",
       price: "",
-      category: "",
     },
     validationSchema: AddProductSchema,
     onSubmit: () => {
+      console.log(descriptionRef.current.value, uom.value, cat.value);
       dispatch(
         createProduct(
           nameRef.current.value,

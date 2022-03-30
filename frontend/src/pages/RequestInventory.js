@@ -25,14 +25,13 @@ export default function RequestInventory() {
     if (option.label != null) {
       // navigate to selected dept
       if (option.label.trim()) {
-        navigate(`/dashboard/inventoryitems/${option.value}`);
+        navigate(`/dashboard/requestinventory/inventoryitems/${option.value}`);
       }
     }
   };
 
   return (
     <Page title="Dashboard: Purchases | Stokify">
-      
       <Container>
         <Stack
           direction="row"

@@ -11,7 +11,7 @@ const UserProduct = ({ product }) => {
     <Fragment>
       <Link
         className="productCard"
-        to={`/dashboard/inventoryitem/${department}/${product._id}`}
+        to={`/dashboard/requestinventory/inventoryitem/${department}/${product._id}`}
       >
         <h4>{product.name}</h4>
         <Typography>Description: {product.description}</Typography>

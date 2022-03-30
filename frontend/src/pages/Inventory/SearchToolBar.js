@@ -45,9 +45,11 @@ const SearchToolBar = () => {
   const searchSubmitHandler = (e) => {
     e.preventDefault();
     if (name.trim()) {
-      navigate(`/dashboard/inventoryitems/${department}/${name}`);
+      navigate(
+        `/dashboard/requestinventory/inventoryitems/${department}/${name}`
+      );
     } else {
-      navigate(`/dashboard/inventoryitems/${department}`);
+      navigate(`/dashboard/requestinventory/inventoryitems/${department}`);
     }
   };
 

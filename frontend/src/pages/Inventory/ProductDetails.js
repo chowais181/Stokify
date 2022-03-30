@@ -15,7 +15,13 @@ import "./productDetails.css";
 import { useNavigate } from "react-router-dom";
 import { addItemsToCart } from "../../actions/cartAction";
 
+///////////---QR Code----///////////////
+import QRCode from "qrcode";
+
+/////////////////////////////
 const ProductDetails = () => {
+  const [src, setSrc] = useState("");
+
   //Use the useParams hook to access the id match param
   //getting theid wich we are selecting in inventory
   // the useParam fetch the id from the url
@@ -34,14 +40,41 @@ const ProductDetails = () => {
     (state) => state.productDetails
   );
 
+  /////fro QR code////////
+  var text = "hi";
+  if (loading === false) {
+    text =
+      "Product Name: " +
+      product.name +
+      "\nProduct ID: " +
+      id +
+      "\nProduct Description: " +
+      product.description +
+      "\nProduct Status: " +
+      product.status;
+  } else {
+    text =
+      "Product Name: " +
+      " " +
+      "\nProduct ID: " +
+      " " +
+      "\nProduct Description: " +
+      " " +
+      "\nProduct Status: " +
+      " ";
+  }
+
   useEffect(() => {
+    ////qr /////
+    QRCode.toDataURL(text).then(setSrc);
+
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
 
     dispatch(getProductDetails(id));
-  }, [dispatch, id, error, alert]);
+  }, [dispatch, id, error, alert, text]);
 
   const [quantity, setQuantity] = useState(1);
 
@@ -58,10 +91,24 @@ const ProductDetails = () => {
     const qty = quantity - 1;
     setQuantity(qty);
   };
+  const { cartItems } = useSelector((state) => state.cart);
 
   const addToCartHandler = () => {
-    dispatch(addItemsToCart(id, quantity));
-    alert.success("Item Added To Cart");
+    let dept = "";
+    if (cartItems.length > 0) {
+      dept = cartItems[0]["department"];
+      console.log(dept);
+      if (product.department === dept) {
+        dispatch(addItemsToCart(id, quantity));
+        alert.success("Item Added To Cart");
+      } else {
+        alert.error("Cannot Add! Only add from the same category");
+      }
+    }
+    if (cartItems.length === 0) {
+      dispatch(addItemsToCart(id, quantity));
+      alert.success("Item Added To Cart");
+    }
   };
 
   return (
@@ -71,7 +118,6 @@ const ProductDetails = () => {
       ) : (
         <Fragment>
           <Page title="Products: Product Detail | Stokify">
-           
             <Container>
               <Stack
                 direction="row"
@@ -88,13 +134,17 @@ const ProductDetails = () => {
                   <h2>{product.name}</h2>
                   <p>Product ID# {product._id}</p>
                 </div>
+                <div className="detailsBlock-1">
+                  <h2>Product QR code</h2>
+                  <img src={src} alt="qr code" />
+                </div>
 
                 <div className="detailsBlock-3">
                   {/* <h1>{`₹Rs: {product.price}`}</h1> */}
 
                   <div className="detailsBlock-3-1">
                     <div className="detailsBlock-3-1-1">
-                      <h3>Quantity</h3>
+                      <h2>Quantity</h2>
                       <br />
                       <button onClick={decreaseQuantity}>-</button>
                       <input type="number" value={quantity} />
