@@ -15,16 +15,22 @@ import NotFound from "./pages/Page404";
 import Purchases from "./pages/Purchases";
 import NewUser from "./pages/newUser/addUser";
 import NewProduct from "./pages/newProduct/newItem";
-import Order from "./pages/Orders";
+
 // import { Route, Redirect } from "react-router";
 import RequestInventory from "./pages/RequestInventory";
 import Profile from "./components/user/Profile";
 import UpdatePassword from "./components/user/UpdatePassword";
 import ForgotPassword from "./components/user/ForgotPassword";
 import Cart from "./pages/Inventory/Cart/Cart";
-import Checkout from "./pages/Inventory/Cart/Vendor/CheckoutSteps";
-import Shipping from "./pages/Inventory/Cart/Vendor/Shipping";
-import ConfirmOrder from "./pages/Inventory/Cart/Vendor/ConfirmOrder";
+import Checkout from "./pages/Inventory/Cart/VendorSteps/CheckoutSteps";
+import Shipping from "./pages/Inventory/Cart/VendorSteps/Shipping";
+import ConfirmOrder from "./pages/Inventory/Cart/VendorSteps/ConfirmOrder";
+import Payment from "./pages/Inventory/Cart/VendorSteps/Payment";
+import OrderSuccess from "./pages/Inventory/Cart/VendorSteps/OrderSuccess";
+import MyRequests from "./pages/Request Inventory/MyRequests";
+import GridView from "./pages/Request Inventory/MyRequests";
+import ReqInventoryDetail from "./pages/Request Inventory/ReqInventoryDetail";
+import ConfirmRequest from "./pages/Request Inventory/ConfirmRequest"
 
 // ----------------------------------------------------------------------
 
@@ -36,18 +42,14 @@ export default function Router() {
       children: [
         { element: <Navigate to="/dashboard/app" replace /> },
         { path: "app", element: <DashboardApp /> },
-        { path: "orders", element: <Order /> },
         { path: "purchases", element: <Purchases /> },
         { path: "user", element: <User /> },
         { path: "newuser", element: <NewUser /> },
         { path: "products", element: <Products /> },
         { path: "newproduct", element: <NewProduct /> },
-
         { path: "profile", element: <Profile /> },
         { path: "password/update", element: <UpdatePassword /> },
-
         { path: "requestinventory", element: <RequestInventory /> },
-
         { path: "requestinventory/inventoryitems", element: <Inventory /> },
         {
           path: "requestinventory/inventoryitem/:department/:id",
@@ -66,16 +68,37 @@ export default function Router() {
           element: <Cart />,
         },
         {
-          path: "requestinventory/inventoryitems/checkout",
-          element: <Checkout />,
+          path: "requestinventory/inventoryitems/confirmrequest",
+          element: <ConfirmRequest />,
         },
         {
           path: "shipping",
           element: <Shipping />,
         },
         {
-          path: "order/confirm",
+          path: "shipping/order/confirm",
           element: <ConfirmOrder />,
+        },
+        {
+          path: "shipping/order/confirm/process/payment",
+          element: <Payment />,
+        },
+        {
+          path: "success",
+          element: <OrderSuccess />,
+        },
+        {
+          path: "requests",
+          element: <MyRequests />,
+        },
+
+        {
+          path: "requests/:id",
+          element: <ReqInventoryDetail />,
+        },
+        {
+          path: "gridview",
+          element: <GridView />,
         },
       ],
     },

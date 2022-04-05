@@ -12,6 +12,13 @@ import {
   forgotPasswordReducer,
 } from "./reducers/userReducer";
 import { cartReducer } from "./reducers/cartReducer";
+import {
+  createReqInventoryReducer,
+  myRequestsReducer,
+  allRequestReducer,
+  requestDetailsReducer,
+  reqInventoryReducer,
+} from "./reducers/reqInventoryReducer";
 
 const reducer = combineReducers({
   newProduct: newProductReducer,
@@ -21,6 +28,11 @@ const reducer = combineReducers({
   profile: profileReducer,
   forgotPassword: forgotPasswordReducer,
   cart: cartReducer,
+  newReqInventory: createReqInventoryReducer,
+  myRequests: myRequestsReducer,
+  reqInventory: reqInventoryReducer,
+  allRequest: allRequestReducer,
+  reqInventoryDetails: requestDetailsReducer,
 });
 const userInfoFromStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo"))

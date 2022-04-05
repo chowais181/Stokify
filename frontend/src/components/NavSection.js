@@ -1,4 +1,4 @@
-import { useState} from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 
 import {
@@ -213,8 +213,8 @@ const sidebarConfigAdmin = [
     icon: getIcon("vaadin:stock"),
   },
   {
-    title: "orders",
-    path: "/dashboard/orders",
+    title: "requests",
+    path: "/dashboard/requests",
     icon: getIcon("carbon:order-details"),
   },
   {
@@ -225,6 +225,11 @@ const sidebarConfigAdmin = [
   {
     title: "shipping",
     path: "/dashboard/shipping",
+    icon: getIcon("fa-solid:shipping-fast"),
+  },
+  {
+    title: "grid view",
+    path: "/dashboard/gridview",
     icon: getIcon("fa-solid:shipping-fast"),
   },
   {
@@ -240,7 +245,6 @@ export default function NavSection({ navConfig, ...other }) {
   let side = sidebarConfig0;
 
   if (user) {
-    
     if (user.role === "Admin") {
       side = sidebarConfigAdmin;
     }

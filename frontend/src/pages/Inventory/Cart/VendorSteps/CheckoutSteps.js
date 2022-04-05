@@ -9,6 +9,7 @@ const CheckoutSteps = ({ activeStep }) => {
   const steps = [
     {
       label: <Typography>Shipping Details</Typography>,
+      to:"/dashboard/shipping",
       icon: <LocalShippingIcon />,
     },
     {
@@ -40,6 +41,7 @@ const CheckoutSteps = ({ activeStep }) => {
               }}
               icon={item.icon}
             >
+              
               {item.label}
             </StepLabel>
           </Step>

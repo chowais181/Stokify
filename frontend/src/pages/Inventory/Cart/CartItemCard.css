@@ -23,10 +23,14 @@
   color: rgba(24, 24, 24, 0.815);
 }
 
+.CartItemCard > div > h4 {
+  font: 100 2vmax "Roboto";
+}
+
 .CartItemCard > div > p {
   color: tomato;
   padding: 2px;
-  font: 100 1.8vmax "Roboto";
+  font: 100 1.2vmax "Roboto";
   cursor: pointer;
 }
 

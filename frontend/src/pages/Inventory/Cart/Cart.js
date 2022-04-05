@@ -8,7 +8,7 @@ import {
 } from "../../../actions/cartAction";
 import { Typography, Input } from "@material-ui/core";
 import RemoveShoppingCartIcon from "@material-ui/icons/RemoveShoppingCart";
-import { Link ,useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Cart = ({ history }) => {
   const dispatch = useDispatch();
@@ -36,7 +36,7 @@ const Cart = ({ history }) => {
   };
 
   const checkoutHandler = () => {
-    navigate("/dashboard/requestinventory/inventoryitems/checkout");
+    navigate("/dashboard/requestinventory/inventoryitems/confirmrequest");
   };
 
   return (
@@ -67,7 +67,7 @@ const Cart = ({ history }) => {
                     >
                       -
                     </button>
-                    <Input type="number" value={item.quantity} readOnly />
+                    <h3> {item.quantity}</h3>
 
                     <button
                       onClick={() =>
