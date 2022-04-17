@@ -20,7 +20,10 @@ import { loadStripe } from "@stripe/stripe-js";
 
 export default function App() {
   const navigate = useNavigate();
-  const [stripeApiKey, setStripeApiKey] = useState("");
+  const [stripeApiKey, setStripeApiKey] = useState(
+    "pk_test_51KiyJVDWF4zRUS5Ci614ejyt9Kd2JnBKV4ktGkOwbkpBgxO4MfkQ8K3KWpkg7AlmIfwg41fYijjGgc9aJlo2VAiz004WALV7Mv"
+  );
+
   async function getStripeApiKey() {
     const { data } = await axios.get("/api/v1/stripeapikey");
     setStripeApiKey(data.stripeApiKey);

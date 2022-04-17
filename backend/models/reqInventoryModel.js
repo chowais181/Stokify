@@ -17,7 +17,6 @@ const reqInventorySchema = new mongoose.Schema({
       },
       itemDescription: {
         type: String,
-        required: true,
       },
       quantity: {
         type: Number,

@@ -124,7 +124,17 @@
   transition: 0.5s;
   font: 400 1vmax "Roboto";
 }
-
+.btnPro {
+  background-color: tomato;
+  color: white;
+  width: 100%;
+  padding: 1vmax;
+  border: none;
+  margin: auto;
+  cursor: pointer;
+  transition: 0.5s;
+  font: 400 1vmax "Roboto";
+}
 .orderSummary > button:hover {
   background-color: rgb(192, 71, 50);
 }

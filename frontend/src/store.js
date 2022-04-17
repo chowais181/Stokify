@@ -3,10 +3,11 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import {
   productDetailsReducer,
-  productReducer,
+  productsReducer,
   newProductReducer,
 } from "./reducers/productReducer";
 import {
+  allUsersReducer,
   userReducer,
   profileReducer,
   forgotPasswordReducer,
@@ -20,11 +21,20 @@ import {
   reqInventoryReducer,
 } from "./reducers/reqInventoryReducer";
 
+import {
+  allOrdersReducer,
+  myOrdersReducer,
+  newOrderReducer,
+  orderDetailsReducer,
+  orderReducer,
+} from "./reducers/orderReducer";
+
 const reducer = combineReducers({
   newProduct: newProductReducer,
-  products: productReducer,
+  products: productsReducer,
   productDetails: productDetailsReducer,
   user: userReducer,
+  allUsers: allUsersReducer,
   profile: profileReducer,
   forgotPassword: forgotPasswordReducer,
   cart: cartReducer,
@@ -33,6 +43,11 @@ const reducer = combineReducers({
   reqInventory: reqInventoryReducer,
   allRequest: allRequestReducer,
   reqInventoryDetails: requestDetailsReducer,
+  newOrder: newOrderReducer,
+  myOrders: myOrdersReducer,
+  orderDetails: orderDetailsReducer,
+  allOrders: allOrdersReducer,
+  order: orderReducer,
 });
 const userInfoFromStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo"))

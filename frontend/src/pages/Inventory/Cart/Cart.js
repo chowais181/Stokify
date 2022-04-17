@@ -6,7 +6,7 @@ import {
   addItemsToCart,
   removeItemsFromCart,
 } from "../../../actions/cartAction";
-import { Typography, Input } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import RemoveShoppingCartIcon from "@material-ui/icons/RemoveShoppingCart";
 import { Link, useNavigate } from "react-router-dom";
 

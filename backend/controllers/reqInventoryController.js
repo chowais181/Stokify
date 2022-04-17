@@ -1,8 +1,9 @@
 const ReqInventory = require("../models/reqInventoryModel");
 const ErrorHander = require("../utils/errorhander");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
-//create req inventory
+const Product = require("../models/productModel");
 
+//create req inventory
 exports.createReqInventory = catchAsyncErrors(async (req, res, next) => {
   const { orderItems } = req.body;
   const reqInventory = await ReqInventory.create({
@@ -19,7 +20,7 @@ exports.createReqInventory = catchAsyncErrors(async (req, res, next) => {
 exports.getSingleRequest = catchAsyncErrors(async (req, res, next) => {
   const request = await ReqInventory.findById(req.params.id).populate(
     "user",
-    "name email"
+    "name email phoneNumber"
   );
 
   if (!request) {
@@ -61,17 +62,20 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
   }
 
   if (request.requestStatus === "Delivered") {
-    return next(new ErrorHander("You have already delivered this order", 400));
+    return next(
+      new ErrorHander("You have already delivered this inventory request", 400)
+    );
   }
 
-  if (req.body.status === "Shipped") {
+  // if (req.body.requestStatus === "Accepted") {
+
+  // }
+  request.requestStatus = req.body.requestStatus;
+
+  if (req.body.requestStatus === "Delivered") {
     request.orderItems.forEach(async (o) => {
       await updateStock(o.product, o.quantity);
     });
-  }
-  request.requestStatus = req.body.status;
-
-  if (req.body.status === "Delivered") {
     request.deliveredAt = Date.now();
   }
 

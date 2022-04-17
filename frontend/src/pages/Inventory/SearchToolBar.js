@@ -1,6 +1,7 @@
 import { Icon } from "@iconify/react";
 import searchFill from "@iconify/icons-eva/search-fill";
 import { useState } from "react";
+// import Inventory from "./Inventory";
 // material
 import { styled } from "@mui/material/styles";
 import {
@@ -41,6 +42,7 @@ const SearchToolBar = () => {
   const { department } = useParams();
   const [name, setKeyword] = useState("");
 
+  // <Inventory set={name} />;
   const navigate = useNavigate();
   const searchSubmitHandler = (e) => {
     e.preventDefault();

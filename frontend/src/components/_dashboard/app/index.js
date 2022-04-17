@@ -1,7 +1,9 @@
 export { default as TotalProductsByCategory } from "./TotalProductsByCategory";
-export { default as AppItemOrders } from "./AppItemOrders";
-
-export { default as AppNewUsers } from "./AppNewUsers";
+export { default as AppItemOrders } from "./TotalRequest";
+export { default as TotalAmount } from "./TotalAmount";
+export { default as AppNewUsers } from "./TotalUsers";
 export { default as AppOrderTimeline } from "./AppOrderTimeline";
 export { default as TotalProducts } from "./TotalProducts";
 export { default as AppWebsiteVisits } from "./AppWebsiteVisits";
+export { default as ChartTotalAmount } from "./ChartTotalAmount";
+export { default as DoughnutStockChart } from "./DoughnutStockChart";

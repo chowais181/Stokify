@@ -11,7 +11,7 @@ import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, createProduct } from "src/actions/productAction";
 import { useAlert } from "react-alert";
-import { NEW_PRODUCT_RESET } from "../../constants/productConstants";
+import { NEW_PRODUCT_RESET } from "../../../../constants/productConstants";
 //-------------------------------------------
 const optionsUnit = [
   { value: "piece", label: "Piece" },
@@ -74,7 +74,7 @@ export default function ProductForm() {
       );
     },
   });
-
+  const { errors, touched, handleSubmit, getFieldProps, resetForm } = formik;
   // ----------------------------------------------------------------------
   useEffect(() => {
     if (error) {
@@ -85,11 +85,10 @@ export default function ProductForm() {
       alert.show(
         <div style={{ color: "green" }}>Product added successfully!</div>
       );
+      resetForm();
       dispatch({ type: NEW_PRODUCT_RESET });
     }
-  }, [dispatch, error, alert, success]);
-
-  const { errors, touched, handleSubmit, getFieldProps } = formik;
+  }, [dispatch, error, alert, success, resetForm]);
 
   return (
     <Container maxWidth="xs">

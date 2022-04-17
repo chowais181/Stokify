@@ -4,7 +4,7 @@ import { Container, Typography } from "@mui/material";
 
 // components
 
-import { RegisterForm } from "../../components/authentication/register";
+import { RegisterForm } from "../../../../components/authentication/register";
 import { Stack } from "@mui/material";
 const ContentStyle = styled("div")(({ theme }) => ({
   maxWidth: 480,

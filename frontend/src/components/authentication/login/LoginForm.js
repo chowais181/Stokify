@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Link as RouterLink} from "react-router-dom";
 import { useFormik, Form, FormikProvider } from "formik";
 import { Icon } from "@iconify/react";
 import eyeFill from "@iconify/icons-eva/eye-fill";
@@ -15,33 +15,27 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import { useAlert } from "react-alert";
+
 //--------------------------------------------------
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearErrors, login } from "src/actions/userAction";
+import {  login } from "src/actions/userAction";
 
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
-  const navigate = useNavigate();
+
   //getting the value from the textfield
   //creating a refernce for TextField Component
   const EmailRef = useRef("");
   const PasswordRef = useRef("");
   // console.log(EmailRef.current.value, PasswordRef.current.value);
   const dispatch = useDispatch();
-  const alert = useAlert();
+
 
   // ----------------------------------------------------------------------
-  const { loading, error } = useSelector((state) => state.user);
+  const { loading} = useSelector((state) => state.user);
   // ----------------------------------------------------------------------
-  useEffect(() => {
-    if (error) {
-      alert.error(error);
-      dispatch(clearErrors());
-    }
-  }, [dispatch, error, alert, navigate]);
 
   // --------------------------validation---------------------------------------
   const LoginSchema = Yup.object().shape({

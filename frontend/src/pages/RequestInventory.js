@@ -31,7 +31,7 @@ export default function RequestInventory() {
   };
 
   return (
-    <Page title="Dashboard: Purchases | Stokify">
+    <Page title="Dashboard: Request Inventory | Stokify">
       <Container>
         <Stack
           direction="row"

@@ -204,7 +204,7 @@ const sidebarConfigAdmin = [
 
   {
     title: "products",
-    path: "/dashboard/products",
+    path: "/dashboard/admin/products",
     icon: getIcon("ic:baseline-production-quantity-limits"),
   },
   {
@@ -215,6 +215,11 @@ const sidebarConfigAdmin = [
   {
     title: "requests",
     path: "/dashboard/requests",
+    icon: getIcon("carbon:order-details"),
+  },
+  {
+    title: "orders",
+    path: "/dashboard/orders",
     icon: getIcon("carbon:order-details"),
   },
   {

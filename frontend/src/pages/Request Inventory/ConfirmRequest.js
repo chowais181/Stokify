@@ -1,22 +1,59 @@
-import React, { Fragment, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { Fragment, useRef, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Page from "../../components/Page";
 import "./ConfirmRequest.css";
 import { Link, useNavigate } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 import Loader from "../../components/Loader/Loader";
+import emailjs from "@emailjs/browser";
+import {
+  createReqInventory,
+  clearErrors,
+} from "../../actions/reqInventoryAction";
+import { useAlert } from "react-alert";
 const ConfirmRequest = ({ history }) => {
   let TotalQuantity = 0;
-
+  const form = useRef();
+  const dispatch = useDispatch();
+  const alert = useAlert();
   const navigate = useNavigate();
   const { cartItems } = useSelector((state) => state.cart);
   const { user, loading } = useSelector((state) => state.user);
-
-  const proceedToPayment = () => {
-    // sessionStorage.setItem("requestInfo", JSON.stringify(data));
-    navigate("/dashboard/success");
+  const { error } = useSelector((state) => state.newReqInventory);
+  let dept = " ";
+  dept = cartItems && cartItems[0].department;
+  const order = {
+    department: dept,
+    orderItems: cartItems,
   };
 
+  const proceed = (e) => {
+    e.preventDefault();
+    dispatch(createReqInventory(order));
+    // emailjs
+    //   .sendForm(
+    //     "service_546uk9a",
+    //     "template_bjifoua",
+    //     form.current,
+    //     "YMs3ef2fvu8QUd8nC"
+    //   )
+    //   .then(
+    //     (result) => {
+    //       console.log(result.text);
+    //     },
+    //     (error) => {
+    //       console.log(error.text);
+    //     }
+    //   );
+
+    navigate("/dashboard/requestinventory/success");
+  };
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+  }, [dispatch, error, alert]);
   return (
     <Fragment>
       {loading ? (
@@ -70,7 +107,7 @@ const ConfirmRequest = ({ history }) => {
             {/*  */}
             <div>
               <div className="orderSummary">
-                <Typography> Summery</Typography>
+                <Typography> Summary</Typography>
                 <div>
                   <div>
                     <p>Total Items:</p>
@@ -91,10 +128,32 @@ const ConfirmRequest = ({ history }) => {
                     <b> Click to Proceed the Request!</b>
                   </p>
                 </div>
-
-                <button onClick={proceedToPayment}>
-                  <b>Proceed </b>
-                </button>
+                <form ref={form} onClick={proceed}>
+                  <input
+                    type="hidden"
+                    name="user_name"
+                    value={user && user.name}
+                  />
+                  <input
+                    type="hidden"
+                    name="user_email"
+                    value={user && user.email}
+                  />
+                  <input
+                    type="hidden"
+                    name="message"
+                    value={`| User ID:${user && user._id}|\n | Name:${
+                      user && user.name
+                    }| \n| Contact No:${
+                      user && user.phoneNumber
+                    } \n| Requested Items:${
+                      cartItems && cartItems.length
+                    }\n | Total Quantity:${TotalQuantity}\n | To see the details click on this link: \n http://localhost:3000/dashboard/requests`}
+                  />
+                  <button className="btnPro">
+                    <b>Proceed </b>
+                  </button>
+                </form>
               </div>
             </div>
           </div>

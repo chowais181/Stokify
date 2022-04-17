@@ -107,9 +107,9 @@ export default function RegisterForm() {
             role.value
           )
         );
-        // if (success === true) {
-        //   formik.resetForm();
-        // }
+        if (success === true) {
+          formik.resetForm();
+        }
       }
     },
   });

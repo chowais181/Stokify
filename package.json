@@ -25,6 +25,7 @@
     "mongoose-intl-phone-number": "^1.1.1",
     "nodemailer": "^6.7.2",
     "nodemon": "^2.0.15",
+    "stripe": "^8.213.0",
     "transporter": "^0.0.1",
     "validator": "^13.7.0"
   }

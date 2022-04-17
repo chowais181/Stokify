@@ -35,21 +35,51 @@ const ChartWrapperStyle = styled("div")(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
+// const Categories = ["grocery", "IT", "furniture", "societies", "sports"];
+let CHART_DATA = [1, 1, 1, 1, 1];
 
-const CHART_DATA = [4344, 5435, 1443, 4443, 1223];
-const Categories = ["grocery", "IT", "furniture", "societies", "sports"];
-// let count = 0;
 export default function TotalProductsByCategory() {
+  let gro = 0,
+    it = 0,
+    fur = 0,
+    soc = 0,
+    spo = 0;
   const alert = useAlert();
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.products);
+  const { error, allProducts, loading } = useSelector(
+    (state) => state.products
+  );
+
+  allProducts &&
+    allProducts.forEach((item, index) => {
+      if (item.department === "grocery") {
+        gro++;
+      } else if (item.department === "IT") {
+        it++;
+      } else if (item.department === "furniture") {
+        fur++;
+      } else if (item.department === "societies") {
+        soc++;
+      } else if (item.department === "sports") {
+        spo++;
+      }
+    });
 
   useEffect(() => {
     if (error) {
       return alert.error(error);
     }
-    dispatch(getProduct(Categories[0]));
+
+    dispatch(getProduct());
   }, [dispatch, error, alert]);
+
+  if (loading === false) {
+    CHART_DATA[0] = gro;
+    CHART_DATA[1] = it;
+    CHART_DATA[2] = fur;
+    CHART_DATA[3] = soc;
+    CHART_DATA[4] = spo;
+  }
 
   const theme = useTheme();
 
@@ -80,7 +110,10 @@ export default function TotalProductsByCategory() {
 
   return (
     <Card>
-      <CardHeader title="Stock By Categories" />
+      <CardHeader
+        title="Stock By Categories"
+        subheader="Chart of Available Products of each category"
+      />
       <ChartWrapperStyle dir="ltr">
         <ReactApexChart
           type="pie"

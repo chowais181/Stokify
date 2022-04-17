@@ -17,7 +17,7 @@ import {
   INVENTORYORDER_DETAILS_REQUEST,
   INVENTORYORDER_DETAILS_SUCCESS,
   INVENTORYORDER_DETAILS_FAIL,
-  CLEAR_ERRORS,
+  CLEAR_ERRORS
 } from "../constants/reqInventoryConstants";
 
 import axios from "axios";

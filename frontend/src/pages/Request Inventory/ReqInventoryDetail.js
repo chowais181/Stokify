@@ -2,11 +2,12 @@ import React, { Fragment, useEffect } from "react";
 import "./ReqInventoryDetail.css";
 import { useSelector, useDispatch } from "react-redux";
 import Page from "../../components/Page";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 import {
   getRequestDetails,
   clearErrors,
+  updateRequest,
 } from "../../actions/reqInventoryAction";
 import Loader from "../../components/Loader/Loader";
 import { useAlert } from "react-alert";
@@ -25,8 +26,8 @@ const ReqInventoryDetail = () => {
       alert.error(error);
       dispatch(clearErrors());
     }
-
     dispatch(getRequestDetails(id));
+    dispatch(updateRequest(id, "Accepted"));
   }, [dispatch, alert, error, id]);
   return (
     <Fragment>
@@ -38,9 +39,9 @@ const ReqInventoryDetail = () => {
           <div className="orderDetailsPage">
             <div className="orderDetailsContainer">
               <Typography component="h1">
-                Order #{order && order._id}
+                Request ID #{order && order._id}
               </Typography>
-              <Typography>Shipping Info</Typography>
+              <Typography>User Info</Typography>
               <div className="orderDetailsContainerBox">
                 <div>
                   <p>Name:</p>
@@ -48,53 +49,24 @@ const ReqInventoryDetail = () => {
                 </div>
                 <div>
                   <p>Phone:</p>
-                  <span>
-                    {order.shippingInfo && order.shippingInfo.phoneNo}
-                  </span>
+                  <span>{order.user && order.user.phoneNumber}</span>
                 </div>
-                <div>
-                  <p>Address:</p>
-                  <span>
-                    {order.shippingInfo &&
-                      `${order.shippingInfo.address}, ${order.shippingInfo.city}, ${order.shippingInfo.state}, ${order.shippingInfo.pinCode}, ${order.shippingInfo.country}`}
-                  </span>
-                </div>
+                <div></div>
               </div>
-              <Typography>Payment</Typography>
+
+              <Typography>Request Status</Typography>
               <div className="orderDetailsContainerBox">
                 <div>
                   <p
                     className={
-                      order.paymentInfo &&
-                      order.paymentInfo.status === "succeeded"
+                      order &&
+                      order.requestStatus &&
+                      order.requestStatus === "Accepted"
                         ? "greenColor"
                         : "redColor"
                     }
                   >
-                    {order.paymentInfo &&
-                    order.paymentInfo.status === "succeeded"
-                      ? "PAID"
-                      : "NOT PAID"}
-                  </p>
-                </div>
-
-                <div>
-                  <p>Amount:</p>
-                  <span>{order.totalPrice && order.totalPrice}</span>
-                </div>
-              </div>
-
-              <Typography>Order Status</Typography>
-              <div className="orderDetailsContainerBox">
-                <div>
-                  <p
-                    className={
-                      order.orderStatus && order.orderStatus === "Delivered"
-                        ? "greenColor"
-                        : "redColor"
-                    }
-                  >
-                    {order.orderStatus && order.orderStatus}
+                    {order && order.requestStatus}
                   </p>
                 </div>
               </div>
@@ -105,9 +77,10 @@ const ReqInventoryDetail = () => {
               <div className="orderDetailsCartItemsContainer">
                 {order.orderItems &&
                   order.orderItems.map((item) => (
-                    <div key={item.product}>
-                      {item.name}
-                      <span>{item.quantity}</span>
+                    <div key={item.name}>
+                      <p>{item.name} = </p>
+
+                      <p>{item.quantity}</p>
                     </div>
                   ))}
               </div>

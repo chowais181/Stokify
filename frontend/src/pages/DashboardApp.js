@@ -4,6 +4,7 @@ import { Box, Grid, Container, Typography } from "@mui/material";
 import Page from "../components/Page";
 import {
   AppNewUsers,
+  TotalAmount,
   AppItemOrders,
   // AppOrderTimeline,
   TotalProducts,
@@ -21,6 +22,9 @@ export default function DashboardApp() {
           <Typography variant="h4">Hi, Welcome back</Typography>
         </Box>
         <Grid container spacing={3}>
+          <Grid item xs={12} md={8} lg={6}>
+            <TotalAmount />
+          </Grid>
           <Grid item xs={12} sm={6} md={3}>
             <TotalProducts />
           </Grid>

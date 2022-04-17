@@ -9,8 +9,7 @@ const RequestInventorySuccess = () => {
     <div className="orderSuccess">
       <CheckCircleIcon />
       <Typography>
-              Your Request is Forwarded! {" "}
-              <span>Wait for response</span>
+        Your Request is Forwarded! <span>Wait for response</span>
       </Typography>
       <Link to="/dashboard/requests">View Inventory Requests </Link>
     </div>

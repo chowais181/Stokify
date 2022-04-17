@@ -75,7 +75,7 @@ const ConfirmOrder = ({ history }) => {
                           {item.name}
                         </Link>{" "}
                         <span>
-                          {item.quantity} X Rp: {item.price} ={" "}
+                          {item.quantity} X Rs: {item.price} ={" "}
                           <b>{item.price * item.quantity}</b>
                         </span>
                       </div>
@@ -106,7 +106,7 @@ const ConfirmOrder = ({ history }) => {
                   <p>
                     <b>Total:</b>
                   </p>
-                  <span>Rp: {totalPrice}</span>
+                  <span>Rs: {totalPrice}</span>
                 </div>
 
                 <button onClick={proceedToPayment}>Proceed To Payment</button>

@@ -1,11 +1,11 @@
 import { useAlert } from "react-alert";
 import { Icon } from "@iconify/react";
-import { Button } from "@mui/material";
+import { Button, Card } from "@mui/material";
 // import { addItemsToCart } from "../../actions/cartAction";
 import Loader from "src/components/Loader/Loader";
 import React, { Fragment, useEffect, useState } from "react";
 // material
-import { Container, Stack, Typography } from "@mui/material";
+import { Container, Stack, Typography, CardContent } from "@mui/material";
 // components
 import Page from "src/components/Page";
 import { useSelector, useDispatch } from "react-redux";
@@ -43,25 +43,14 @@ const ProductDetails = () => {
   /////fro QR code////////
   var text = "hi";
   if (loading === false) {
-    text =
-      "Product Name: " +
-      product.name +
-      "\nProduct ID: " +
-      id +
-      "\nProduct Description: " +
-      product.description +
-      "\nProduct Status: " +
-      product.status;
-  } else {
-    text =
-      "Product Name: " +
-      " " +
-      "\nProduct ID: " +
-      " " +
-      "\nProduct Description: " +
-      " " +
-      "\nProduct Status: " +
-      " ";
+    text = `Product Name: 
+      ${product && product.name} 
+      \nProduct ID: 
+      ${id} 
+      \nProduct Description: 
+      ${product && product.description}
+      \nProduct Status: 
+      ${product && product.status}`;
   }
 
   useEffect(() => {
@@ -129,56 +118,82 @@ const ProductDetails = () => {
                   Product Details
                 </Typography>
               </Stack>
-              <div>
-                <div className="detailsBlock-1">
-                  <h2>{product.name}</h2>
-                  <p>Product ID# {product._id}</p>
-                </div>
-                <div className="detailsBlock-1">
-                  <h2>Product QR code</h2>
-                  <img src={src} alt="qr code" />
-                </div>
+              <Card variant="filled" sx={{ minWidth: 275 }}>
+                <CardContent>
+                  <div>
+                    <div className="detailsBlock-1">
+                      <h2 style={{ font: "500 1.9vmax Roboto" }}>
+                        {product && product.name}
+                      </h2>
+                      <p>Product ID# {product && product._id}</p>
+                    </div>
+                    <div className="detailsBlock-1">
+                      <h2 style={{ font: "500 1.9vmax Roboto" }}>
+                        Product QR code
+                      </h2>
+                      <img src={src} alt="qr code" />
+                    </div>
 
-                <div className="detailsBlock-3">
-                  {/* <h1>{`₹Rs: {product.price}`}</h1> */}
-
-                  <div className="detailsBlock-3-1">
-                    <div className="detailsBlock-3-1-1">
-                      <h2>Quantity</h2>
+                    <div className="detailsBlock-3">
+                      {/* <h1>{`₹Rs: {product.price}`}</h1> */}
+                      <div className="detailsBlock-3-1">
+                        <div className="detailsBlock-3-1-1">
+                          <h2 style={{ font: "500 1.9vmax Roboto" }}>
+                            Quantity
+                          </h2>
+                          <br />
+                          <button onClick={decreaseQuantity}>-</button>
+                          <input type="number" value={quantity} />
+                          <button onClick={increaseQuantity}>+</button>
+                        </div>
+                      </div>
                       <br />
-                      <button onClick={decreaseQuantity}>-</button>
-                      <input type="number" value={quantity} />
-                      <button onClick={increaseQuantity}>+</button>
+                      <Button
+                        variant="contained"
+                        color="info"
+                        disabled={product && product.Stock < 1 ? true : false}
+                        onClick={addToCartHandler}
+                      >
+                        <Icon icon="bx:bxs-cart-download" width="30" /> Add to
+                        Cart
+                      </Button>
+                      <br /> <br />
+                      <h2 style={{ font: "500 1.9vmax Roboto" }}>
+                        Status :
+                        <b
+                          className={
+                            product && product.Stock < 1
+                              ? "redColor"
+                              : "greenColor"
+                          }
+                        >
+                          {product && product.Stock < 1
+                            ? "OutOfStock"
+                            : "InStock"}
+                        </b>
+                      </h2>
+                    </div>
+                    <br />
+                    <div className="detailsBlock-4">
+                      <h2 style={{ font: "500 1.9vmax Roboto" }}>
+                        Description :
+                        <h2 style={{ font: "300 1.3vmax Roboto" }}>
+                          {product && product.description}
+                        </h2>
+                      </h2>
                     </div>
                   </div>
                   <br />
                   <Button
                     variant="contained"
-                    color="info"
-                    disabled={product.Stock < 1 ? true : false}
-                    onClick={addToCartHandler}
+                    onClick={MoveBack}
+                    color="warning"
                   >
-                    <Icon icon="bx:bxs-cart-download" width="30" /> Add to Cart
+                    <Icon icon="akar-icons:arrow-back" width="40" />
+                    Back to list
                   </Button>
-                  <p>
-                    Status :
-                    <b
-                      className={product.Stock < 1 ? "redColor" : "greenColor"}
-                    >
-                      {product.Stock < 1 ? "OutOfStock" : "InStock"}
-                    </b>
-                  </p>
-                </div>
-
-                <div className="detailsBlock-4">
-                  Description : {product.description}
-                </div>
-              </div>
-              <br />
-              <Button variant="contained" onClick={MoveBack} color="warning">
-                <Icon icon="akar-icons:arrow-back" width="40" />
-                Back to list
-              </Button>
+                </CardContent>
+              </Card>
             </Container>
           </Page>
         </Fragment>
