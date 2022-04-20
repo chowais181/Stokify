@@ -8,7 +8,7 @@ exports.createReqInventory = catchAsyncErrors(async (req, res, next) => {
   const { orderItems } = req.body;
   const reqInventory = await ReqInventory.create({
     orderItems,
-    user: req.user._id,
+    user: req.user,
   });
   res.status(201).json({
     success: true,
@@ -45,7 +45,10 @@ exports.myRequests = catchAsyncErrors(async (req, res, next) => {
 
 // get all Request-- Admin
 exports.getAllRequest = catchAsyncErrors(async (req, res, next) => {
-  const request = await ReqInventory.find();
+  const request = await ReqInventory.find().populate(
+    "user",
+    "name email phoneNumber role"
+  );
 
   res.status(200).json({
     success: true,
@@ -96,7 +99,7 @@ async function updateStock(id, quantity) {
 
 // delete Request -- Admin
 exports.deleteRequest = catchAsyncErrors(async (req, res, next) => {
-  const request = await Order.findById(req.params.id);
+  const request = await ReqInventory.findById(req.params.id);
 
   if (!request) {
     return next(new ErrorHander("Request not found with this Id", 404));

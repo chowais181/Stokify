@@ -28,7 +28,7 @@
 }
 
 .orderDetailsContainerBox > div > p {
-  font: 600 1.3vmax "Roboto";
+  font: 600 1.5vmax "Roboto";
   color: black;
 }
 .orderDetailsContainerBox > div > span {
@@ -56,7 +56,6 @@
 .orderDetailsCartItemsContainer > div > p {
   font: 400 1.5vmax "Roboto";
 }
-
 
 .orderDetailsCartItemsContainer > div > a {
   color: #575757;

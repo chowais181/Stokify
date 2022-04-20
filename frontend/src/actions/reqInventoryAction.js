@@ -17,7 +17,7 @@ import {
   INVENTORYORDER_DETAILS_REQUEST,
   INVENTORYORDER_DETAILS_SUCCESS,
   INVENTORYORDER_DETAILS_FAIL,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
 } from "../constants/reqInventoryConstants";
 
 import axios from "axios";
@@ -80,7 +80,7 @@ export const getAllRequest = () => async (dispatch) => {
 };
 
 // Update Order
-export const updateRequest = (id, order) => async (dispatch) => {
+export const updateRequest = (id, request) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_INVENTORYORDER_REQUEST });
 
@@ -91,7 +91,7 @@ export const updateRequest = (id, order) => async (dispatch) => {
     };
     const { data } = await axios.put(
       `/api/v1/admin/request/${id}`,
-      order,
+      request,
       config
     );
 

@@ -33,7 +33,7 @@ export const createReqInventoryReducer = (state = {}, action) => {
     case CREATE_INVENTORYORDER_SUCCESS:
       return {
         loading: false,
-        order: action.payload,
+        request: action.payload,
       };
 
     case CREATE_INVENTORYORDER_FAIL:
@@ -52,7 +52,7 @@ export const createReqInventoryReducer = (state = {}, action) => {
   }
 };
 
-export const myRequestsReducer = (state = { orders: [] }, action) => {
+export const myRequestsReducer = (state = { requests: [] }, action) => {
   switch (action.type) {
     case MY_INVENTORYORDERS_REQUEST:
       return {
@@ -62,7 +62,7 @@ export const myRequestsReducer = (state = { orders: [] }, action) => {
     case MY_INVENTORYORDERS_SUCCESS:
       return {
         loading: false,
-        orders: action.payload,
+        requests: action.payload,
       };
 
     case MY_INVENTORYORDERS_FAIL:
@@ -81,7 +81,7 @@ export const myRequestsReducer = (state = { orders: [] }, action) => {
   }
 };
 
-export const allRequestReducer = (state = { orders: [] }, action) => {
+export const allRequestReducer = (state = { requests: [] }, action) => {
   switch (action.type) {
     case ALL_INVENTORYORDERS_REQUEST:
       return {
@@ -91,7 +91,7 @@ export const allRequestReducer = (state = { orders: [] }, action) => {
     case ALL_INVENTORYORDERS_SUCCESS:
       return {
         loading: false,
-        orders: action.payload,
+        requests: action.payload,
       };
 
     case ALL_INVENTORYORDERS_FAIL:
@@ -162,7 +162,7 @@ export const reqInventoryReducer = (state = {}, action) => {
   }
 };
 
-export const requestDetailsReducer = (state = { order: {} }, action) => {
+export const requestDetailsReducer = (state = { request: {} }, action) => {
   switch (action.type) {
     case INVENTORYORDER_DETAILS_REQUEST:
       return {
@@ -172,7 +172,7 @@ export const requestDetailsReducer = (state = { order: {} }, action) => {
     case INVENTORYORDER_DETAILS_SUCCESS:
       return {
         loading: false,
-        order: action.payload,
+        request: action.payload,
       };
 
     case INVENTORYORDER_DETAILS_FAIL:

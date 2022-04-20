@@ -35,6 +35,12 @@ const OrderDetails = ({ match }) => {
               <Typography component="h1">
                 Order #{order && order._id}
               </Typography>
+              <Typography>Date</Typography>
+              <div className="orderDetailsContainerBox">
+                <div>
+                  <p>{order && order.createdAt}</p>
+                </div>
+              </div>
               <Typography>Shipping Info</Typography>
               <div className="orderDetailsContainerBox">
                 <div>

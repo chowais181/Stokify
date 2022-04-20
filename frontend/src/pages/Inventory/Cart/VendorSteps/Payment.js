@@ -4,6 +4,7 @@ import CheckoutSteps from "./CheckoutSteps";
 import { useSelector, useDispatch } from "react-redux";
 import Page from "../../../../components/Page";
 import { Typography } from "@material-ui/core";
+import { LoadingButton } from "@mui/lab";
 import { useAlert } from "react-alert";
 import {
   CardNumberElement,
@@ -31,8 +32,7 @@ const Payment = ({ history }) => {
 
   const { shippingInfo, cartItems } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.user);
-  const { error } = useSelector((state) => state.newOrder);
-
+  const { error, loading } = useSelector((state) => state.newOrder);
   const paymentData = {
     amount: Math.round(orderInfo.totalPrice * 100),
   };
@@ -134,13 +134,17 @@ const Payment = ({ history }) => {
             <VpnKeyIcon />
             <CardCvcElement className="paymentInput" />
           </div>
-
-          <input
+          <LoadingButton
+            fullWidth
+            variant="contained"
+            size="large"
             type="submit"
-            value={`Pay - PKR ${orderInfo && orderInfo.totalPrice}`}
+            loading={loading}
             ref={payBtn}
             className="paymentFormBtn"
-          />
+          >
+            Pay - PKR: {orderInfo && orderInfo.totalPrice}
+          </LoadingButton>
         </form>
       </div>
     </Fragment>

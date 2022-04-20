@@ -11,7 +11,7 @@ const RequestSuccess = () => {
 
       <Typography>Your Request has been sent successfully! </Typography>
       <h3>Wait for response!You will notify soon</h3>
-      <Link to="/dashboard/requests">View your Requests</Link>
+      <Link to="/dashboard/myrequests">View your Requests</Link>
     </div>
   );
 };

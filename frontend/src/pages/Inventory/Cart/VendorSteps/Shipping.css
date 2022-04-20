@@ -50,7 +50,7 @@
   box-sizing: border-box;
   border: 1px solid rgba(0, 0, 0, 0.267);
   border-radius: 4px;
-  font: 300 0.9vmax cursive;
+  /* font: 300 0.9vmax cursive; */
   outline: none;
 }
 
@@ -75,7 +75,7 @@
 }
 
 .shippingBtn:hover {
-  background-color: rgb(179, 66, 46);
+  background-color: rgb(145, 48, 3);
 }
 
 @media screen and (max-width: 600px) {
@@ -96,7 +96,7 @@
   .shippingForm > div > input,
   .shippingForm > div > select {
     padding: 5vw 10vw;
-    font: 300 4vw cursive;
+    /* font: 300 4vw cursive; */
   }
 
   .shippingForm > div > svg {

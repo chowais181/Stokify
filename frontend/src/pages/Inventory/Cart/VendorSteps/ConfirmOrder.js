@@ -51,11 +51,11 @@ const ConfirmOrder = ({ history }) => {
                 <div className="confirmshippingAreaBox">
                   <div>
                     <p>Name:</p>
-                    <span>{user.name}</span>
+                    <span>{user && user.name}</span>
                   </div>
                   <div>
                     <p>Phone:</p>
-                    <span>{shippingInfo.phoneNo}</span>
+                    <span>{shippingInfo && shippingInfo.phoneNo}</span>
                   </div>
                   <div>
                     <p>Address:</p>

@@ -1,6 +1,5 @@
 import { Fragment, useEffect } from "react";
 import * as React from "react";
-
 import { DataGrid } from "@mui/x-data-grid";
 import "./myRequests.css";
 import { useSelector, useDispatch } from "react-redux";
@@ -19,7 +18,7 @@ const MyRequests = () => {
 
   const alert = useAlert();
 
-  const { error, orders } = useSelector((state) => state.myRequests);
+  const { error, requests } = useSelector((state) => state.myRequests);
   const { user, loading } = useSelector((state) => state.user);
 
   const columns = [
@@ -37,7 +36,7 @@ const MyRequests = () => {
     },
     {
       field: "itemsQty",
-      headerName: "Items Qty",
+      headerName: "Total Products",
       type: "number",
       minWidth: 150,
       flex: 0.3,
@@ -63,7 +62,9 @@ const MyRequests = () => {
       sortable: false,
       renderCell: (params) => {
         return (
-          <Link to={`/dashboard/requests/${params.getValue(params.id, "id")}`}>
+          <Link
+            to={`/dashboard/myrequests/${params.getValue(params.id, "id")}`}
+          >
             <LaunchIcon />
           </Link>
         );
@@ -72,8 +73,8 @@ const MyRequests = () => {
   ];
   const rows = [];
 
-  orders &&
-    orders.reverse().map((item) => {
+  requests &&
+    requests.reverse().map((item) => {
       rows.push({
         itemsQty: item.orderItems.length,
         id: item._id,

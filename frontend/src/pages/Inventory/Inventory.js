@@ -23,7 +23,6 @@ import { useState } from "react";
 import { styled } from "@mui/material/styles";
 import { Box, OutlinedInput, InputAdornment } from "@mui/material";
 
-
 const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
   width: 240,
   transition: theme.transitions.create(["box-shadow", "width"], {
@@ -38,7 +37,6 @@ const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
 }));
 
 const Inventory = ({ search }) => {
-
   const alert = useAlert();
   const dispatch = useDispatch();
   const { loading, products, error } = useSelector((state) => state.products);

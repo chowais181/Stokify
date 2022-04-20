@@ -189,9 +189,33 @@ const sidebarConfig0 = [
 
 const sidebarConfigManager = [
   {
-    title: "Manager",
+    title: "dashboard",
     path: "/dashboard/app",
     icon: getIcon(pieChart2Fill),
+  },
+
+
+  {
+    title: "inventory",
+    path: "/dashboard/requestinventory",
+    icon: getIcon("vaadin:stock"),
+  },
+  {
+    title: "my requests",
+    path: "/dashboard/myrequests",
+    icon: getIcon("carbon:order-details"),
+  },
+  
+  
+  {
+    title: "About Us",
+    path: "/dashboard/gridview",
+    icon: getIcon("flat-color-icons:about"),
+  },
+  {
+    title: "Not found",
+    path: "/404",
+    icon: getIcon(alertTriangleFill),
   },
 ];
 
@@ -204,7 +228,7 @@ const sidebarConfigAdmin = [
 
   {
     title: "products",
-    path: "/dashboard/admin/products",
+    path: "/dashboard/products",
     icon: getIcon("ic:baseline-production-quantity-limits"),
   },
   {
@@ -213,13 +237,18 @@ const sidebarConfigAdmin = [
     icon: getIcon("vaadin:stock"),
   },
   {
-    title: "requests",
-    path: "/dashboard/requests",
+    title: "my requests",
+    path: "/dashboard/myrequests",
     icon: getIcon("carbon:order-details"),
   },
   {
-    title: "orders",
-    path: "/dashboard/orders",
+    title: "my orders",
+    path: "/dashboard/myorders",
+    icon: getIcon("carbon:order-details"),
+  },
+  {
+    title: "requests List",
+    path: "/dashboard/requestlist",
     icon: getIcon("carbon:order-details"),
   },
   {
@@ -253,9 +282,11 @@ export default function NavSection({ navConfig, ...other }) {
     if (user.role === "Admin") {
       side = sidebarConfigAdmin;
     }
-    if (user.role === "Staff") {
-      side = sidebarConfigManager;
-    }
+   else{
+ side = sidebarConfigManager;
+   }
+     
+    
   }
 
   const { pathname } = useLocation();

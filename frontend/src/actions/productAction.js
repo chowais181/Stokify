@@ -123,31 +123,38 @@ export const getAdminProduct = () => async (dispatch) => {
 };
 
 // Update Product
-export const updateProduct = (id, productData) => async (dispatch) => {
-  try {
-    dispatch({ type: UPDATE_PRODUCT_REQUEST });
+export const updateProduct =
+  (id, name, description, price, Stock) => async (dispatch) => {
+    try {
+      dispatch({ type: UPDATE_PRODUCT_REQUEST });
 
-    const config = {
-      headers: { "Content-Type": "application/json" },
-    };
+      const config = {
+        headers: { "Content-Type": "application/json" },
+      };
 
-    const { data } = await axios.put(
-      `/api/v1/admin/product/${id}`,
-      productData,
-      config
-    );
+      const { data } = await axios.put(
+        `/api/v1/admin/product/${id}`,
+        {
+          name,
+          description,
+          price,
+          Stock,
+        },
 
-    dispatch({
-      type: UPDATE_PRODUCT_SUCCESS,
-      payload: data.success,
-    });
-  } catch (error) {
-    dispatch({
-      type: UPDATE_PRODUCT_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+        config
+      );
+
+      dispatch({
+        type: UPDATE_PRODUCT_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: UPDATE_PRODUCT_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 // Delete Product
 export const deleteProduct = (id) => async (dispatch) => {

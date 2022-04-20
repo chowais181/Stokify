@@ -14,7 +14,7 @@ const RootStyle = styled(Card)(({ theme }) => ({
   textAlign: "center",
   padding: theme.spacing(5, 0),
   color: theme.palette.warning.lighter,
-  backgroundColor: "black",
+  backgroundColor: theme.palette.warning.darker,
 }));
 
 const IconWrapperStyle = styled("div")(({ theme }) => ({
@@ -34,26 +34,22 @@ const IconWrapperStyle = styled("div")(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-let totalAmount = 0;
-export default function TotalAmount() {
-  totalAmount = 0;
+
+export default function TotalOrder() {
   const dispatch = useDispatch();
   const { orders } = useSelector((state) => state.allOrders);
-  orders &&
-    orders.forEach((item) => {
-      totalAmount += item.totalPrice;
-    });
+  const TOTAL = orders && orders.length;
   useEffect(() => {
     dispatch(getAllOrders());
   }, [dispatch]);
   return (
     <RootStyle>
       <IconWrapperStyle>
-        <Icon icon="emojione:money-bag" width={24} height={24} />
+        <Icon icon="fa:cart-arrow-down" width={24} height={24} />
       </IconWrapperStyle>
-      <Typography variant="h3">{fShortenNumber(totalAmount)}</Typography>
+      <Typography variant="h3">{fShortenNumber(TOTAL)}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Total Amount
+        Total Orders
       </Typography>
     </RootStyle>
   );

@@ -11,6 +11,10 @@ import {
   clearErrors,
 } from "../../actions/reqInventoryAction";
 import { useAlert } from "react-alert";
+
+
+
+///////////////////////////////
 const ConfirmRequest = ({ history }) => {
   let TotalQuantity = 0;
   const form = useRef();
@@ -148,7 +152,7 @@ const ConfirmRequest = ({ history }) => {
                       user && user.phoneNumber
                     } \n| Requested Items:${
                       cartItems && cartItems.length
-                    }\n | Total Quantity:${TotalQuantity}\n | To see the details click on this link: \n http://localhost:3000/dashboard/requests`}
+                    }\n | Total Quantity:${TotalQuantity}\n | To see the details click on this link: \n http://localhost:3000/dashboard/requestlist`}
                   />
                   <button className="btnPro">
                     <b>Proceed </b>

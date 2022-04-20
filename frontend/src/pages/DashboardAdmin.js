@@ -5,8 +5,9 @@ import Page from "../components/Page";
 import {
   TotalAmount,
   AppNewUsers,
-  AppItemOrders,
   AppOrderTimeline,
+  TotalRequest,
+  TotalOrder,
   TotalProducts,
   TotalProductsByCategory,
   AppWebsiteVisits,
@@ -24,22 +25,25 @@ export default function DashboardAdmin() {
           <Typography variant="h4">Hi, Welcome back Admin</Typography>
         </Box>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={2.2}>
             <TotalAmount />
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={2.2}>
             <TotalProducts />
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={2.2}>
             <AppNewUsers />
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <AppItemOrders />
+          <Grid item xs={12} sm={6} md={2.2}>
+            <TotalRequest />
           </Grid>
-          <Grid item xs={12} md={4} lg={4.5}>
+          <Grid item xs={12} sm={6} md={2.2}>
+            <TotalOrder />
+          </Grid>
+          <Grid item xs={30} md={6} lg={4}>
             <DoughnutStockChart />
           </Grid>
-          <Grid item xs={12} md={4} lg={4}>
+          <Grid item xs={12} md={6} lg={6}>
             <TotalProductsByCategory />
           </Grid>
 

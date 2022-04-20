@@ -35,7 +35,7 @@ const MyOrders = () => {
     },
     {
       field: "itemsQty",
-      headerName: "Items Qty",
+      headerName: "Total Products",
       type: "number",
       minWidth: 150,
       flex: 0.3,
@@ -59,7 +59,7 @@ const MyOrders = () => {
       renderCell: (params) => {
         return (
           <Link
-            to={`/dashboard/orders/order/${params.getValue(params.id, "id")}`}
+            to={`/dashboard/myorders/order/${params.getValue(params.id, "id")}`}
           >
             <LaunchIcon />
           </Link>

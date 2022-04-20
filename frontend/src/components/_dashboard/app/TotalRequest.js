@@ -35,10 +35,10 @@ const IconWrapperStyle = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function AppItemOrders() {
+export default function TotalRequest() {
   const dispatch = useDispatch();
-  const { orders } = useSelector((state) => state.allRequest);
-  const TOTAL = orders && orders.length;
+  const { requests } = useSelector((state) => state.allRequest);
+  const TOTAL = requests && requests.length;
   useEffect(() => {
     dispatch(getAllRequest());
   }, [dispatch]);

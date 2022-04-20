@@ -1,20 +1,43 @@
 import React, { Fragment, useEffect } from "react";
 import "./ReqInventoryDetail.css";
+import { DataGrid } from "@mui/x-data-grid";
 import { useSelector, useDispatch } from "react-redux";
 import Page from "../../components/Page";
 import { useParams } from "react-router-dom";
-import { Typography } from "@material-ui/core";
+import { Typography, Grid } from "@mui/material";
+
 import {
   getRequestDetails,
   clearErrors,
-  updateRequest,
 } from "../../actions/reqInventoryAction";
 import Loader from "../../components/Loader/Loader";
 import { useAlert } from "react-alert";
+const columns = [
+  {
+    field: "id",
+    headerName: "#No",
+    minWidth: 50,
+    flex: 0.3,
+    backgroundColor: "lightgray",
+  },
+  {
+    field: "name",
+    headerName: "Product Name",
+    minWidth: 150,
+    flex: 0.5,
+    backgroundColor: "lightgray",
+  },
+  {
+    field: "qty",
+    headerName: "Quantity",
+    minWidth: 150,
+    flex: 0.5,
+  },
+];
 
 const ReqInventoryDetail = () => {
   const { id } = useParams();
-  const { order, error, loading } = useSelector(
+  const { request, error, loading } = useSelector(
     (state) => state.reqInventoryDetails
   );
 
@@ -27,8 +50,20 @@ const ReqInventoryDetail = () => {
       dispatch(clearErrors());
     }
     dispatch(getRequestDetails(id));
-    dispatch(updateRequest(id, "Accepted"));
   }, [dispatch, alert, error, id]);
+  const rows = [];
+  if (loading === false) {
+   request && request.orderItems &&
+      request.orderItems.map((item, index) => {
+        rows.push({
+          id: index + 1,
+          qty: item.quantity,
+          name: item.name,
+        });
+        return 1;
+      });
+  }
+
   return (
     <Fragment>
       {loading ? (
@@ -38,18 +73,18 @@ const ReqInventoryDetail = () => {
           <Page title="Request Inventory Details" />
           <div className="orderDetailsPage">
             <div className="orderDetailsContainer">
-              <Typography component="h1">
-                Request ID #{order && order._id}
+              <Typography color="primary">
+                Request ID #{request && request._id}
               </Typography>
               <Typography>User Info</Typography>
               <div className="orderDetailsContainerBox">
                 <div>
                   <p>Name:</p>
-                  <span>{order.user && order.user.name}</span>
+                  <span>{request && request.user && request.user.name}</span>
                 </div>
                 <div>
                   <p>Phone:</p>
-                  <span>{order.user && order.user.phoneNumber}</span>
+                  <span>{ request && request.user && request.user.phoneNumber}</span>
                 </div>
                 <div></div>
               </div>
@@ -59,31 +94,43 @@ const ReqInventoryDetail = () => {
                 <div>
                   <p
                     className={
-                      order &&
-                      order.requestStatus &&
-                      order.requestStatus === "Accepted"
+                      request &&
+                      request.requestStatus &&
+                      request.requestStatus === "Accepted"
                         ? "greenColor"
                         : "redColor"
                     }
                   >
-                    {order && order.requestStatus}
+                    {request && request.requestStatus}
                   </p>
                 </div>
               </div>
             </div>
 
             <div className="orderDetailsCartItems">
-              <Typography>Requested Items:</Typography>
-              <div className="orderDetailsCartItemsContainer">
-                {order.orderItems &&
-                  order.orderItems.map((item) => (
-                    <div key={item.name}>
-                      <p>{item.name} = </p>
-
-                      <p>{item.quantity}</p>
-                    </div>
-                  ))}
-              </div>
+              <Typography>Requested Items</Typography>
+              <br />
+              <Grid container spacing={3}>
+                <Grid item xs={8} sm={6}>
+                  <DataGrid
+                    backgroundColor="lightgray"
+                    rows={rows}
+                    columns={columns}
+                    pageSize={10}
+                    disableSelectionOnClick
+                    className="myOrdersTable"
+                    autoHeight
+                    sx={{
+                      boxShadow: 2,
+                      border: 2,
+                      borderColor: "secondary.light",
+                      "& .MuiDataGrid-cell:hover": {
+                        color: "info.main",
+                      },
+                    }}
+                  />
+                </Grid>
+              </Grid>
             </div>
           </div>
         </Fragment>

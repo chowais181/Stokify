@@ -35,11 +35,11 @@ AuthLayout.propTypes = {
 export default function AuthLayout({ children }) {
   return (
     <HeaderStyle>
-      <MHidden width="smDown">
-        <RouterLink to="/login">
-          <Logo />
-        </RouterLink>
-      </MHidden>
+      {/* <MHidden width="smDown"> */}
+      <RouterLink to="/login">
+        <Logo />
+      </RouterLink>
+      {/* </MHidden> */}
       <MHidden width="smDown">
         <Typography
           variant="body2"

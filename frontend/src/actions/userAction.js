@@ -53,6 +53,7 @@ export const login = (email, password) => async (dispatch) => {
     localStorage.setItem("userInfo", JSON.stringify(data.user));
     localStorage.setItem("isAuthenticated", true);
     dispatch({ type: LOGIN_SUCCESS, payload: data.user });
+
   } catch (error) {
     dispatch({ type: LOGIN_FAIL, payload: error.response.data.message });
   }
@@ -95,6 +96,7 @@ export const logout = () => async (dispatch) => {
     await axios.get(`/api/v1/logout`);
 
     dispatch({ type: LOGOUT_SUCCESS });
+    localStorage.setItem("cartItems", [JSON.stringify("")]);
   } catch (error) {
     dispatch({ type: LOGOUT_FAIL, payload: error.response.data.message });
   }

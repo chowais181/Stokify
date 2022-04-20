@@ -15,8 +15,8 @@ import { useAlert } from "react-alert";
 import CheckoutSteps from "./CheckoutSteps";
 import { useNavigate } from "react-router-dom";
 const Shipping = ({ history }) => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const alert = useAlert();
   const { shippingInfo } = useSelector((state) => state.cart);
 

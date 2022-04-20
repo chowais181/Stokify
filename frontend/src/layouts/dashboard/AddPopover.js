@@ -16,7 +16,7 @@ const MENU_OPTIONS = [
   {
     label: "Add Product",
     icon: "ic:baseline-production-quantity-limits",
-    linkTo: "/dashboard/newproduct",
+    linkTo: "/dashboard/products/newproduct",
   },
   {
     label: "Add User",

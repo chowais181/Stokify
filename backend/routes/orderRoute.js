@@ -18,11 +18,11 @@ router.route("/order/:id").get(isAuthenticatedUser, getSingleOrder);
 router.route("/orders/me").get(isAuthenticatedUser, myOrders);
 
 router
-  .route("/vendor/orders")
+  .route("/admin/orders")
   .get(isAuthenticatedUser, authorizeRoles("Admin"), getAllOrders);
 
 router
-  .route("/vendor/order/:id")
+  .route("/admin/order/:id")
   .put(isAuthenticatedUser, authorizeRoles("Admin"), updateOrder)
   .delete(isAuthenticatedUser, authorizeRoles("Admin"), deleteOrder);
 
