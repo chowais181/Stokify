@@ -5,12 +5,12 @@ import Page from "../components/Page";
 import {
   TotalAmount,
   AppNewUsers,
-  AppOrderTimeline,
+  // AppOrderTimeline,
   TotalRequest,
   TotalOrder,
   TotalProducts,
   TotalProductsByCategory,
-  AppWebsiteVisits,
+  // AppWebsiteVisits,
   ChartTotalAmount,
   DoughnutStockChart,
 } from "../components/_dashboard/app";
@@ -50,13 +50,13 @@ export default function DashboardAdmin() {
           <Grid item xs={12} md={6} lg={8}>
             <ChartTotalAmount />
           </Grid>
-          <Grid item xs={12} md={6} lg={8}>
+          {/* <Grid item xs={12} md={6} lg={8}>
             <AppWebsiteVisits />
           </Grid>
 
           <Grid item xs={12} md={6} lg={4}>
             <AppOrderTimeline />
-          </Grid>
+          </Grid> */}
         </Grid>
       </Container>
     </Page>

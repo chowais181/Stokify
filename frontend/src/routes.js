@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 // import Register from "./pages/Register";
 import DashboardApp from "./pages/DashboardApp";
 import DashboardAdmin from "./pages/DashboardAdmin";
+import About from "./pages/About"
 
 import ProductDetails from "./pages/Inventory/ProductDetails";
 
@@ -81,6 +82,7 @@ export default function Router() {
           path: "products/product/:id",
           element: isAdmin ? <UpdateProduct /> : <Navigate to="/" />,
         },
+         { path: "about", element: <About /> },
         { path: "purchases", element: <Purchases /> },
         { path: "user", element: <User /> },
         {

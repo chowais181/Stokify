@@ -42,7 +42,7 @@ const columns = [
     flex: 0.5,
   },
 ];
-let count=0;
+
 const ProcessRequest = () => {
    const form = useRef();
   const [status, setStatus] = useState("");
@@ -59,21 +59,21 @@ const ProcessRequest = () => {
   const alert = useAlert();
   const updateRequestSubmitHandler = (e) => {
     e.preventDefault();
-//  emailjs
-//       .sendForm(
-//         "service_546uk9a",
-//         "template_enc0b4x",
-//         form.current,
-//         "YMs3ef2fvu8QUd8nC"
-//       )
-//       .then(
-//         (result) => {
-//           console.log(result.text);
-//         },
-//         (error) => {
-//           console.log(error.text);
-//         }
-//       );
+ emailjs
+      .sendForm(
+        "service_546uk9a",
+        "template_enc0b4x",
+        form.current,
+        "YMs3ef2fvu8QUd8nC"
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
     const myForm = new FormData();
 
     myForm.set("requestStatus", status);
@@ -192,7 +192,7 @@ if (isUpdated) {
           </div>
           <div
             style={{
-              display: request && request.requestStatus === "Accepted" ? "block" : "block",
+              display: request && request.requestStatus === "Accepted" ? "none" : "block",
             }}
           >
             <Grid container spacing={3}>

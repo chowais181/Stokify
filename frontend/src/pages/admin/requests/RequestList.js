@@ -167,7 +167,7 @@ const RequestList = () => {
         (filteredProducts) =>
           filteredProducts.user.name.includes(name) ||
           filteredProducts.user.email.includes(name)
-      )
+      ).reverse()
       .map((item, index) => {
         rows.push({
           index: index + 1,

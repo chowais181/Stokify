@@ -5,9 +5,9 @@ const Product = require("../models/productModel");
 
 //create req inventory
 exports.createReqInventory = catchAsyncErrors(async (req, res, next) => {
-  const { orderItems } = req.body;
+  const { orderItems ,department} = req.body;
   const reqInventory = await ReqInventory.create({
-    orderItems,
+    orderItems,department,
     user: req.user,
   });
   res.status(201).json({

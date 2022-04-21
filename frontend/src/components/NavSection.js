@@ -209,8 +209,8 @@ const sidebarConfigManager = [
   
   {
     title: "About Us",
-    path: "/dashboard/gridview",
-    icon: getIcon("flat-color-icons:about"),
+    path: "/dashboard/about",
+    icon: getIcon("bi:info-circle"),
   },
   {
     title: "Not found",
@@ -236,11 +236,7 @@ const sidebarConfigAdmin = [
     path: "/dashboard/requestinventory",
     icon: getIcon("vaadin:stock"),
   },
-  {
-    title: "my requests",
-    path: "/dashboard/myrequests",
-    icon: getIcon("carbon:order-details"),
-  },
+ 
   {
     title: "my orders",
     path: "/dashboard/myorders",
@@ -261,10 +257,10 @@ const sidebarConfigAdmin = [
     path: "/dashboard/shipping",
     icon: getIcon("fa-solid:shipping-fast"),
   },
-  {
-    title: "grid view",
-    path: "/dashboard/gridview",
-    icon: getIcon("fa-solid:shipping-fast"),
+ {
+    title: "About Us",
+    path: "/dashboard/about",
+    icon: getIcon("bi:info-circle"),
   },
   {
     title: "Not found",

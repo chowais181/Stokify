@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Icon } from "@iconify/react";
 import menu2Fill from "@iconify/icons-eva/menu-2-fill";
 // material
@@ -45,7 +45,7 @@ DashboardNavbar.propTypes = {
 };
 
 export default function DashboardNavbar({ onOpenSidebar }) {
-  // const { user, loading } = useSelector((state) => state.user);
+  const { user, loading } = useSelector((state) => state.user);
 
   return (
     <RootStyle>
@@ -67,11 +67,11 @@ export default function DashboardNavbar({ onOpenSidebar }) {
           alignItems="center"
           spacing={{ xs: 0.5, sm: 1.5 }}
         >
-          {/* {loading === false && user.role === "Admin" && <AddPopover />}
-          {loading === false && user.role === "Staff" && <PurchasesPopover />} */}
+          {loading === false && user && user.role === "Admin" && <AddPopover />}
+          {loading === false &&user &&  user.role === "Admin" && <PurchasesPopover />}
           <InventoryCartPopover />
-          <PurchasesPopover />
-          <AddPopover />
+          {/* <PurchasesPopover />
+          <AddPopover /> */}
           <NotificationsPopover />
           <AccountPopover />
         </Stack>

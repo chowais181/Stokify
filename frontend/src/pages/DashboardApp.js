@@ -3,7 +3,7 @@ import { Box, Grid, Container, Typography } from "@mui/material";
 // components
 import Page from "../components/Page";
 import {
-MyRequests
+MyRequests,Approved,RequestOrderTimeline
 } from "../components/_dashboard/app";
 
 // ----------------------------------------------------------------------
@@ -19,7 +19,12 @@ export default function DashboardApp() {
           <Grid item xs={12} md={8} lg={6}>
             <MyRequests />
           </Grid>
-          
+          <Grid item xs={12} md={8} lg={6}>
+            <Approved />
+          </Grid>
+           <Grid item xs={12} md={8} lg={6}>
+            <RequestOrderTimeline />
+          </Grid>
         </Grid>
       </Container>
     </Page>

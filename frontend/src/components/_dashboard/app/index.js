@@ -9,3 +9,5 @@ export { default as AppWebsiteVisits } from "./AppWebsiteVisits";
 export { default as ChartTotalAmount } from "./ChartTotalAmount";
 export { default as DoughnutStockChart } from "./DoughnutStockChart";
 export { default as MyRequests } from "./user/MyRequests";
+export { default as Approved } from "./user/Approved";
+export { default as RequestOrderTimeline } from "./user/RequestOrderTimeline";

@@ -34,22 +34,24 @@ const ConfirmRequest = ({ history }) => {
   const proceed = (e) => {
     e.preventDefault();
     dispatch(createReqInventory(order));
-    // emailjs
-    //   .sendForm(
-    //     "service_546uk9a",
-    //     "template_bjifoua",
-    //     form.current,
-    //     "YMs3ef2fvu8QUd8nC"
-    //   )
-    //   .then(
-    //     (result) => {
-    //       console.log(result.text);
-    //     },
-    //     (error) => {
-    //       console.log(error.text);
-    //     }
-    //   );
 
+    ////////////////////////////////
+    emailjs
+      .sendForm(
+        "service_546uk9a",
+        "template_bjifoua",
+        form.current,
+        "YMs3ef2fvu8QUd8nC"
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+////////////////////////////////////
     navigate("/dashboard/requestinventory/success");
   };
   useEffect(() => {

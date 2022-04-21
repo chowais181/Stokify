@@ -15,16 +15,16 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-
+import { useAlert } from "react-alert";
 //--------------------------------------------------
-import { useState, useRef, } from "react";
+import { useState, useRef,useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {  login } from "src/actions/userAction";
+import {  login,clearErrors } from "src/actions/userAction";
 
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
-
+ const alert = useAlert();
   //getting the value from the textfield
   //creating a refernce for TextField Component
   const EmailRef = useRef("");
@@ -34,7 +34,7 @@ export default function LoginForm() {
 
 
   // ----------------------------------------------------------------------
-  const { loading} = useSelector((state) => state.user);
+  const { loading,error} = useSelector((state) => state.user);
   // ----------------------------------------------------------------------
 
   // --------------------------validation---------------------------------------
@@ -61,6 +61,19 @@ export default function LoginForm() {
   const handleShowPassword = () => {
     setShowPassword((show) => !show);
   };
+//............
+
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+   
+  }, [dispatch, error, alert, ]);
+
+
+
+
   // ----------------------------------------------------------------------
 
   return (
