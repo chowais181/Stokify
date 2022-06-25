@@ -53,29 +53,39 @@ export const login = (email, password) => async (dispatch) => {
     localStorage.setItem("userInfo", JSON.stringify(data.user));
     localStorage.setItem("isAuthenticated", true);
     dispatch({ type: LOGIN_SUCCESS, payload: data.user });
-
   } catch (error) {
     dispatch({ type: LOGIN_FAIL, payload: error.response.data.message });
   }
 };
 
 // Register
-export const register = (userData) => async (dispatch) => {
-  try {
-    dispatch({ type: REGISTER_USER_REQUEST });
+export const register =
+  (name, email, phoneNumber, password, role) => async (dispatch) => {
+    try {
+      dispatch({ type: REGISTER_USER_REQUEST });
 
-    const config = { headers: { "Content-Type": "multipart/form-data" } };
+      const config = { headers: { "Content-Type": "application/json" } };
 
-    const { data } = await axios.post(`/api/v1/register`, userData, config);
+      const { data } = await axios.post(
+        `/api/v1/admin/register`,
+        {
+          name,
+          email,
+          phoneNumber,
+          password,
+          role,
+        },
+        config
+      );
 
-    dispatch({ type: REGISTER_USER_SUCCESS, payload: data.user });
-  } catch (error) {
-    dispatch({
-      type: REGISTER_USER_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({ type: REGISTER_USER_SUCCESS, payload: data.user });
+    } catch (error) {
+      dispatch({
+        type: REGISTER_USER_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 // Load User
 export const loadUser = () => async (dispatch) => {
@@ -91,34 +101,42 @@ export const loadUser = () => async (dispatch) => {
 };
 
 // Logout User
-export const logout = () => async (dispatch,getState) => {
+export const logout = () => async (dispatch, getState) => {
   try {
     await axios.get(`/api/v1/logout`);
 
     dispatch({ type: LOGOUT_SUCCESS });
-localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems=[]));
+    localStorage.setItem(
+      "cartItems",
+      JSON.stringify((getState().cart.cartItems = []))
+    );
   } catch (error) {
     dispatch({ type: LOGOUT_FAIL, payload: error.response.data.message });
   }
 };
 
 // Update Profile
-export const updateProfile = (userData) => async (dispatch) => {
-  try {
-    dispatch({ type: UPDATE_PROFILE_REQUEST });
+export const updateProfile =
+  (name, email, phoneNumber, password, role) => async (dispatch) => {
+    try {
+      dispatch({ type: UPDATE_PROFILE_REQUEST });
 
-    const config = { headers: { "Content-Type": "multipart/form-data" } };
+      const config = { headers: { "Content-Type": "application/json" } };
 
-    const { data } = await axios.put(`/api/v1/me/update`, userData, config);
+      const { data } = await axios.put(
+        `/api/v1/me/update`,
+        { name, email, phoneNumber, password, role },
+        config
+      );
 
-    dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: data.success });
-  } catch (error) {
-    dispatch({
-      type: UPDATE_PROFILE_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: data.success });
+    } catch (error) {
+      dispatch({
+        type: UPDATE_PROFILE_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 // Update Password
 export const updatePassword = (passwords) => async (dispatch) => {
@@ -207,26 +225,33 @@ export const getUserDetails = (id) => async (dispatch) => {
 };
 
 // Update User
-export const updateUser = (id, userData) => async (dispatch) => {
-  try {
-    dispatch({ type: UPDATE_USER_REQUEST });
+export const updateUser =
+  (id, name, email, phoneNumber, role) => async (dispatch) => {
+    try {
+      dispatch({ type: UPDATE_USER_REQUEST });
 
-    const config = { headers: { "Content-Type": "application/json" } };
+      const config = { headers: { "Content-Type": "application/json" } };
 
-    const { data } = await axios.put(
-      `/api/v1/admin/user/${id}`,
-      userData,
-      config
-    );
+      const { data } = await axios.put(
+        `/api/v1/admin/user/${id}`,
+        {
+          name,
+          email,
+          phoneNumber,
+          role,
+        },
 
-    dispatch({ type: UPDATE_USER_SUCCESS, payload: data.success });
-  } catch (error) {
-    dispatch({
-      type: UPDATE_USER_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+        config
+      );
+
+      dispatch({ type: UPDATE_USER_SUCCESS, payload: data.success });
+    } catch (error) {
+      dispatch({
+        type: UPDATE_USER_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 // Delete User
 export const deleteUser = (id) => async (dispatch) => {

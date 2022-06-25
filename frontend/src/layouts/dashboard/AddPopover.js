@@ -21,7 +21,7 @@ const MENU_OPTIONS = [
   {
     label: "Add User",
     icon: "bi:person-plus",
-    linkTo: "/dashboard/newuser",
+    linkTo: "/dashboard/users/newuser",
   },
   {
     label: "Add Vendor",

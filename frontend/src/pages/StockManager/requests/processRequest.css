@@ -1,0 +1,27 @@
+.updateOrderForm {
+ margin-left: 70px;
+  background-color: white;
+}
+
+.updateOrderForm > div {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+.updateOrderForm > div > select {
+  padding: 1vmax 4vmax;
+  margin: 2rem 0;
+  width: 100%;
+  box-sizing: border-box;
+  border: 2px solid rgba(0, 0, 0, 0.267);
+  border-radius: 4px;
+  font: 400 3.9vmax;
+  outline: none;
+}
+
+.updateOrderForm > div > svg {
+  position: absolute;
+  transform: translateX(1vmax);
+  font-size: 1.8vmax;
+  color: rgba(0, 0, 0, 0.623);
+}

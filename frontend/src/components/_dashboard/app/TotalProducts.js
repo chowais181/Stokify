@@ -38,7 +38,7 @@ const IconWrapperStyle = styled("div")(({ theme }) => ({
 const StockInHand = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
-  const { productsCount, error } = useSelector((state) => state.products);
+  const { productsCount , error } = useSelector((state) => state.products);
 
   useEffect(() => {
     if (error) {

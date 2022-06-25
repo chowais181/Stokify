@@ -1,26 +1,29 @@
 import React, { Fragment, useEffect, useState } from "react";
-
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
 import { Icon } from "@iconify/react";
-
+import plusFill from "@iconify/icons-eva/plus-fill";
 import Page from "../../../components/Page";
-
+import { Link as RouterLink } from "react-router-dom";
 import { Stack, Button, Container, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useSelector, useDispatch } from "react-redux";
 import {
   clearErrors,
-  getAllRequest,
-  deleteRequest,
-} from "../../../actions/reqInventoryAction";
+  getAllUsers,
+  deleteUser,
+} from "../../../actions/userAction";
 import { Link } from "react-router-dom";
 import { useAlert } from "react-alert";
 
-import { DELETE_INVENTORYORDER_RESET } from "../../../constants/reqInventoryConstants";
+import { DELETE_USER_RESET } from "../../../constants/userConstants";
 import { styled } from "@mui/material/styles";
 import { Box, OutlinedInput, InputAdornment } from "@mui/material";
 import searchFill from "@iconify/icons-eva/search-fill";
 
-// ------------------------------------------------------------------------
 const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
   width: 240,
   transition: theme.transitions.create(["box-shadow", "width"], {
@@ -33,23 +36,20 @@ const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
     borderColor: `${theme.palette.grey[500_32]} !important`,
   },
 }));
-
-// ------------------------------------------------------------------------
-
-const RequestList = () => {
+const UserList = () => {
   const dispatch = useDispatch();
   const [name, setKeyword] = useState("");
 
   const alert = useAlert();
-  const { error, requests } = useSelector((state) => state.allRequest);
+  const { error, users } = useSelector((state) => state.allUsers);
 
   const { error: deleteError, isDeleted } = useSelector(
-    (state) => state.reqInventory
+    (state) => state.profile
   );
 
-  const deleteRequestHandler = (id) => {
-    if (window.confirm("Are you sure to delete this Request?")) {
-      dispatch(deleteRequest(id));
+  const deleteUserHandler = (id) => {
+    if (window.confirm("Are you sure to delete this User?")) {
+      dispatch(deleteUser(id));
     }
   };
 
@@ -65,58 +65,46 @@ const RequestList = () => {
     }
 
     if (isDeleted) {
-      alert.success("Request Deleted Successfully");
-      dispatch({ type: DELETE_INVENTORYORDER_RESET });
+      alert.success("User Deleted Successfully");
+      dispatch({ type: DELETE_USER_RESET });
     }
 
-    dispatch(getAllRequest());
+    dispatch(getAllUsers());
   }, [dispatch, alert, error, isDeleted, deleteError]);
 
   const columns = [
     { field: "index", headerName: "#No", minWidth: 100, flex: 0.5 },
-    { field: "id", headerName: "Inventory Request ID", minWidth: 300, flex: 1 },
+    { field: "id", headerName: "User ID", minWidth: 300, flex: 0.5 },
+
     {
-      field: "status",
-      headerName: "Status",
-      minWidth: 100,
-      flex: 0.5,
-      cellClassName: (params) => {
-        return params.getValue(params.id, "status") === "Accepted"
-          ? "greenColor"
-          : "redColor";
-      },
-    },
-    {
-      field: "username",
-      headerName: "Requested By",
+      field: "name",
+      headerName: "Name",
       minWidth: 150,
-      flex: 0.3,
+      flex: 1,
     },
+
     {
       field: "email",
-      headerName: "User Email",
-      minWidth: 250,
-      flex: 0.3,
+      headerName: "Email",
+      minWidth: 150,
+      flex: 0.5,
     },
     {
-      field: "itemsQty",
-      headerName: "Total Products",
+      field: "role",
+      headerName: "Role",
+      type: "number",
+      minWidth: 90,
+      flex: 0.5,
+    },
+
+    {
+      field: "phoneNumber",
+      headerName: "Phone Number",
       type: "number",
       minWidth: 150,
-      flex: 0.3,
-    },
-    {
-      field: "department",
-      headerName: "Department",
-      minWidth: 170,
       flex: 0.5,
     },
-    {
-      field: "date",
-      headerName: "Requested Date",
-      minWidth: 270,
-      flex: 0.5,
-    },
+
     {
       field: "actions",
       flex: 0.3,
@@ -128,10 +116,7 @@ const RequestList = () => {
         return (
           <Fragment>
             <Link
-              to={`/dashboard/requestlist/request/${params.getValue(
-                params.id,
-                "id"
-              )}`}
+              to={`/dashboard/users/user/${params.getValue(params.id, "id")}`}
             >
               <Icon
                 icon="clarity:edit-solid"
@@ -143,7 +128,7 @@ const RequestList = () => {
             <Button>
               <Icon
                 onClick={() =>
-                  deleteRequestHandler(params.getValue(params.id, "id"))
+                  deleteUserHandler(params.getValue(params.id, "id"))
                 }
                 icon="fluent:delete-24-filled"
                 color="red"
@@ -156,45 +141,54 @@ const RequestList = () => {
       },
     },
   ];
+  const [value, setValue] = React.useState("");
+  console.log(value);
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
 
   const rows = [];
 
-  requests &&
-    requests
+  users &&
+    users
       .filter(
-        (filteredProducts) =>
-          filteredProducts.user.name.includes(name) ||
-          filteredProducts.user.email.includes(name)
+        (filteredUsers) =>
+          filteredUsers.name.includes(name) &&
+          filteredUsers.role.includes(value)
       )
-      .reverse()
       .map((item, index) => {
-        item.requestStatus === "Processing" &&
-          rows.push({
-            index: index + 1,
-            itemsQty: item.orderItems.length,
-            id: item._id,
-            status: item.requestStatus,
-            department: item.department,
-            date: item.createdAt,
-            username: item.user.name,
-            email: item.user.email,
-          });
+        rows.push({
+          index: index + 1,
+          id: item._id,
+          name: item.name,
+          email: item.email,
+          role: item.role,
+          phoneNumber: item.phoneNumber,
+        });
         return 1;
       });
 
   return (
     <Fragment>
-      <Page title={`ALL Rquests - Admin`}>
+      <Page title={`ALL USER'S - Admin`}>
         <Container>
           <Stack
             direction="row"
             alignItems="center"
             justifyContent="space-between"
-            mb={2}
+            mb={1}
           >
             <Typography variant="h4" gutterBottom>
-              Requests List
+              All Users
             </Typography>
+            <Button
+              variant="contained"
+              component={RouterLink}
+              to="/dashboard/users/newUser"
+              startIcon={<Icon icon={plusFill} />}
+            >
+              Add User
+            </Button>
           </Stack>
           <Stack
             direction="row"
@@ -205,7 +199,7 @@ const RequestList = () => {
             <SearchStyle
               backgroundColor="black"
               onChange={(e) => setKeyword(e.target.value)}
-              placeholder="Search by name or email ..."
+              placeholder="Search product..."
               startAdornment={
                 <InputAdornment position="end">
                   <Box
@@ -216,6 +210,50 @@ const RequestList = () => {
                 </InputAdornment>
               }
             />
+            <FormControl>
+              <FormLabel id="demo-row-radio-buttons-group-label">
+                <Typography> Roles</Typography>
+              </FormLabel>
+              <RadioGroup
+                row
+                aria-labelledby="demo-row-radio-buttons-group-label"
+                name="row-radio-buttons-group"
+                value={value}
+                onChange={handleChange}
+              >
+                <FormControlLabel
+                  value="Admin"
+                  control={<Radio />}
+                  label="Admin"
+                />
+                <FormControlLabel
+                  value="Stock Manager"
+                  control={<Radio />}
+                  label="Stock Manager"
+                />
+                <FormControlLabel
+                  value="Staff"
+                  control={<Radio />}
+                  label="Staff"
+                />
+                <FormControlLabel
+                  value="Faculty"
+                  control={<Radio />}
+                  label="Faculty"
+                />
+                <FormControlLabel
+                  value="Vendor"
+                  control={<Radio />}
+                  label="Vendor"
+                />
+                <FormControlLabel
+                  value="Student"
+                  control={<Radio />}
+                  label="Student"
+                />
+                <FormControlLabel value="" control={<Radio />} label="Reset" />
+              </RadioGroup>
+            </FormControl>
           </Stack>
 
           <br />
@@ -238,4 +276,4 @@ const RequestList = () => {
   );
 };
 
-export default RequestList;
+export default UserList;

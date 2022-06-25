@@ -12,8 +12,6 @@ import {
 } from "../../actions/reqInventoryAction";
 import { useAlert } from "react-alert";
 
-
-
 ///////////////////////////////
 const ConfirmRequest = ({ history }) => {
   let TotalQuantity = 0;
@@ -51,7 +49,7 @@ const ConfirmRequest = ({ history }) => {
           console.log(error.text);
         }
       );
-////////////////////////////////////
+    ////////////////////////////////////
     navigate("/dashboard/requestinventory/success");
   };
   useEffect(() => {

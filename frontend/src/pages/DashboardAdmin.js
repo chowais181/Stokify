@@ -40,7 +40,7 @@ export default function DashboardAdmin() {
           <Grid item xs={12} sm={6} md={2.2}>
             <TotalOrder />
           </Grid>
-          <Grid item xs={30} md={6} lg={4}>
+          <Grid item xs={12} md={6} lg={4}>
             <DoughnutStockChart />
           </Grid>
           <Grid item xs={12} md={6} lg={6}>

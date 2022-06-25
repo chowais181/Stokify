@@ -56,15 +56,11 @@ export default function ProductForm() {
       );
     },
   });
-  const { errors, touched, handleSubmit } = formik;
+  const {  handleSubmit } = formik;
 
   // ----------------------------------------------------------------------
   useEffect(() => {
     dispatch(getProductDetails(id));
-    if (error) {
-      alert.error(error);
-      dispatch(clearErrors());
-    }
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
@@ -77,7 +73,7 @@ export default function ProductForm() {
 
     if (isUpdated) {
       alert.success("Product Updated Successfully");
-      navigate("/");
+      navigate("/dashboard/products");
       dispatch({ type: UPDATE_PRODUCT_RESET });
     }
   }, [dispatch, error, alert, id, updateError, isUpdated, navigate]);
@@ -106,8 +102,8 @@ export default function ProductForm() {
                   fullWidth
                   label="Name"
                   // {...getFieldProps("name")}
-                  error={Boolean(touched.name && errors.name)}
-                  helperText={touched.name && errors.name}
+                  // error={Boolean(touched.name && errors.name)}
+                  // helperText={touched.name && errors.name}
                 />
                 <TextField
                   key={product && product.description}
@@ -116,8 +112,8 @@ export default function ProductForm() {
                   fullWidth
                   label="Description"
                   // {...getFieldProps("name")}
-                  error={Boolean(touched.name && errors.name)}
-                  helperText={touched.name && errors.name}
+                  // error={Boolean(touched.name && errors.name)}
+                  // helperText={touched.name && errors.name}
                 />
                 <TextField
                   key={product && product.price}
@@ -127,8 +123,8 @@ export default function ProductForm() {
                   label="Price"
                   type="number"
                   //   {...getFieldProps("price")}
-                  error={Boolean(touched.price && errors.price)}
-                  helperText={touched.price && errors.price}
+                  // error={Boolean(touched.price && errors.price)}
+                  // helperText={touched.price && errors.price}
                 />
                 <TextField
                   key={product && product.Stock}
@@ -138,8 +134,8 @@ export default function ProductForm() {
                   label="Stock"
                   type="number"
                   //   {...getFieldProps("stock")}
-                  error={Boolean(touched.stock && errors.stock)}
-                  helperText={touched.stock && errors.stock}
+                  // error={Boolean(touched.stock && errors.stock)}
+                  // helperText={touched.stock && errors.stock}
                 />
 
                 <LoadingButton

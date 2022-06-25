@@ -1,3 +1,6 @@
+/// not in use ....
+/// --- Users --- ///
+
 import { filter } from "lodash";
 import { Icon } from "@iconify/react";
 
@@ -152,12 +155,12 @@ export default function User() {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            Users
+            Users hi
           </Typography>
           <Button
             variant="contained"
             component={RouterLink}
-            to="/dashboard/newuser"
+            to="/dashboard/user/newuser"
             startIcon={<Icon icon={plusFill} />}
           >
             Add User

@@ -236,20 +236,25 @@ const sidebarConfigAdmin = [
     path: "/dashboard/requestinventory",
     icon: getIcon("vaadin:stock"),
   },
- 
+
   {
     title: "my orders",
     path: "/dashboard/myorders",
     icon: getIcon("carbon:order-details"),
   },
   {
-    title: "requests List",
+    title: "inventory requests",
     path: "/dashboard/requestlist",
     icon: getIcon("carbon:order-details"),
   },
   {
+    title: "inventory requests stock manager",
+    path: "/dashboard/inventoryrequests",
+    icon: getIcon("carbon:order-details"),
+  },
+  {
     title: "users",
-    path: "/dashboard/user",
+    path: "/dashboard/users",
     icon: getIcon("fe:users"),
   },
   {
@@ -257,7 +262,7 @@ const sidebarConfigAdmin = [
     path: "/dashboard/shipping",
     icon: getIcon("fa-solid:shipping-fast"),
   },
- {
+  {
     title: "About Us",
     path: "/dashboard/about",
     icon: getIcon("bi:info-circle"),
@@ -279,7 +284,7 @@ export default function NavSection({ navConfig, ...other }) {
       side = sidebarConfigAdmin;
     }
    else{
- side = sidebarConfigManager;
+      side = sidebarConfigManager;
    }
      
     

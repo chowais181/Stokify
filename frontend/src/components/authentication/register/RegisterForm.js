@@ -35,7 +35,7 @@ const optionsRole = [
 export default function RegisterForm() {
   const dispatch = useDispatch();
   const alert = useAlert();
-  const { loading, error, success } = useSelector((state) => state.user);
+  const { loading, error, isRegister } = useSelector((state) => state.user);
   const [role, setOption] = useState(optionsRole[0]);
   //getting the value from the textfield
   //creating a refernce for TextField Component
@@ -93,6 +93,7 @@ export default function RegisterForm() {
 
     validationSchema: RegisterSchema,
     onSubmit: () => {
+      console.log(PasswordRef.current.value);
       // navigate("/dashboard/app", { replace: true });
       if (PasswordRef.current.value !== ConfirmPasswordRef.current.value) {
         alert.error("Password is not match with confirm password!!");
@@ -107,28 +108,27 @@ export default function RegisterForm() {
             role.value
           )
         );
-        if (success === true) {
-          formik.resetForm();
-        }
+       
       }
     },
   });
-
+ const { errors, touched, handleSubmit, getFieldProps, resetForm } = formik;
   // ----------------------------------------------------------------------
   useEffect(() => {
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
-    if (success === true) {
+    if (isRegister) {
       alert.show(
         <div style={{ color: "green" }}>User added successfully!</div>
       );
+       resetForm();
     }
-  }, [dispatch, error, alert, success]);
+  }, [dispatch, error, alert, isRegister,resetForm]);
   // ----------------------------------------------------------------------
 
-  const { errors, touched, handleSubmit, getFieldProps } = formik;
+ 
 
   return (
     <FormikProvider value={formik}>

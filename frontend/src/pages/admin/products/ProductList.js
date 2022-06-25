@@ -157,7 +157,7 @@ const ProductList = () => {
       .filter(
         (filteredProducts) =>
           filteredProducts.name.includes(name) &&
-          filteredProducts.department.includes(value)    
+          filteredProducts.department.includes(value)
       )
       .map((item, index) => {
         rows.push({

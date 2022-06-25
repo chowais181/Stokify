@@ -1,22 +1,22 @@
 import { Navigate, useRoutes } from "react-router-dom";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 // layouts
 import DashboardLayout from "./layouts/dashboard";
 import LogoOnlyLayout from "./layouts/LogoOnlyLayout";
 //
 import Login from "./pages/Login";
 // import Register from "./pages/Register";
-import DashboardApp from "./pages/DashboardApp";
+// import DashboardApp from "./pages/DashboardApp";
 import DashboardAdmin from "./pages/DashboardAdmin";
-import About from "./pages/About"
+import About from "./pages/About";
 
-import ProductDetails from "./pages/Inventory/ProductDetails";
+import Users from "./pages/admin/users/UserList";
+import NewUser from "./pages/admin/users/newUser/addUser";
+import UpdateUser from "./pages/admin/users/UpdateUser";
 
-import User from "./pages/User";
 import Inventory from "./pages/Inventory/Inventory";
 import NotFound from "./pages/Page404";
 import Purchases from "./pages/Purchases";
-import NewUser from "./pages/admin/users/newUser/addUser";
 
 // import { Route, Redirect } from "react-router";
 import RequestInventory from "./pages/RequestInventory";
@@ -33,32 +33,35 @@ import Payment from "./pages/Inventory/Cart/VendorSteps/Payment";
 import OrderSuccess from "./pages/Inventory/Cart/VendorSteps/OrderSuccess";
 import MyRequests from "./pages/Request Inventory/MyRequests";
 
+import ProductDetails from "./pages/Inventory/ProductDetails";
 import ReqInventoryDetail from "./pages/Request Inventory/ReqInventoryDetail";
 import ConfirmRequest from "./pages/Request Inventory/ConfirmRequest";
 import RequestSuccess from "./pages/Request Inventory/RequestSuccess";
-import Loader from "./components/Loader/Loader";
+// import Loader from "./components/Loader/Loader";
 //////////////////////////////////////
 import ProductList from "./pages/admin/products/ProductList";
 import NewProduct from "./pages/admin/products/newProduct/NewProduct";
 import UpdateProduct from "./pages/admin/products/UpdateProduct";
 import RequestList from "./pages/admin/requests/RequestList";
 import ProcessRequest from "./pages/admin/requests/ProcessRequest";
+import SMRequestList from "./pages/StockManager/requests/RequestList";
+import SMProcessRequest from "./pages/StockManager/requests/ProcessRequest";
 // ----------------------------------------------------------------------
-let isAdmin = false;
+// let isAdmin = false;
 export default function Router() {
-  const { user, loading } = useSelector((state) => state.user);
+  // const { user, loading } = useSelector((state) => state.user);
 
-  let Dashboard = Loader;
-  if (loading === false) {
-    if (user && user.role === "Admin") {
-      Dashboard = DashboardAdmin;
-      isAdmin = true;
-    } else {
-      isAdmin = false;
-      Dashboard = DashboardApp;
-    }
-  }
-  console.log(isAdmin);
+  // let Dashboard = Loader;
+  // if (loading === false) {
+  //   if (user && user.role === "Admin") {
+  //     Dashboard = DashboardAdmin;
+  //     isAdmin = true;
+  //   } else {
+  //     isAdmin = false;
+  //     Dashboard = DashboardApp;
+  //   }
+  // }
+  // console.log(isAdmin);
 
   return useRoutes([
     {
@@ -68,26 +71,35 @@ export default function Router() {
         { element: <Navigate to="/dashboard/app" replace /> },
         {
           path: "app",
-          element: <Dashboard />,
+          element: <DashboardAdmin />,
         },
         {
           path: "products",
-          element: isAdmin ? <ProductList /> : <Navigate to="/" />,
+          // element: isAdmin ? <ProductList /> : <Navigate to="/" />,
+          element: <ProductList />,
         },
         {
           path: "products/newproduct",
-          element: isAdmin ? <NewProduct /> : <Navigate to="/" />,
+          // element: isAdmin ? <NewProduct /> : <Navigate to="/" />,
+          element: <NewProduct />,
         },
         {
           path: "products/product/:id",
-          element: isAdmin ? <UpdateProduct /> : <Navigate to="/" />,
+          // element: isAdmin ? <UpdateProduct /> : <Navigate to="/" />,
+          element: <UpdateProduct />,
         },
-         { path: "about", element: <About /> },
+        { path: "about", element: <About /> },
         { path: "purchases", element: <Purchases /> },
-        { path: "user", element: <User /> },
+        { path: "users", element: <Users /> },
         {
-          path: "newuser",
-          element: isAdmin ? <NewUser /> : <Navigate to="/" />,
+          path: "users/newuser",
+          // element: isAdmin ? <NewUser /> : <Navigate to="/" />,
+          element: <NewUser />,
+        },
+        {
+          path: "users/user/:id",
+          // element: isAdmin ? <UpdateProduct /> : <Navigate to="/" />,
+          element: <UpdateUser />,
         },
 
         { path: "profile", element: <Profile /> },
@@ -130,11 +142,23 @@ export default function Router() {
         },
         {
           path: "requestlist",
-          element: isAdmin ? <RequestList /> : <Navigate to="/" />,
+          // element: isAdmin ? <RequestList /> : <Navigate to="/" />,
+          element: <RequestList />,
+        },
+        {
+          path: "inventoryrequests",
+          // element: isAdmin ? <RequestList /> : <Navigate to="/" />,
+          element: <SMRequestList />,
+        },
+        {
+          path: "inventoryrequests/request/:id",
+          // element: isAdmin ? <ProcessRequest /> : <Navigate to="/" />,
+          element: <SMProcessRequest />,
         },
         {
           path: "requestlist/request/:id",
-          element: isAdmin ? <ProcessRequest /> : <Navigate to="/" />,
+          // element: isAdmin ? <ProcessRequest /> : <Navigate to="/" />,
+          element: <ProcessRequest />,
         },
         {
           path: "myorders",

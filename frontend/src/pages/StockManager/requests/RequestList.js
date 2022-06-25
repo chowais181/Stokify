@@ -36,6 +36,7 @@ const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
 
 // ------------------------------------------------------------------------
 
+// ------------------------------------------------------------------------
 const RequestList = () => {
   const dispatch = useDispatch();
   const [name, setKeyword] = useState("");
@@ -81,7 +82,7 @@ const RequestList = () => {
       minWidth: 100,
       flex: 0.5,
       cellClassName: (params) => {
-        return params.getValue(params.id, "status") === "Accepted"
+        return params.getValue(params.id, "status") === "Delivered"
           ? "greenColor"
           : "redColor";
       },
@@ -112,8 +113,14 @@ const RequestList = () => {
       flex: 0.5,
     },
     {
-      field: "date",
+      field: "requested_date",
       headerName: "Requested Date",
+      minWidth: 270,
+      flex: 0.5,
+    },
+    {
+      field: "delivered_date",
+      headerName: "Delivered Date",
       minWidth: 270,
       flex: 0.5,
     },
@@ -128,7 +135,7 @@ const RequestList = () => {
         return (
           <Fragment>
             <Link
-              to={`/dashboard/requestlist/request/${params.getValue(
+              to={`/dashboard/inventoryrequests/request/${params.getValue(
                 params.id,
                 "id"
               )}`}
@@ -156,6 +163,26 @@ const RequestList = () => {
       },
     },
   ];
+  // ---------------------------------- for date conversion --------------------------------------
+
+  function getDate(myDate) {
+    console.log(myDate);
+    var date = new Date(myDate.toString());
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? "pm" : "am";
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    var strTime = hours + ":" + minutes + " " + ampm;
+    var finalDate;
+    finalDate = `${year}/${month}/${day}  ${strTime}`;
+    return finalDate;
+  }
+  // ------------------------------------------------------------------------
 
   const rows = [];
 
@@ -168,14 +195,19 @@ const RequestList = () => {
       )
       .reverse()
       .map((item, index) => {
-        item.requestStatus === "Processing" &&
+        //function calling to convert date
+        var dateCT = getDate(item.createdAt);
+
+        /// only accepted requests are appearing
+        item.requestStatus !== "Processing" &&
           rows.push({
             index: index + 1,
             itemsQty: item.orderItems.length,
             id: item._id,
             status: item.requestStatus,
             department: item.department,
-            date: item.createdAt,
+            requested_date: dateCT,
+            delivered_date: item.deliveredAt,
             username: item.user.name,
             email: item.user.email,
           });
@@ -193,7 +225,7 @@ const RequestList = () => {
             mb={2}
           >
             <Typography variant="h4" gutterBottom>
-              Requests List
+              Stock Manager-Requests List
             </Typography>
           </Stack>
           <Stack
