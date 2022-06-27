@@ -9,8 +9,6 @@ import { useParams } from "react-router-dom";
 import { Grid, Typography, Button, Card } from "@mui/material";
 import emailjs from "@emailjs/browser";
 import { useNavigate } from "react-router-dom";
-///////////---QR Code----///////////////
-import QRCode from "qrcode";
 import {
   getRequestDetails,
   clearErrors,
@@ -20,8 +18,7 @@ import { UPDATE_INVENTORYORDER_RESET } from "../../../constants/reqInventoryCons
 import Loader from "../../../components/Loader/Loader";
 import { useAlert } from "react-alert";
 import "./processRequest.css";
-//////////////date picker//////////////
-import DatePicker from "sassy-datepicker";
+
 ////////////////////////////
 const columns = [
   {
@@ -62,65 +59,31 @@ const ProcessRequest = () => {
   const { error: updateError, isUpdated } = useSelector(
     (state) => state.reqInventory
   );
-  /////////////////////date /////////////
-  const [returnDate, setReturnDate] = useState("");
-  console.log(returnDate);
-  ///////////////////// /////////////
+
   const dispatch = useDispatch();
   const alert = useAlert();
   const updateRequestSubmitHandler = (e) => {
     e.preventDefault();
-    // emailjs
-    //   .sendForm(
-    //     "service_546uk9a",
-    //     "template_enc0b4x",
-    //     form.current,
-    //     "YMs3ef2fvu8QUd8nC"
-    //   )
-    //   .then(
-    //     (result) => {
-    //       console.log(result.text);
-    //     },
-    //     (error) => {
-    //       console.log(error.text);
-    //     }
-    //   );
-    dispatch(updateRequest(id, status, returnDate));
-  };
-  ///////////////////when inventory return back ////////////
-  const updateInventoryReturn = (e) => {
-    e.preventDefault();
+    //  emailjs
+    //       .sendForm(
+    //         "service_546uk9a",
+    //         "template_enc0b4x",
+    //         form.current,
+    //         "YMs3ef2fvu8QUd8nC"
+    //       )
+    //       .then(
+    //         (result) => {
+    //           console.log(result.text);
+    //         },
+    //         (error) => {
+    //           console.log(error.text);
+    //         }
+    //       );
+
     dispatch(updateRequest(id, status, ""));
   };
 
-  ///fro QR code////////
-  const [src, setSrc] = useState("");
-  const [text, setText] = useState("hi");
-
-  var orderItems = ".";
-  if (loading === false) {
-    orderItems = `Inventory ID: ${request && request._id}\nCategory:${
-      request && request.department
-    }\nDelivered At:${
-      request && request.deliveredAt.substring(0, 16)
-    }\n---User Info---\nUser Name: ${
-      request && request.user && request.user.name
-    }\nUser Email: ${request && request.user && request.user.email}`;
-  }
-
-  //////////////////
   useEffect(() => {
-    setText(
-      `${orderItems}\n[Inventory Return Date: ${returnDate.substring(0, 16)}]`
-    );
-
-    QRCode.toDataURL(text).then(setSrc);
-    console.log(text);
-  }, [text, returnDate, orderItems]);
-
-  useEffect(() => {
-    ////qr /////
-
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
@@ -198,7 +161,7 @@ const ProcessRequest = () => {
                       className={
                         request &&
                         request.requestStatus &&
-                        request.requestStatus === "Delivered"
+                        request.requestStatus === "Accepted"
                           ? "greenColor"
                           : "redColor"
                       }
@@ -207,16 +170,10 @@ const ProcessRequest = () => {
                     </p>
                   </div>
                 </div>
-                <Typography>Return Date</Typography>
-                <br />
-                <DatePicker
-                  minDate={new Date()}
-                  onChange={(date) => setReturnDate(date.toString())}
-                />
               </div>
 
               <div className="orderDetailsCartItems">
-                <h2 style={{ font: "500 1.9vmax Roboto" }}>Requested Items</h2>
+                <Typography>Requested Items</Typography>
                 <br />
                 <Grid container spacing={3}>
                   <Grid item xs={8} sm={6}>
@@ -239,19 +196,12 @@ const ProcessRequest = () => {
                     />
                   </Grid>
                 </Grid>
-                <br />
-                <div className="detailsBlock-1">
-                  <h2 style={{ font: "500 1.9vmax Roboto" }}>
-                    Inventory QR code
-                  </h2>
-                  <img src={src} alt="qr code" width="150" height="150" />
-                </div>
               </div>
             </div>
             <div
               style={{
                 display:
-                  request && request.requestStatus === "Delivered"
+                  request && request.requestStatus === "Accepted"
                     ? "none"
                     : "block",
               }}
@@ -266,12 +216,18 @@ const ProcessRequest = () => {
                     <div>
                       <AccountTreeIcon />
                       <select onChange={(e) => setStatus(e.target.value)}>
-                        <option value="">
-                          Update Inventory Request Status
-                        </option>
-                        <option value="Delivered">Delivered</option>
+                        <option value="">Update Request Status</option>
+                        {/* {request.requestStatus === "Processing" && ( */}
+                        <option value="Accepted">Accept</option>
+
+                        {/* )} */}
+
+                        {/* {request.requestStatus === "Processing" && ( */}
+                        <option value="Rejected">Reject</option>
+                        {/* )} */}
                       </select>
                     </div>
+                    {/* //////////////////////////////////////////////////////// */}
                     <input
                       type="hidden"
                       name="to_name"
@@ -287,7 +243,7 @@ const ProcessRequest = () => {
                       name="message"
                       value={`Your request for inventory is updated.\nTo see the detail click on this link: \n http://localhost:3000/dashboard/myrequests`}
                     />
-                    {/* ///////return date of inventory //// */}
+                    {/* //////////////////////////////////////////////////////// */}
                     <Button
                       id="createProductBtn"
                       variant="contained"
@@ -304,42 +260,7 @@ const ProcessRequest = () => {
                 </Grid>
               </Grid>
             </div>
-            {/* ///////////////////////////////--when inventory return back--//////////////////////////////////////////////// */}
-            <div
-              style={{
-                display:
-                  request && request.requestStatus === "Delivered"
-                    ? "block"
-                    : "none",
-              }}
-            >
-              <Grid container spacing={3}>
-                <Grid item xs={6}>
-                  <div className="updateOrderForm">
-                    <select onChange={(e) => setStatus(e.target.value)}>
-                      <option value="">Update Inventory Status</option>
-                      <option value="Recieved">Recieved</option>
-                    </select>
-                    <br />
-                    <br />
-                    <Button
-                      id="createProductBtn"
-                      variant="contained"
-                      color="secondary"
-                      startIcon={<Icon icon="clarity:process-on-vm-line" />}
-                      type="submit"
-                      onClick={updateInventoryReturn}
-                      disabled={
-                        loading ? true : false || status === "" ? true : false
-                      }
-                    >
-                      Proceed
-                    </Button>
-                  </div>
-                </Grid>
-              </Grid>
-            </div>
-            {/* ///////////////////////////////--when inventory return back--//////////////////////////////////////////////// */}
+
             <Button
               variant="contained"
               onClick={MoveBack}

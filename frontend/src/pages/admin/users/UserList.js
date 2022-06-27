@@ -1,15 +1,11 @@
 import React, { Fragment, useEffect, useState } from "react";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
+
 import { Icon } from "@iconify/react";
 import plusFill from "@iconify/icons-eva/plus-fill";
 import Page from "../../../components/Page";
 import { Link as RouterLink } from "react-router-dom";
 import { Stack, Button, Container, Typography } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useSelector, useDispatch } from "react-redux";
 import {
   clearErrors,
@@ -141,11 +137,6 @@ const UserList = () => {
       },
     },
   ];
-  const [value, setValue] = React.useState("");
-  console.log(value);
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
 
   const rows = [];
 
@@ -153,8 +144,7 @@ const UserList = () => {
     users
       .filter(
         (filteredUsers) =>
-          filteredUsers.name.includes(name) &&
-          filteredUsers.role.includes(value)
+          filteredUsers.name.includes(name) || filteredUsers.role.includes(name)
       )
       .map((item, index) => {
         rows.push({
@@ -199,7 +189,7 @@ const UserList = () => {
             <SearchStyle
               backgroundColor="black"
               onChange={(e) => setKeyword(e.target.value)}
-              placeholder="Search product..."
+              placeholder="Name or Role ..."
               startAdornment={
                 <InputAdornment position="end">
                   <Box
@@ -210,50 +200,6 @@ const UserList = () => {
                 </InputAdornment>
               }
             />
-            <FormControl>
-              <FormLabel id="demo-row-radio-buttons-group-label">
-                <Typography> Roles</Typography>
-              </FormLabel>
-              <RadioGroup
-                row
-                aria-labelledby="demo-row-radio-buttons-group-label"
-                name="row-radio-buttons-group"
-                value={value}
-                onChange={handleChange}
-              >
-                <FormControlLabel
-                  value="Admin"
-                  control={<Radio />}
-                  label="Admin"
-                />
-                <FormControlLabel
-                  value="Stock Manager"
-                  control={<Radio />}
-                  label="Stock Manager"
-                />
-                <FormControlLabel
-                  value="Staff"
-                  control={<Radio />}
-                  label="Staff"
-                />
-                <FormControlLabel
-                  value="Faculty"
-                  control={<Radio />}
-                  label="Faculty"
-                />
-                <FormControlLabel
-                  value="Vendor"
-                  control={<Radio />}
-                  label="Vendor"
-                />
-                <FormControlLabel
-                  value="Student"
-                  control={<Radio />}
-                  label="Student"
-                />
-                <FormControlLabel value="" control={<Radio />} label="Reset" />
-              </RadioGroup>
-            </FormControl>
           </Stack>
 
           <br />
@@ -263,6 +209,7 @@ const UserList = () => {
             columns={columns}
             pageSize={13}
             disableSelectionOnClick
+            components={{ Toolbar: GridToolbar }}
             // className="productListTable"
             autoHeight
             sx={{

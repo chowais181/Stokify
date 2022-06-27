@@ -80,29 +80,34 @@ export const getAllRequest = () => async (dispatch) => {
 };
 
 // Update Order
-export const updateRequest = (id, request) => async (dispatch) => {
-  try {
-    dispatch({ type: UPDATE_INVENTORYORDER_REQUEST });
+export const updateRequest =
+  (id, requestStatus, returnDate) => async (dispatch) => {
+    
+    try {
+      dispatch({ type: UPDATE_INVENTORYORDER_REQUEST });
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    const { data } = await axios.put(
-      `/api/v1/admin/request/${id}`,
-      request,
-      config
-    );
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const { data } = await axios.put(
+        `/api/v1/admin/request/${id}`,
+        {
+          requestStatus,
+          returnDate,
+        },
+        config
+      );
 
-    dispatch({ type: UPDATE_INVENTORYORDER_SUCCESS, payload: data.success });
-  } catch (error) {
-    dispatch({
-      type: UPDATE_INVENTORYORDER_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({ type: UPDATE_INVENTORYORDER_SUCCESS, payload: data.success });
+    } catch (error) {
+      dispatch({
+        type: UPDATE_INVENTORYORDER_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 // Delete Order
 export const deleteRequest = (id) => async (dispatch) => {

@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 // material
 import { styled } from "@mui/material/styles";
 //
-import DashboardNavbar from "./DashboardNavbar";
+import DashboardNavbar from "./IMPDashboardNavbar";
 import DashboardSidebar from "./DashboardSidebar";
 import ScrollToTop from "react-scroll-to-top";
 // ----------------------------------------------------------------------

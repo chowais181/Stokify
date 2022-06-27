@@ -14,14 +14,14 @@ import MenuPopover from "../../components/MenuPopover";
 
 const MENU_OPTIONS = [
   {
-    label: "Vendors",
-    icon: "bxs:user",
-    linkTo: "/dashboard/users",
+    label: "Add Product",
+    icon: "ic:baseline-production-quantity-limits",
+    linkTo: "/dashboard/products/newproduct",
   },
   {
-    label: "Bills",
-    icon: "uil:bill",
-    linkTo: "/dashboard/invoices",
+    label: "Add User",
+    icon: "bi:person-plus",
+    linkTo: "/dashboard/users/newuser",
   },
 ];
 
@@ -61,7 +61,7 @@ export default function AddPopover() {
           }),
         }}
       >
-        <Icon icon="carbon:purchase" color="#293a8e" width="38" height="38" />
+        <Icon icon="bi:plus-circle-dotted" />
       </IconButton>
 
       <MenuPopover

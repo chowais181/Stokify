@@ -1,11 +1,10 @@
 // material
+import * as React from "react";
 import { Card, CardHeader } from "@mui/material";
 import "chart.js/auto";
 import { Doughnut } from "react-chartjs-2";
-
 import { useSelector } from "react-redux";
-
-// ----------------------------------------------------------------------
+// Importing toastify module
 
 export default function DoughnutStockChart() {
   let outOfStock = 0;
@@ -38,6 +37,7 @@ export default function DoughnutStockChart() {
       },
     ],
   };
+
   return (
     <Card>
       <CardHeader title="Stock Status" subheader="Chart of In & Out Stock" />

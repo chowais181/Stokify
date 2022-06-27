@@ -7,7 +7,7 @@ import { Box, Drawer } from "@mui/material";
 // components
 import Logo from "../../components/Logo";
 import Scrollbar from "../../components/Scrollbar";
-import NavSection from "../../components/NavSection";
+import NavSection from "../../components/IMPNavSection";
 import { MHidden } from "../../components/@material-extend";
 //
 import React from "react";

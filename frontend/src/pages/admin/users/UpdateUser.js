@@ -29,6 +29,7 @@ const optionsRole = [
   { value: "Vendor", label: "Vendor" },
   { value: "Coordinator", label: "Coordinator" },
   { value: "Admin", label: "Admin" },
+  { value: "Account Officer", label: "Account Officer" },
 ];
 export default function UpdateUser() {
   const dispatch = useDispatch();

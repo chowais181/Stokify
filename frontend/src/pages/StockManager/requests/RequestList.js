@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react";
 import Page from "../../../components/Page";
 
 import { Stack, Button, Container, Typography } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useSelector, useDispatch } from "react-redux";
 import {
   clearErrors,
@@ -125,6 +125,12 @@ const RequestList = () => {
       flex: 0.5,
     },
     {
+      field: "return_date",
+      headerName: "Return Date",
+      minWidth: 270,
+      flex: 0.5,
+    },
+    {
       field: "actions",
       flex: 0.3,
       headerName: "Actions",
@@ -163,26 +169,6 @@ const RequestList = () => {
       },
     },
   ];
-  // ---------------------------------- for date conversion --------------------------------------
-
-  function getDate(myDate) {
-    console.log(myDate);
-    var date = new Date(myDate.toString());
-    var year = date.getFullYear();
-    var month = date.getMonth() + 1;
-    var day = date.getDate();
-    var hours = date.getHours();
-    var minutes = date.getMinutes();
-    var ampm = hours >= 12 ? "pm" : "am";
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? "0" + minutes : minutes;
-    var strTime = hours + ":" + minutes + " " + ampm;
-    var finalDate;
-    finalDate = `${year}/${month}/${day}  ${strTime}`;
-    return finalDate;
-  }
-  // ------------------------------------------------------------------------
 
   const rows = [];
 
@@ -195,19 +181,19 @@ const RequestList = () => {
       )
       .reverse()
       .map((item, index) => {
-        //function calling to convert date
-        var dateCT = getDate(item.createdAt);
-
-        /// only accepted requests are appearing
+        // / only accepted requests are appearing
         item.requestStatus !== "Processing" &&
+          item.requestStatus !== "Recieved" &&
+          item.requestStatus !== "Rejected" &&
           rows.push({
             index: index + 1,
             itemsQty: item.orderItems.length,
             id: item._id,
             status: item.requestStatus,
             department: item.department,
-            requested_date: dateCT,
-            delivered_date: item.deliveredAt,
+            requested_date: item.createdAt.substring(0, 16),
+            delivered_date: item.deliveredAt.substring(0, 16),
+            return_date: item.returnDate.substring(0, 16),
             username: item.user.name,
             email: item.user.email,
           });
@@ -256,6 +242,7 @@ const RequestList = () => {
             rows={rows}
             columns={columns}
             pageSize={13}
+            components={{ Toolbar: GridToolbar }}
             disableSelectionOnClick
             // className="productListTable"
             autoHeight

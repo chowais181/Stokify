@@ -4,7 +4,7 @@ import { Icon } from "@iconify/react";
 import { useFormik, Form, FormikProvider } from "formik";
 import eyeFill from "@iconify/icons-eva/eye-fill";
 import eyeOffFill from "@iconify/icons-eva/eye-off-fill";
-
+import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 // material
 import {
@@ -31,9 +31,11 @@ const optionsRole = [
   { value: "Vendor", label: "Vendor" },
   { value: "Coordinator", label: "Coordinator" },
   { value: "Admin", label: "Admin" },
+  { value: "Account Officer", label: "Account Officer" },
 ];
 export default function RegisterForm() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const alert = useAlert();
   const { loading, error, isRegister } = useSelector((state) => state.user);
   const [role, setOption] = useState(optionsRole[0]);
@@ -94,7 +96,6 @@ export default function RegisterForm() {
     validationSchema: RegisterSchema,
     onSubmit: () => {
       console.log(PasswordRef.current.value);
-      // navigate("/dashboard/app", { replace: true });
       if (PasswordRef.current.value !== ConfirmPasswordRef.current.value) {
         alert.error("Password is not match with confirm password!!");
       } else {
@@ -108,11 +109,10 @@ export default function RegisterForm() {
             role.value
           )
         );
-       
       }
     },
   });
- const { errors, touched, handleSubmit, getFieldProps, resetForm } = formik;
+  const { errors, touched, handleSubmit, getFieldProps, resetForm } = formik;
   // ----------------------------------------------------------------------
   useEffect(() => {
     if (error) {
@@ -123,12 +123,11 @@ export default function RegisterForm() {
       alert.show(
         <div style={{ color: "green" }}>User added successfully!</div>
       );
-       resetForm();
+      resetForm();
+      navigate(-1);
     }
-  }, [dispatch, error, alert, isRegister,resetForm]);
+  }, [dispatch, error, alert, isRegister, resetForm,navigate]);
   // ----------------------------------------------------------------------
-
- 
 
   return (
     <FormikProvider value={formik}>

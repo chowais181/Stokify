@@ -1,6 +1,5 @@
 import { Icon } from "@iconify/react";
 import React, { useEffect } from "react";
-
 // material
 import { alpha, styled } from "@mui/material/styles";
 import { Card, Typography } from "@mui/material";
@@ -14,8 +13,8 @@ const RootStyle = styled(Card)(({ theme }) => ({
   boxShadow: "none",
   textAlign: "center",
   padding: theme.spacing(5, 0),
-  color: theme.palette.primary.lighter,
-  backgroundColor: "#880e4f",
+  color: theme.palette.warning.lighter,
+  backgroundColor: "brown",
 }));
 
 const IconWrapperStyle = styled("div")(({ theme }) => ({
@@ -35,31 +34,31 @@ const IconWrapperStyle = styled("div")(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-let count = 0;
-export default function Approved() {
-  const dispatch = useDispatch();
-  count = 0;
-  const { requests, loading } = useSelector((state) => state.myRequests);
 
+export default function MyOrder() {
+  const dispatch = useDispatch();
+  var TOTAL = 0;
+  const { requests, loading } = useSelector((state) => state.myRequests);
   if (loading === false) {
     requests &&
       requests.forEach((i) => {
-        if (i.requestStatus === "Delivered") {
-          count++;
+        if (i.returnDate !== "") {
+          TOTAL++;
         }
       });
   }
+
   useEffect(() => {
     dispatch(myRequests());
   }, [dispatch]);
   return (
     <RootStyle>
       <IconWrapperStyle>
-        <Icon icon="fa:cart-arrow-down" width={24} height={24} />
+        <Icon icon="ic:baseline-inventory-2" width={24} height={24} />
       </IconWrapperStyle>
-      <Typography variant="h3">{fShortenNumber(count)}</Typography>
+      <Typography variant="h3">{fShortenNumber(TOTAL)}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Recieved Inventory
+        Inventory to Return
       </Typography>
     </RootStyle>
   );
