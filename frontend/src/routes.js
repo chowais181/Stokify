@@ -10,19 +10,19 @@ import Login from "./pages/Login";
 import DashboardApp from "./pages/Dashboards/DashboardApp";
 import DashboardAdmin from "./pages/Dashboards/DashboardAdmin";
 import DashboardStockManager from "./pages/Dashboards/DashboardStockManager";
-
-////////////////////////////////////////////////////
+import DashboardVendor from "./pages/Dashboards/DashboardVendor";
+import DashboardCod from "./pages/Dashboards/DashboardCod";
+import DashboardAO from "./pages/Dashboards/DashboardAO";
+////////////////////SM////////////////////////////////
 import StartOrdering from "./pages/StockManager/OrderFromVendor/StartOrdering";
 import OrderProducts from "./pages/StockManager/OrderFromVendor/Inventory";
 import OrderProductDetail from "./pages/StockManager/OrderFromVendor/ProductDetails";
 import SMCart from "./pages/StockManager/OrderFromVendor/Cart/Cart";
 ////////////////////////////////////////////////////
 import About from "./pages/About";
-
 import Users from "./pages/admin/users/UserList";
 import NewUser from "./pages/admin/users/newUser/addUser";
 import UpdateUser from "./pages/admin/users/UpdateUser";
-
 import Inventory from "./pages/User Inventory/Inventory";
 import NotFound from "./pages/Page404";
 // import Purchases from "./pages/Purchases";
@@ -51,12 +51,21 @@ import Loader from "./components/Loader/Loader";
 import ProductList from "./pages/admin/products/ProductList";
 import NewProduct from "./pages/admin/products/newProduct/NewProduct";
 import UpdateProduct from "./pages/admin/products/UpdateProduct";
-import RequestList from "./pages/admin/HODRequests/RequestList";
-import ProcessRequest from "./pages/admin/HODRequests/ProcessRequest";
+/////////////////////////////////////
 import SMRequestList from "./pages/StockManager/requests/RequestList";
 import SMProcessRequest from "./pages/StockManager/requests/ProcessRequest";
 import Invoices from "./pages/Invoices";
-// ----------------------------------------------------------------------
+// ------------------------Vendor----------------------------------------------
+import VendorProductList from "./pages/Vendor/products/ProductList";
+import NewVendorProduct from "./pages/Vendor/products/newProduct/NewProduct";
+import UpdateVendorProduct from "./pages/Vendor/products/UpdateProduct";
+import AllOrders from "./pages/Vendor/orders/AllOrders";
+import ProcessOrder from "./pages/Vendor/orders/ProcessOrder";
+// -------------------------HOD---------------------------------------------
+
+import RequestList from "./pages/admin/HODRequests/RequestList";
+import ProcessRequest from "./pages/admin/HODRequests/ProcessRequest";
+//-----------------------------------------------
 
 export default function Router() {
   const { user, loading } = useSelector((state) => state.user);
@@ -67,6 +76,12 @@ export default function Router() {
       Dashboard = DashboardAdmin;
     } else if (user && user.role === "Stock Manager") {
       Dashboard = DashboardStockManager;
+    } else if (user && user.role === "Vendor") {
+      Dashboard = DashboardVendor;
+    } else if (user && user.role === "Coordinator") {
+      Dashboard = DashboardCod;
+    } else if (user && user.role === "Account Officer") {
+      Dashboard = DashboardAO;
     } else {
       Dashboard = DashboardApp;
     }
@@ -149,11 +164,7 @@ export default function Router() {
           path: "myrequests/:id",
           element: <ReqInventoryDetail />,
         },
-        {
-          path: "requestlist",
-          // element: isAdmin ? <RequestList /> : <Navigate to="/" />,
-          element: <RequestList />,
-        },
+
         {
           path: "inventoryrequests",
           // element: isAdmin ? <RequestList /> : <Navigate to="/" />,
@@ -163,6 +174,12 @@ export default function Router() {
           path: "inventoryrequests/request/:id",
           // element: isAdmin ? <ProcessRequest /> : <Navigate to="/" />,
           element: <SMProcessRequest />,
+        },
+        /////////////////HOD////////////////
+        {
+          path: "requestlist",
+          // element: isAdmin ? <RequestList /> : <Navigate to="/" />,
+          element: <RequestList />,
         },
         {
           path: "requestlist/request/:id",
@@ -208,6 +225,31 @@ export default function Router() {
         {
           path: "shipping/success",
           element: <OrderSuccess />,
+        },
+        /////////////////vendor////////////
+        {
+          path: "vendorproducts",
+          element: <VendorProductList />,
+        },
+        {
+          path: "vendorproducts/newproduct",
+          // element: isAdmin ? <NewProduct /> : <Navigate to="/" />,
+          element: <NewVendorProduct />,
+        },
+        {
+          path: "vendorproducts/product/:id",
+          // element: isAdmin ? <UpdateProduct /> : <Navigate to="/" />,
+          element: <UpdateVendorProduct />,
+        },
+        {
+          path: "allorders",
+          // element: isAdmin ? <UpdateProduct /> : <Navigate to="/" />,
+          element: <AllOrders />,
+        },
+        {
+          path: "allorders/processorder/:id",
+          // element: isAdmin ? <UpdateProduct /> : <Navigate to="/" />,
+          element: <ProcessOrder />,
         },
       ],
     },

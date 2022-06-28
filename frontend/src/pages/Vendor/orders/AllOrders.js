@@ -4,20 +4,20 @@ import "./allOrders.css";
 import { useSelector, useDispatch } from "react-redux";
 import { clearErrors, getAllOrders } from "../../../actions/orderAction";
 import Loader from "../../../components/Loader/Loader";
-import { Button, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { useAlert } from "react-alert";
 import Page from "../../../components/Page";
 import LaunchIcon from "@material-ui/icons/Launch";
-import plusFill from "@iconify/icons-eva/plus-fill";
+
 import { Link } from "react-router-dom";
-import { Icon } from "@iconify/react";
+
 const AllOrders = () => {
   const dispatch = useDispatch();
 
   const alert = useAlert();
 
   const { loading, error, orders } = useSelector((state) => state.allOrders);
-  const { user } = useSelector((state) => state.user);
+  // const { user } = useSelector((state) => state.user);
 
   const columns = [
     { field: "id", headerName: "Order ID", minWidth: 300, flex: 1 },
@@ -59,7 +59,10 @@ const AllOrders = () => {
       renderCell: (params) => {
         return (
           <Link
-            to={`/dashboard/allorders/order/${params.getValue(params.id, "id")}`}
+            to={`/dashboard/allorders/processorder/${params.getValue(
+              params.id,
+              "id"
+            )}`}
           >
             <LaunchIcon />
           </Link>

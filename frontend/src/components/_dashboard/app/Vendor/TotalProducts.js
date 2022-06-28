@@ -1,13 +1,12 @@
 import { Icon } from "@iconify/react";
-import React, { useEffect } from "react";
-
 // material
 import { alpha, styled } from "@mui/material/styles";
 import { Card, Typography } from "@mui/material";
 // utils
 import { fShortenNumber } from "../../../../utils/formatNumber";
-import { useSelector, useDispatch } from "react-redux";
-import { myRequests } from "../../../../actions/reqInventoryAction";
+import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useAlert } from "react-alert";
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Card)(({ theme }) => ({
@@ -27,40 +26,38 @@ const IconWrapperStyle = styled("div")(({ theme }) => ({
   height: theme.spacing(8),
   justifyContent: "center",
   marginBottom: theme.spacing(3),
-  color: theme.palette.warning.lighter,
+  color: theme.palette.primary.lighter,
   backgroundImage: `linear-gradient(135deg, ${alpha(
-    theme.palette.warning.dark,
+    theme.palette.primary.lighter,
     0
-  )} 0%, ${alpha(theme.palette.warning.dark, 0.24)} 100%)`,
+  )} 0%, ${alpha(theme.palette.primary.dark, 0.24)} 100%)`,
 }));
 
 // ----------------------------------------------------------------------
-let count = 0;
-export default function Approved() {
-  const dispatch = useDispatch();
-  count = 0;
-  const { requests, loading } = useSelector((state) => state.myRequests);
 
-  if (loading === false) {
-    requests &&
-      requests.forEach((i) => { 
-        if (i.requestStatus === "Delivered") {
-          count++;
-        }
-      });
-  }
+const StockInHand = () => {
+  const alert = useAlert();
+  const dispatch = useDispatch();
+  const { products , error } = useSelector((state) => state.vendorProducts);
+
   useEffect(() => {
-    dispatch(myRequests());
-  }, [dispatch]);
+    if (error) {
+      return alert.error(error);
+    }
+  }, [dispatch, error, alert]);
+
+  // console.log(products);
+  const TOTAL = products.length;
   return (
     <RootStyle>
       <IconWrapperStyle>
-        <Icon icon="fa:cart-arrow-down" width={24} height={24} />
+        <Icon icon="akar-icons:cart" width={24} height={24} />
       </IconWrapperStyle>
-      <Typography variant="h3">{fShortenNumber(count)}</Typography>
+      <Typography variant="h3">{fShortenNumber(TOTAL)}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Recieved Inventory
+        Total Products
       </Typography>
     </RootStyle>
   );
-}
+};
+export default StockInHand;

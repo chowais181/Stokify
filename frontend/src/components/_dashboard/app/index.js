@@ -1,5 +1,6 @@
 export { default as TotalProductsByCategory } from "./TotalProductsByCategory";
 export { default as TotalRequest } from "./TotalRequest";
+export { default as PendingRequest } from "./Cod/PendingRequest";
 export { default as TotalOrder } from "./TotalOrder";
 export { default as TotalAmount } from "./TotalAmount";
 export { default as AppNewUsers } from "./TotalUsers";
@@ -14,5 +15,8 @@ export { default as Approved } from "./user/Approved";
 export { default as UserRequestOrderTimeline } from "./user/UserRequestOrderTimeline";
 export { default as InventoryReturnTimeline } from "./user/InventoryReturnTimeline";
 export { default as SMInventoryReturnTimeline } from "./SM/SMInventoryReturnTimeline";
-
 export { default as RequestOrderTimeline } from "./SM/RequestOrderTimeline";
+export { default as VendorTotalOrders } from "./Vendor/TotalOrders";
+export { default as VendorTotalAmount } from "./Vendor/TotalAmount";
+export { default as VendorDoughnutStockChart } from "./Vendor/DoughnutStockChart";
+export { default as VendorTotalProducts } from "./Vendor/TotalProducts";

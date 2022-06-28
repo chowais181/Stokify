@@ -9,11 +9,14 @@ import { Container, Stack, Typography, CardContent } from "@mui/material";
 // components
 import Page from "src/components/Page";
 import { useSelector, useDispatch } from "react-redux";
-import { clearErrors, getProductDetails } from "../../../actions/productAction";
+import {
+  clearErrors,
+  getProductDetails,
+} from "../../../actions/vendorProductAction";
 import { useParams } from "react-router-dom";
 import "./productDetails.css";
 import { useNavigate } from "react-router-dom";
-import { addItemsToCart } from "../../../actions/cartAction";
+import { addItemsToCart } from "../../../actions/vendorCartAction";
 
 ///////////---QR Code----///////////////
 import QRCode from "qrcode";
@@ -37,7 +40,7 @@ const ProductDetails = () => {
   const alert = useAlert();
 
   const { product, loading, error } = useSelector(
-    (state) => state.productDetails
+    (state) => state.vendorProductDetails
   );
 
   /////fro QR code////////
@@ -49,8 +52,8 @@ const ProductDetails = () => {
       ${id} 
       \nProduct Description: 
       ${product && product.description}
-      \nProduct Status: 
-      ${product && product.status}`;
+      \nProduct Price: 
+      ${product && product.price}`;
   }
 
   useEffect(() => {
@@ -80,7 +83,7 @@ const ProductDetails = () => {
     const qty = quantity - 1;
     setQuantity(qty);
   };
-  const { cartItems } = useSelector((state) => state.cart);
+  // const { cartItems } = useSelector((state) => state.cart);
 
   const addToCartHandler = () => {
     // let dept = "";
@@ -106,7 +109,7 @@ const ProductDetails = () => {
         <Loader />
       ) : (
         <Fragment>
-          <Page title="Products: Product Detail | Stokify">
+          <Page title="Order: Product Detail | Stokify">
             <Container>
               <Stack
                 direction="row"
@@ -122,20 +125,18 @@ const ProductDetails = () => {
                 <CardContent>
                   <div>
                     <div className="detailsBlock-1">
-                      <h2 style={{ font: "500 1.9vmax Roboto" }}>
+                      <h2 style={{ font: "500 1.9vma" }}>
                         {product && product.name}
                       </h2>
                       <p>Product ID# {product && product._id}</p>
                     </div>
                     <div className="detailsBlock-1">
-                      <h2 style={{ font: "500 1.9vmax Roboto" }}>
-                        Product QR code
-                      </h2>
+                      <h2 style={{ font: "500 1.9vmax " }}>Product QR code</h2>
                       <img src={src} alt="qr code" width="100" height="100" />
                     </div>
 
                     <div className="detailsBlock-3">
-                      {/* <h1>{`₹Rs: {product.price}`}</h1> */}
+                      <h1>{`Price Rs/: ${product && product.price}`}</h1>
                       <div className="detailsBlock-3-1">
                         <div className="detailsBlock-3-1-1">
                           <h2 style={{ font: "500 1.9vmax Roboto" }}>
@@ -158,7 +159,7 @@ const ProductDetails = () => {
                         Cart
                       </Button>
                       <br /> <br />
-                      {/* <h2 style={{ font: "500 1.9vmax Roboto" }}>
+                      <h2 style={{ font: "500 1.9vmax Roboto" }}>
                         Status :
                         <b
                           className={
@@ -171,17 +172,17 @@ const ProductDetails = () => {
                             ? "OutOfStock"
                             : "InStock"}
                         </b>
-                      </h2> */}
+                      </h2>
                     </div>
                     <br />
-                    {/* <div className="detailsBlock-4">
-                      {/* <h2 style={{ font: "500 1.9vmax Roboto" }}>
+                    <div className="detailsBlock-4">
+                      <h2 style={{ font: "500 1.9vmax Roboto" }}>
                         Description :
                         <h2 style={{ font: "300 1.3vmax Roboto" }}>
                           {product && product.description}
                         </h2>
                       </h2>
-                    </div> */}
+                    </div>
                   </div>
                   <br />
                   <Button

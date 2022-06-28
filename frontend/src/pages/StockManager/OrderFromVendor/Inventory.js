@@ -7,7 +7,7 @@ import { Container, Stack, Typography, Card, CardContent } from "@mui/material";
 // components
 import Page from "../../../components/Page";
 import UserProduct from "./UserProducts";
-import { getProduct } from "../../../actions/productAction";
+import { getProduct } from "../../../actions/vendorProductAction";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "src/components/Loader/Loader";
 import SearchNotFound from "../../../components/SearchNotFound";
@@ -39,7 +39,9 @@ const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
 const Inventory = ({ search }) => {
   const alert = useAlert();
   const dispatch = useDispatch();
-  const { loading, products, error } = useSelector((state) => state.products);
+  const { loading, products, error } = useSelector(
+    (state) => state.vendorProducts
+  );
   let isProductNotFound = 0;
   if (loading === false) {
     isProductNotFound = products.length === 0;
@@ -63,7 +65,7 @@ const Inventory = ({ search }) => {
       {loading ? (
         <Loader />
       ) : (
-        <Page title="Dashboard: Inventory | Stokify">
+        <Page title="Dashboard: Order | Stokify">
           {/* <ProductCartWidget /> */}
           <Container>
             <Stack

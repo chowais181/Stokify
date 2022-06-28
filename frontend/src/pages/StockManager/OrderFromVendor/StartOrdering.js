@@ -1,5 +1,4 @@
-
-/// 
+///
 import { Icon } from "@iconify/react";
 
 import Select from "react-select";
@@ -33,7 +32,7 @@ export default function RequestInventory() {
   };
 
   return (
-    <Page title="Dashboard: Request Inventory | Stokify">
+    <Page title="Dashboard: Place Order | Stokify">
       <Container>
         <Stack
           direction="row"

@@ -14,8 +14,15 @@ import {
   newProductReducer,
   productReducer,
 } from "./reducers/productReducer";
+import {
+  vendorProductDetailsReducer,
+  vendorProductsReducer,
+  newVendorProductReducer,
+  vendorProductReducer,
+} from "./reducers/vendorProductReducer";
 
 import { cartReducer } from "./reducers/cartReducer";
+// import { vendorCartReducer } from "./reducers/vendorCartReducer";
 import {
   createReqInventoryReducer,
   myRequestsReducer,
@@ -53,6 +60,10 @@ const reducer = combineReducers({
   orderDetails: orderDetailsReducer,
   allOrders: allOrdersReducer,
   order: orderReducer,
+  newVendorProduct: newVendorProductReducer,
+  vendorProducts: vendorProductsReducer,
+  vendorProduct: vendorProductReducer,
+  vendorProductDetails: vendorProductDetailsReducer,
 });
 const userInfoFromStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo"))

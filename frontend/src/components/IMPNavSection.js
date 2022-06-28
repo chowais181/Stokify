@@ -252,6 +252,55 @@ const sidebarConigUser = [
     icon: getIcon(alertTriangleFill),
   },
 ];
+/////////////////////// Coordinator ////////////////////////////////////////
+const sidebarCod = [
+  {
+    title: "dashboard",
+    path: "/dashboard/app",
+    icon: getIcon(pieChart2Fill),
+  },
+  {
+    title: "inventory requests",
+    path: "/dashboard/requestlist",
+    icon: getIcon("carbon:order-details"),
+  },
+
+  {
+    title: "About Us",
+    path: "/dashboard/about",
+    icon: getIcon("bi:info-circle"),
+  },
+  {
+    title: "Not found",
+    path: "/404",
+    icon: getIcon(alertTriangleFill),
+  },
+];
+/////////////////////// Account officer ////////////////////////////////////////
+const sidebarAO = [
+  {
+    title: "dashboard",
+    path: "/dashboard/app",
+    icon: getIcon(pieChart2Fill),
+  },
+
+  {
+    title: "invoices",
+    path: "/dashboard/invoices",
+    icon: getIcon("material-symbols:payments-outline-sharp"),
+  },
+
+  {
+    title: "About Us",
+    path: "/dashboard/about",
+    icon: getIcon("bi:info-circle"),
+  },
+  {
+    title: "Not found",
+    path: "/404",
+    icon: getIcon(alertTriangleFill),
+  },
+];
 ////////////////////sidebarStockManager//////////////////////////////////////////
 const sidebarStockManager = [
   {
@@ -301,6 +350,41 @@ const sidebarStockManager = [
     icon: getIcon(alertTriangleFill),
   },
 ];
+
+////////////////////Vendor//////////////////////////////////////////
+const sidebarVendor = [
+  {
+    title: "dashboard",
+    path: "/dashboard/app",
+    icon: getIcon(pieChart2Fill),
+  },
+  {
+    title: "products",
+    path: "/dashboard/vendorproducts",
+    icon: getIcon("ic:baseline-production-quantity-limits"),
+  },
+  {
+    title: "recieved orders",
+    path: "/dashboard/allorders",
+    icon: getIcon("carbon:order-details"),
+  },
+
+  {
+    title: "invoices",
+    path: "/dashboard/invoices",
+    icon: getIcon("material-symbols:payments-outline-sharp"),
+  },
+  {
+    title: "About Us",
+    path: "/dashboard/about",
+    icon: getIcon("bi:info-circle"),
+  },
+  {
+    title: "Not found",
+    path: "/404",
+    icon: getIcon(alertTriangleFill),
+  },
+];
 //////////////////////////////////////////////////////////////
 export default function NavSection({ navConfig, ...other }) {
   const { user } = useSelector((state) => state.user);
@@ -312,6 +396,12 @@ export default function NavSection({ navConfig, ...other }) {
       side = sidebarAdmin;
     } else if (user.role === "Stock Manager") {
       side = sidebarStockManager;
+    } else if (user.role === "Vendor") {
+      side = sidebarVendor;
+    } else if (user.role === "Coordinator") {
+      side = sidebarCod;
+    } else if (user.role === "Account Officer") {
+      side = sidebarAO;
     } else {
       side = sidebarConigUser;
     }

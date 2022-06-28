@@ -11,7 +11,7 @@
 
 .container {
   display: flex;
-  margin: 2vmax auto;
+  margin: 6vmax auto;
   width: 80vw;
   flex-wrap: wrap;
   justify-content: center;
@@ -42,21 +42,20 @@
 
 .productCardSpan {
   margin: 0.5vmax;
-  font: 300 0.7vmax "Roboto";
+  font: 300 1vmax "Roboto";
 }
 
 .productCard > p {
-  font-family: "Roboto";
-  font-size: 1.2vmax;
+  font-size: 1.6vmax;
   margin: 1vmax 0.5vmax;
   margin-bottom: 0;
 }
 
 .productCard > span {
   margin: 0.5vmax;
-  color: tomato;
+
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  font-size: 1vmax;
+  font-size: 2vmax;
 }
 
 .productCard:hover {

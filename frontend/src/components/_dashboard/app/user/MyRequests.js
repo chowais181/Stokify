@@ -37,7 +37,7 @@ const IconWrapperStyle = styled("div")(({ theme }) => ({
 
 export default function MyOrder() {
   const dispatch = useDispatch();
-  const {  requests } = useSelector((state) => state.myRequests);
+  const { requests } = useSelector((state) => state.myRequests);
   const TOTAL = requests && requests.length;
   useEffect(() => {
     dispatch(myRequests());

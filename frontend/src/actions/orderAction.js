@@ -76,7 +76,7 @@ export const getAllOrders = () => async (dispatch) => {
 };
 
 // Update Order
-export const updateOrder = (id, order) => async (dispatch) => {
+export const updateOrder = (id, orderStatus) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_ORDER_REQUEST });
 
@@ -87,7 +87,8 @@ export const updateOrder = (id, order) => async (dispatch) => {
     };
     const { data } = await axios.put(
       `/api/v1/admin/order/${id}`,
-      order,
+      { orderStatus },
+
       config
     );
 

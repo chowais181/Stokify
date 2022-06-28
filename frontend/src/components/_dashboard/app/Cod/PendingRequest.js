@@ -1,20 +1,19 @@
 import { Icon } from "@iconify/react";
 import React, { useEffect } from "react";
-
 // material
 import { alpha, styled } from "@mui/material/styles";
 import { Card, Typography } from "@mui/material";
 // utils
 import { fShortenNumber } from "../../../../utils/formatNumber";
 import { useSelector, useDispatch } from "react-redux";
-import { myRequests } from "../../../../actions/reqInventoryAction";
+import { getAllRequest } from "../../../../actions/reqInventoryAction.js";
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Card)(({ theme }) => ({
   boxShadow: "none",
   textAlign: "center",
   padding: theme.spacing(5, 0),
-  color: theme.palette.primary.lighter,
+  color: theme.palette.warning.lighter,
   backgroundColor: "#880e4f",
 }));
 
@@ -35,31 +34,32 @@ const IconWrapperStyle = styled("div")(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-let count = 0;
-export default function Approved() {
-  const dispatch = useDispatch();
-  count = 0;
-  const { requests, loading } = useSelector((state) => state.myRequests);
 
+export default function TotalRequest() {
+  const dispatch = useDispatch();
+  const { requests, loading } = useSelector((state) => state.allRequest);
+  let TOTAL = 0;
+
+  useEffect(() => {
+    dispatch(getAllRequest());
+  }, [dispatch]);
   if (loading === false) {
     requests &&
-      requests.forEach((i) => { 
-        if (i.requestStatus === "Delivered") {
-          count++;
+      requests.forEach((item) => {
+        if (item.requestStatus === "Processing") {
+          TOTAL++;
         }
       });
   }
-  useEffect(() => {
-    dispatch(myRequests());
-  }, [dispatch]);
+
   return (
     <RootStyle>
       <IconWrapperStyle>
-        <Icon icon="fa:cart-arrow-down" width={24} height={24} />
+        <Icon icon="ic:baseline-inventory-2" width={24} height={24} />
       </IconWrapperStyle>
-      <Typography variant="h3">{fShortenNumber(count)}</Typography>
+      <Typography variant="h3">{fShortenNumber(TOTAL)}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Recieved Inventory
+        Pending Inventory Requests
       </Typography>
     </RootStyle>
   );

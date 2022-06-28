@@ -53,7 +53,7 @@ export default function TotalAmount() {
       </IconWrapperStyle>
       <Typography variant="h3">{fShortenNumber(totalAmount)}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Total Amount
+        Total Amount Paid
       </Typography>
     </RootStyle>
   );

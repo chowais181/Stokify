@@ -1,21 +1,20 @@
 import { Icon } from "@iconify/react";
 import React, { useEffect } from "react";
-
 // material
 import { alpha, styled } from "@mui/material/styles";
 import { Card, Typography } from "@mui/material";
 // utils
 import { fShortenNumber } from "../../../../utils/formatNumber";
 import { useSelector, useDispatch } from "react-redux";
-import { myRequests } from "../../../../actions/reqInventoryAction";
+import { getAllOrders } from "../../../../actions/orderAction.js";
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Card)(({ theme }) => ({
   boxShadow: "none",
   textAlign: "center",
   padding: theme.spacing(5, 0),
-  color: theme.palette.primary.lighter,
-  backgroundColor: "#880e4f",
+  color: theme.palette.warning.lighter,
+  backgroundColor: "black",
 }));
 
 const IconWrapperStyle = styled("div")(({ theme }) => ({
@@ -35,31 +34,26 @@ const IconWrapperStyle = styled("div")(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-let count = 0;
-export default function Approved() {
+let totalAmount = 0;
+export default function TotalAmount() {
+  totalAmount = 0;
   const dispatch = useDispatch();
-  count = 0;
-  const { requests, loading } = useSelector((state) => state.myRequests);
-
-  if (loading === false) {
-    requests &&
-      requests.forEach((i) => { 
-        if (i.requestStatus === "Delivered") {
-          count++;
-        }
-      });
-  }
+  const { orders } = useSelector((state) => state.allOrders);
+  orders &&
+    orders.forEach((item) => {
+      totalAmount += item.totalPrice;
+    });
   useEffect(() => {
-    dispatch(myRequests());
+    dispatch(getAllOrders());
   }, [dispatch]);
   return (
     <RootStyle>
       <IconWrapperStyle>
-        <Icon icon="fa:cart-arrow-down" width={24} height={24} />
+        <Icon icon="emojione:money-bag" width={24} height={24} />
       </IconWrapperStyle>
-      <Typography variant="h3">{fShortenNumber(count)}</Typography>
+      <Typography variant="h3">{fShortenNumber(totalAmount)}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Recieved Inventory
+        Total Amount Recieved
       </Typography>
     </RootStyle>
   );
