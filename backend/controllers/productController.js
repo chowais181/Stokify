@@ -7,10 +7,16 @@ const ApiFeatures = require("../utils/apifeatures");
 exports.createProduct = catchAsyncErrors(async (req, res, next) => {
   req.body.user = req.user.id;
   const product = await Product.create(req.body);
-  res.status(201).json({
-    success: true,
-    product,
-  });
+  if (req.body.price < 0) {
+    return next(new ErrorHander("Price cannot be negative, 404"));
+  } else if (req.body.Stock < 0) {
+    return next(new ErrorHander("Stock cannot be negative, 404"));
+  } else {
+    res.status(201).json({
+      success: true,
+      product,
+    });
+  }
 });
 
 // Get All Product

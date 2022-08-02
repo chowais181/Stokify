@@ -16,11 +16,11 @@ router.route("/requests/me").get(isAuthenticatedUser, myRequests);
 
 router
   .route("/admin/requests")
-  .get(isAuthenticatedUser, authorizeRoles("Admin"), getAllRequest);
+  .get(isAuthenticatedUser, getAllRequest);
 
 router
   .route("/admin/request/:id")
-  .put(isAuthenticatedUser, authorizeRoles("Admin"), updateRequest)
-  .delete(isAuthenticatedUser, authorizeRoles("Admin"), deleteRequest);
+  .put(isAuthenticatedUser, updateRequest)
+  .delete(isAuthenticatedUser, deleteRequest);
 
 module.exports = router;

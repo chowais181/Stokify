@@ -61,17 +61,26 @@ export default function ProductForm() {
     },
     validationSchema: AddProductSchema,
     onSubmit: () => {
-      console.log(descriptionRef.current.value, uom.value, cat.value);
-      dispatch(
-        createProduct(
-          nameRef.current.value,
-          descriptionRef.current.value,
-          priceRef.current.value,
-          stockRef.current.value,
-          uom.value,
-          cat.value
-        )
+      console.log(
+        descriptionRef.current.value,
+        uom.value,
+        cat.value,
+        priceRef.current.value
       );
+      if (priceRef.current.value < 0 || stockRef.current.value < 0) {
+        alert.error("Cannot be -ve!!!");
+      } else {
+        dispatch(
+          createProduct(
+            nameRef.current.value,
+            descriptionRef.current.value,
+            priceRef.current.value,
+            stockRef.current.value,
+            uom.value,
+            cat.value
+          )
+        );
+      }
     },
   });
   const { errors, touched, handleSubmit, getFieldProps, resetForm } = formik;

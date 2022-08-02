@@ -119,32 +119,38 @@ const ProductDetails = () => {
                 </Typography>
               </Stack>
               <Card variant="filled" sx={{ minWidth: 275 }}>
-                <CardContent>
+                <CardContent className="card">
                   <div>
-                    <div className="detailsBlock-1">
-                      <h2 style={{ font: "500 1.9vmax Roboto" }}>
-                        {product && product.name}
-                      </h2>
+                    <div>
+                      <h2>{product && product.name}</h2>
                       <p>Product ID# {product && product._id}</p>
                     </div>
-                    <div className="detailsBlock-1">
-                      <h2 style={{ font: "500 1.9vmax Roboto" }}>
-                        Product QR code
-                      </h2>
+                    <div>
+                      <h4>
+                        <h2>{product && product.description}</h2>
+                      </h4>
+                    </div>
+                    <div>
+                      <h2>Product QR code</h2>
                       <img src={src} alt="qr code" width="100" height="100" />
                     </div>
 
-                    <div className="detailsBlock-3">
-                      {/* <h1>{`₹Rs: {product.price}`}</h1> */}
-                      <div className="detailsBlock-3-1">
-                        <div className="detailsBlock-3-1-1">
-                          <h2 style={{ font: "500 1.9vmax Roboto" }}>
-                            Quantity
-                          </h2>
-                          <br />
-                          <button onClick={decreaseQuantity}>-</button>
-                          <input type="number" value={quantity} />
-                          <button onClick={increaseQuantity}>+</button>
+                    <div>
+                      <div>
+                        <div>
+                          <h2>Quantity</h2>
+                          <button onClick={decreaseQuantity} className="btn">
+                            -
+                          </button>
+                          <input
+                            type="number"
+                            value={quantity}
+                            style={{ width: "60px" }}
+                            className="btn"
+                          />
+                          <button onClick={increaseQuantity} className="btn">
+                            +
+                          </button>
                         </div>
                       </div>
                       <br />
@@ -154,12 +160,11 @@ const ProductDetails = () => {
                         disabled={product && product.Stock < 1 ? true : false}
                         onClick={addToCartHandler}
                       >
-                        <Icon icon="bx:bxs-cart-download" width="30" /> Add to
-                        Cart
+                        <Icon icon="bx:bxs-cart-download" width="30" />
+                        <div className="mbl">Add to Cart</div>
                       </Button>
                       <br /> <br />
-                      <h2 style={{ font: "500 1.9vmax Roboto" }}>
-                        Status :
+                      <h2>
                         <b
                           className={
                             product && product.Stock < 1
@@ -174,23 +179,16 @@ const ProductDetails = () => {
                       </h2>
                     </div>
                     <br />
-                    <div className="detailsBlock-4">
-                      <h2 style={{ font: "500 1.9vmax Roboto" }}>
-                        Description :
-                        <h2 style={{ font: "300 1.3vmax Roboto" }}>
-                          {product && product.description}
-                        </h2>
-                      </h2>
-                    </div>
                   </div>
                   <br />
                   <Button
+                    size="small"
                     variant="contained"
                     onClick={MoveBack}
                     color="warning"
                   >
                     <Icon icon="akar-icons:arrow-back" width="40" />
-                    Back to list
+                    <div className="mbl"> Back to list</div>
                   </Button>
                 </CardContent>
               </Card>

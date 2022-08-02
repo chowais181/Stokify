@@ -57,6 +57,7 @@ const userSchema = new mongoose.Schema({
       "Coordinator",
       "Vendor",
       "Admin",
+      "Account Officer",
     ],
     default: "Staff",
   },

@@ -18,12 +18,14 @@ app.use(fileUpload());
 const order = require("./routes/orderRoute");
 const reqInventory = require("./routes/reqInventoryRoute");
 const product = require("./routes/productRoute");
+const vendorProduct = require("./routes/vendorProductRoute");
 const user = require("./routes/userRoute");
 const payment = require("./routes/paymentRoute");
 app.use("/api/v1", order);
 app.use("/api/v1", payment);
 app.use("/api/v1", reqInventory);
 app.use("/api/v1", product);
+app.use("/api/v1", vendorProduct);
 app.use("/api/v1", user);
 
 //Middleware for errors

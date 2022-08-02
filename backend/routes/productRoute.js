@@ -16,17 +16,15 @@ router
   .route("/admin/product/new")
   .post(
     isAuthenticatedUser,
-    authorizeRoles("Admin"),
-    isAuthenticatedUser,
     createProduct
   );
 router.route("/product/:id").get(getProductDetails);
 router
   .route("/admin/products")
-  .get(isAuthenticatedUser, authorizeRoles("Admin"), getAdminProducts);
+  .get(isAuthenticatedUser, getAdminProducts);
 router
   .route("/admin/product/:id")
-  .put(isAuthenticatedUser, authorizeRoles("Admin"), updateProduct)
-  .delete(isAuthenticatedUser, authorizeRoles("Admin"), deleteProduct);
+  .put(isAuthenticatedUser, updateProduct)
+  .delete(isAuthenticatedUser, deleteProduct);
 
 module.exports = router;

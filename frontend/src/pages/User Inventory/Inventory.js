@@ -42,7 +42,7 @@ const Inventory = ({ search }) => {
   const { loading, products, error } = useSelector((state) => state.products);
   let isProductNotFound = 0;
   if (loading === false) {
-    isProductNotFound = products.length === 0;
+    isProductNotFound = products && products.length === 0;
   }
 
   //getting the keyword wich we are using in search
@@ -93,13 +93,13 @@ const Inventory = ({ search }) => {
                   }
                 />
                 {isProductNotFound && <SearchNotFound searchQuery={name} />}
-                <div className="container" id="container">
+                <div className="container" id="container" >
                   {products &&
                     products
                       .filter((filteredProducts) =>
                         filteredProducts.name.includes(name)
                       )
-                      .map((product) => <UserProduct product={product} />)}
+                      .map((product) => <UserProduct  product={product} />)}
                 </div>
               </CardContent>
             </Card>

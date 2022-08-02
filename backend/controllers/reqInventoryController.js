@@ -65,22 +65,25 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHander("Request not found with this Id", 404));
   }
 
-  if (request.requestStatus === "Delivered") {
-    return next(
-      new ErrorHander("You have already delivered this inventory request", 400)
-    );
-  }
-
-  // if (req.body.requestStatus === "Accepted") {
-
+  // if (request.requestStatus === "Delivered") {
+  //   return next(
+  //     new ErrorHander("You have already delivered this inventory request", 400)
+  //   );
   // }
+
   request.requestStatus = req.body.requestStatus;
+  request.returnDate = req.body.returnDate;
 
   if (req.body.requestStatus === "Delivered") {
     request.orderItems.forEach(async (o) => {
       await updateStock(o.product, o.quantity);
     });
-    request.deliveredAt = Date.now();
+    request.deliveredAt = new Date();
+  }
+  if (req.body.requestStatus === "Recieved") {
+    request.orderItems.forEach(async (o) => {
+      await updateReturnStock(o.product, o.quantity);
+    });
   }
 
   await request.save({ validateBeforeSave: false });
@@ -94,6 +97,13 @@ async function updateStock(id, quantity) {
   const product = await Product.findById(id);
 
   product.Stock -= quantity;
+
+  await product.save({ validateBeforeSave: false });
+}
+async function updateReturnStock(id, quantity) {
+  const product = await Product.findById(id);
+
+  product.Stock += quantity;
 
   await product.save({ validateBeforeSave: false });
 }

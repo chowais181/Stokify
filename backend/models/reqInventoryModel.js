@@ -39,10 +39,17 @@ const reqInventorySchema = new mongoose.Schema({
     required: true,
     default: "Processing",
   },
-  deliveredAt: Date,
+  deliveredAt: {
+    type: String,
+    default: "",
+  },
+  returnDate: {
+    type: String,
+    default: "",
+  },
   createdAt: {
-    type: Date,
-    default: Date.now,
+    type: String,
+    default: new Date(),
   },
 });
 
