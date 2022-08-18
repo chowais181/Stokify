@@ -69,7 +69,7 @@ import ProcessRequest from "./pages/admin/HODRequests/ProcessRequest";
 
 export default function Router() {
   const { user, loading } = useSelector((state) => state.user);
-
+  console.log(user);
   let Dashboard = Loader;
   if (loading === false) {
     if (user && user.role === "Admin") {

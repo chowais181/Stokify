@@ -94,7 +94,7 @@ export default function ProductForm() {
       alert.show(
         <div style={{ color: "green" }}>Product added successfully!</div>
       );
-      resetForm();
+      // resetForm();
       dispatch({ type: NEW_PRODUCT_RESET });
     }
   }, [dispatch, error, alert, success, resetForm]);
