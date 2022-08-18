@@ -10,7 +10,7 @@
 
 # production
 /frontend/build
-
+/frontend/.eslintcache
 # misc
 /frontend/.env.local
 /frontend/.env.development.local
