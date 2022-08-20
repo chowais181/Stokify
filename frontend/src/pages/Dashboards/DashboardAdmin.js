@@ -68,7 +68,7 @@ export default function DashboardAdmin() {
 
       <Container maxWidth="xl">
         <Box sx={{ pb: 5 }}>
-          <Typography variant="h4">Hey, Welcome back Admin</Typography>
+          <Typography variant="h4">Hey, Welcome Admin</Typography>
         </Box>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={4}>
