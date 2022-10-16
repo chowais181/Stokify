@@ -25,7 +25,7 @@ export default function LogoOnlyLayout() {
     <>
       <HeaderStyle>
         <MHidden width="smDown">
-          <RouterLink to="/">
+          <RouterLink to="#">
             <Logo />
           </RouterLink>
         </MHidden>

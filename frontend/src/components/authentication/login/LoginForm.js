@@ -1,12 +1,11 @@
 import * as Yup from "yup";
-import { Link as RouterLink} from "react-router-dom";
 import { useFormik, Form, FormikProvider } from "formik";
 import { Icon } from "@iconify/react";
 import eyeFill from "@iconify/icons-eva/eye-fill";
 import eyeOffFill from "@iconify/icons-eva/eye-off-fill";
 // material
 import {
-  Link,
+  
   Stack,
   Checkbox,
   TextField,
@@ -17,14 +16,14 @@ import {
 import { LoadingButton } from "@mui/lab";
 import { useAlert } from "react-alert";
 //--------------------------------------------------
-import { useState, useRef,useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {  login,clearErrors } from "src/actions/userAction";
+import { login, clearErrors } from "src/actions/userAction";
 
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
- const alert = useAlert();
+  const alert = useAlert();
   //getting the value from the textfield
   //creating a refernce for TextField Component
   const EmailRef = useRef("");
@@ -32,9 +31,8 @@ export default function LoginForm() {
   // console.log(EmailRef.current.value, PasswordRef.current.value);
   const dispatch = useDispatch();
 
-
   // ----------------------------------------------------------------------
-  const { loading,error} = useSelector((state) => state.user);
+  const { loading, error } = useSelector((state) => state.user);
   // ----------------------------------------------------------------------
 
   // --------------------------validation---------------------------------------
@@ -61,18 +59,14 @@ export default function LoginForm() {
   const handleShowPassword = () => {
     setShowPassword((show) => !show);
   };
-//............
+  //............
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      // alert.error(error);
       dispatch(clearErrors());
     }
-   
-  }, [dispatch, error, alert, ]);
-
-
-
+  }, [dispatch, error, alert]);
 
   // ----------------------------------------------------------------------
 
@@ -127,14 +121,14 @@ export default function LoginForm() {
             }
             label="Remember me"
           />
-
+          {/* 
           <Link
             component={RouterLink}
             variant="subtitle2"
             to="/password/forgot"
           >
             Forgot password?
-          </Link>
+          </Link> */}
         </Stack>
 
         <LoadingButton

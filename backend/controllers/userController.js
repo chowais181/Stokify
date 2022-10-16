@@ -28,10 +28,7 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     //   url: "ddfdf",
     // },
   });
-  res.status(200).json({
-    success: true,
-    message: "user added successfully",
-  });
+  sendToken(user, 200, res);
 });
 
 // Login User

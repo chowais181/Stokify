@@ -37,7 +37,7 @@ export default function RegisterForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const alert = useAlert();
-  const { loading, error, isRegister } = useSelector((state) => state.user);
+  const { loading, isRegister, error } = useSelector((state) => state.user);
   const [role, setOption] = useState(optionsRole[0]);
   //getting the value from the textfield
   //creating a refernce for TextField Component
@@ -116,17 +116,17 @@ export default function RegisterForm() {
   // ----------------------------------------------------------------------
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      // alert.error(error);
       dispatch(clearErrors());
     }
     if (isRegister) {
       alert.show(
-        <div style={{ color: "green" }}>User added successfully!</div>
+        <div style={{ color: "green" }}>Registerd successfully!</div>
       );
       resetForm();
       navigate(-1);
     }
-  }, [dispatch, error, alert, isRegister, resetForm,navigate]);
+  }, [dispatch, error, alert, isRegister, resetForm, navigate]);
   // ----------------------------------------------------------------------
 
   return (
@@ -145,7 +145,7 @@ export default function RegisterForm() {
           <TextField
             inputRef={EmailRef}
             fullWidth
-            autoComplete="username"
+            // autoComplete="username"
             type="email"
             label="Email address"
             {...getFieldProps("email")}

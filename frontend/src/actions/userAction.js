@@ -38,6 +38,7 @@ import {
 } from "../constants/userConstants";
 import axios from "axios";
 
+import { useNavigate } from "react-router-dom";
 // Login
 export const login = (email, password) => async (dispatch) => {
   try {
@@ -77,7 +78,8 @@ export const register =
         },
         config
       );
-
+      localStorage.setItem("userInfo", JSON.stringify(data.user));
+      localStorage.setItem("isAuthenticated", true);
       dispatch({ type: REGISTER_USER_SUCCESS, payload: data.user });
     } catch (error) {
       dispatch({
@@ -102,6 +104,7 @@ export const loadUser = () => async (dispatch) => {
 
 // Logout User
 export const logout = () => async (dispatch, getState) => {
+  const navigate = useNavigate();
   try {
     await axios.get(`/api/v1/logout`);
 
@@ -110,6 +113,7 @@ export const logout = () => async (dispatch, getState) => {
       "cartItems",
       JSON.stringify((getState().cart.cartItems = []))
     );
+    navigate("/login");
   } catch (error) {
     dispatch({ type: LOGOUT_FAIL, payload: error.response.data.message });
   }

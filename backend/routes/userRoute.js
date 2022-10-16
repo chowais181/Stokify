@@ -26,9 +26,7 @@ router.route("/logout").get(logout);
 router.route("/me").get(isAuthenticatedUser, getUserDetails);
 // router.route("/me/update").put(isAuthenticatedUser, updateProfile);
 
-router
-  .route("/admin/register")
-  .post(isAuthenticatedUser, authorizeRoles("Admin"), registerUser);
+router.route("/admin/register").post(registerUser);
 
 router
   .route("/admin/users")

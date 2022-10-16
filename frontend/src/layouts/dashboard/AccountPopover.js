@@ -75,9 +75,9 @@ export default function AccountPopover() {
 
   ////////// //logout user////////////////
   function logoutUser() {
-    navigate("/login", { replace: true });
     dispatch(logout());
     localStorage.clear();
+    navigate("/login");
   }
 
   return (

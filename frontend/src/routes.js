@@ -5,7 +5,7 @@ import DashboardLayout from "./layouts/dashboard";
 import LogoOnlyLayout from "./layouts/LogoOnlyLayout";
 //
 import Login from "./pages/Login";
-// import Register from "./pages/Register";
+import Register from "./pages/Register";
 //////////////////////DASHBOARDS////////////////////////////
 import DashboardApp from "./pages/Dashboards/DashboardApp";
 import DashboardAdmin from "./pages/Dashboards/DashboardAdmin";
@@ -258,10 +258,10 @@ export default function Router() {
       element: <LogoOnlyLayout />,
       children: [
         { path: "login", element: <Login /> },
-        // { path: ":register", element: <Register /> },
+        { path: "register", element: <Register /> },
         { path: "password/forgot", element: <ForgotPassword /> },
         { path: "404", element: <NotFound /> },
-        { path: "/", element: <Navigate to="/dashboard/app" /> },
+        // { path: "/", element: <Navigate to="/dashboard/app" /> },
         { path: "*", element: <Navigate to="/404" /> },
       ],
     },

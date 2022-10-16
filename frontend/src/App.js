@@ -30,9 +30,9 @@ export default function App() {
   }
 
   React.useEffect(() => {
-    if (!localStorage.getItem("isAuthenticated")) {
-      navigate("/login", { replace: true });
-    }
+    // if (localStorage.getItem("isAuthenticated")) {
+    //   navigate("/register", { replace: true });
+    // }
     store.dispatch(loadUser());
     getStripeApiKey();
   }, [navigate]);
